@@ -20,7 +20,7 @@ public class Client {
 			protected void packetReceived(ServerModel client, Packet packet) {
 				
 				if(packet.getPacketName().equals("logged")){
-					String num = (String) packet.getEntry("num");
+					int num = (int) packet.getEntry("num");
 					System.out.println(num);
 					return;
 				}
