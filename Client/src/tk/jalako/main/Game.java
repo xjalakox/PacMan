@@ -9,6 +9,7 @@ import java.awt.image.BufferStrategy;
 import java.awt.image.BufferedImage;
 
 import tk.jalako.entity.Entity;
+import tk.jalako.graphics.Sprite;
 
 
 
@@ -32,6 +33,8 @@ public class Game extends Canvas implements Runnable {
 	private Thread thread;
 	private int frames;
 	public static Handler handler;
+	public static Sprite[] player = new Sprite[96];
+	public static KeyInput key = new KeyInput();
 	
 	
 	synchronized void start() {
@@ -56,7 +59,6 @@ public class Game extends Canvas implements Runnable {
 //				cam.tick(e);
 			}
 		}
-		
 	}
 	public void render() {
 		BufferStrategy bs = getBufferStrategy();
@@ -65,7 +67,7 @@ public class Game extends Canvas implements Runnable {
 			return;
 		}
 		Graphics g = bs.getDrawGraphics();
-		Graphics2D g2d = (Graphics2D)g;
+		Graphics2D g2d = (Graphics2D) g;
 		
 		//g.drawImage(background,0 , 0, getWidth(), getHeight(), this);
 		g.drawRect(0, 0, WIDTH*SCALE+100, HEIGHT*SCALE+100);
@@ -125,8 +127,8 @@ public class Game extends Canvas implements Runnable {
 //		
 //		ImageLoader loader = new ImageLoader();
 	//	background = loader.loadImage("/background_grass.png");
+		addKeyListener(key);
 		handler.createLevel();
-//		addKeyListener(new KeyInput());
 	}
 	
 	@Override

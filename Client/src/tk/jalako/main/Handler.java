@@ -5,6 +5,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import tk.jalako.entity.Entity;
+import tk.jalako.entity.Player;
 import tk.jalako.tile.Tile;
 
 
@@ -39,7 +40,7 @@ public class Handler {
 	}
 	
 	public void createLevel(){
-		
+		addEntity(new Player(250,250,64,64,Id.player,Game.key));
 	}
 
 }

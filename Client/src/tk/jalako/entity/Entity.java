@@ -1,6 +1,7 @@
 package tk.jalako.entity;
 
 import java.awt.Graphics;
+import java.awt.Rectangle;
 
 import tk.jalako.main.Handler;
 import tk.jalako.main.Id;
@@ -89,5 +90,9 @@ public abstract class Entity {
 
 	public void setId(Id id) {
 		this.id = id;
+	}
+
+	public Rectangle getBounds() {
+		return null;
 	}
 }
