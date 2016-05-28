@@ -1,4 +1,4 @@
-package tk.jalako.main;
+package tk.jalako.network;
 
 import javax.swing.JFrame;
 import javax.swing.JOptionPane;
@@ -9,6 +9,9 @@ import org.gnet.client.ServerModel;
 import org.gnet.packet.Packet;
 
 public class Client {
+	
+	static String pname;
+	static boolean connected;
 
 	public static void main(String[] args) {
 		
@@ -19,7 +22,6 @@ public class Client {
 		jf.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		jf.setVisible(true);
 		
-		/*
 		final String host = "127.0.0.1";
 		final int port = 1337;
 		final GNetClient netclient = new GNetClient(host, port);
@@ -28,49 +30,57 @@ public class Client {
 
 			@Override
 			protected void packetReceived(ServerModel client, Packet packet) {
+				System.out.println("?");
 				
-				if(packet.getPacketName().equals("logged")){
-					int num = (int) packet.getEntry("num");
-					System.out.println(num);
-					return;
+				if(packet.getPacketName().equals("log")){
+					
+					pname = (String) packet.getEntry("name");
+					connected = (boolean) packet.getEntry("connected");
 				}
 
 			}
 
 			@Override
 			protected void errorMessage(String arg0) {
-				// TODO Auto-generated method stub
+				
 
 			}
 
 			@Override
 			protected void debugMessage(String arg0) {
-				// TODO Auto-generated method stub
+				
 
 			}
 
 			@Override
 			protected void clientDisconnected(ServerModel arg0) {
-				// TODO Auto-generated method stub
+				
 
 			}
 
 			@Override
-			protected void clientConnected(ServerModel server) {
+			protected void clientConnected(ServerModel client) {
 
+				
 				String name = JOptionPane.showInputDialog("Name eingeben");
+				
+				loginPacket login = new loginPacket(name);
+				
+				client.sendPacket(login);
+				
+				/*String name = JOptionPane.showInputDialog("Name eingeben");
 				Packet login = new Packet("loginPacket", 2);
 				login.addEntry("playerName", name);
 				login.addEntry("test", "test123");
-				server.sendPacket(login);
+				server.sendPacket(login);*/
 
 			}
 		});
 
 		netclient.bind();
 		netclient.start();
+	
 		
-		*/
 	}
 
 }
