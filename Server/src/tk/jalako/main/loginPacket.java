@@ -1,4 +1,4 @@
-package com.jalako.tk;
+package tk.jalako.main;
 
 import org.gnet.packet.Packet;
 

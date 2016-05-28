@@ -1,5 +1,6 @@
-package com.jalako.tk;
+package tk.jalako.main;
 
+import javax.swing.JFrame;
 import javax.swing.JOptionPane;
 
 import org.gnet.client.ClientEventListener;
@@ -10,6 +11,15 @@ import org.gnet.packet.Packet;
 public class Client {
 
 	public static void main(String[] args) {
+		
+		JFrame jf = new JFrame("Client!");
+		jf.setSize(1280/2,720/2);
+		jf.add(new gameLoop());
+		jf.setLocationRelativeTo(null);
+		jf.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+		jf.setVisible(true);
+		
+		/*
 		final String host = "127.0.0.1";
 		final int port = 1337;
 		final GNetClient netclient = new GNetClient(host, port);
@@ -59,6 +69,8 @@ public class Client {
 
 		netclient.bind();
 		netclient.start();
+		
+		*/
 	}
 
 }

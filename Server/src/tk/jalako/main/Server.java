@@ -1,4 +1,6 @@
-package com.jalako.tk;
+package tk.jalako.main;
+
+import javax.swing.JFrame;
 
 import org.gnet.packet.Packet;
 import org.gnet.server.ClientModel;
@@ -9,7 +11,11 @@ public class Server {
 
 	public static void main(String[] args) {
 
-		final String host = "127.0.0.1";
+		
+		
+	}
+	
+		/*final String host = "127.0.0.1";
 		final int port = 1337;
 		final GNetServer netserver = new GNetServer(host, port);
 
@@ -62,6 +68,6 @@ public class Server {
 		netserver.bind();
 		netserver.start();
 
-	}
+	}*/
 
 }
