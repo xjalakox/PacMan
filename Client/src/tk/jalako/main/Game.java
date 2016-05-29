@@ -41,8 +41,6 @@ public class Game extends Canvas implements Runnable {
 	private boolean running = false;
 	private Thread thread;
 	private int frames;
-	
-	private int player_number = 0;
 
 	private String pname;
 
@@ -195,7 +193,6 @@ public class Game extends Canvas implements Runnable {
 		final int port = 1337;
 		final GNetClient netclient = new GNetClient(host, port);
 		
-		
 		netclient.setDebugging(false);
 
 		netclient.addEventListener(new ClientEventListener() {
@@ -206,20 +203,15 @@ public class Game extends Canvas implements Runnable {
 
 				if (packet.getPacketName().equals("log")) {
 
-					
 					String username = (String) packet.getEntry("name");
 					if(username.equals(pname)) handler.addEntity(new Player(username, 250,250,64,64,Id.player,Game.key));
-					else {
-						player2[player_number] = new Player(username, 250, 250, 64, 64, Id.player, null);
-						handler.addEntity(player2[player_number]);
-						player_number++;
-					}
+					else handler.addEntity(new Player(username, 250,250,64,64,Id.player,null));
 					
 					
 				}
 
 				if (packet.getPacketName().equals("askForPositionPacket")) {
-
+					
 					positionPacket p = new positionPacket(handler.getPlayer(pname).getX(),handler.getPlayer(pname).getY());
 					
 					
