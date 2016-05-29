@@ -11,77 +11,39 @@ import tk.jalako.main.KeyInput;
 public class Player extends Entity {
 	int frame = 0, frameDelay = 0;
 	private KeyInput key;
-	private int anim;
+	private String username;
 
-	public Player(int x, int y, int w, int h, Id id, KeyInput key) {
+	public Player(String username, int x, int y, int w, int h, Id id, KeyInput key) {
 		super(x, y, w, h, id, Game.handler);
 		this.key = key;
+		this.username = username;
 	}
 
 	@Override
 	public void render(Graphics g) {
-		
+
 		g.setColor(Color.BLUE);
 		g.fillRect(getX(), getY(), getW(), getH());
 	}
 
 	@Override
 	public void tick() {
-		System.out.println(KeyInput.up);
-		if (!collision()) {
-				if (KeyInput.up) {
-					if (key.running) {
-						y -= 6;
-					} else {
-						y -= 3;
-					}
-					animate();
-				} else if (KeyInput.down) {
-					if (key.running) {
-						y += 6;
-					} else {
-						y += 3;
-					}
-					animate();
-				} else if (KeyInput.right) {
-					if (key.running) {
-						x += 6;
-					} else {
-						x += 3;
-					}
-					animate();
-				} else if (KeyInput.left) {
-					if (key.running) {
-						x -= 6;
-					} else {
-						x -= 3;
-					}
-					animate();
-				} else {
-				}
+		if (key != null) {
+			if (KeyInput.up) {
+				y -= 3;
+			} else if (KeyInput.down) {
+				y += 3;
+			} else if (KeyInput.right) {
+				x += 3;
+			} else if (KeyInput.left) {
+				x -= 3;
 			}
+		}
 	}
 
 	private boolean collision() {
 		return false;
 
-	}
-
-	public void animate() {
-		frameDelay++;
-		if (frameDelay >= 4 && key.running) {
-			frame++;
-			if (frame >= 9) {
-				frame = 1;
-			}
-			frameDelay = 0;
-		} else if (frameDelay >= 8) {
-			frame++;
-			if (frame >= 9) {
-				frame = 1;
-			}
-			frameDelay = 0;
-		}
 	}
 
 	@Override
@@ -103,5 +65,9 @@ public class Player extends Entity {
 
 	public Rectangle getBoundsLeft() {
 		return new Rectangle(getX() * 2 - 10, getY() * 2, getW() * 2 - 54, getH() * 2);
+	}
+
+	public String getUsername() {
+		return username;
 	}
 }

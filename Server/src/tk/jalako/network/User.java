@@ -1,12 +1,16 @@
 package tk.jalako.network;
 
+import org.gnet.server.ClientModel;
+
 public class User {
 
-	String name;
-	boolean connected = false;;
+	private String name;
+	private ClientModel server;
+	private boolean connected = false;
 	
-	public User(String name) {
+	public User(String name, ClientModel server) {
 		this.name = name;
+		this.server = server;
 	}
 	
 	public void setName(String name) {
@@ -23,6 +27,10 @@ public class User {
 	
 	public boolean isConnected() {
 		return connected;
+	}
+	
+	public ClientModel getServer() {
+		return server;
 	}
 
 }
