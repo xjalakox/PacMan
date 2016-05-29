@@ -49,6 +49,7 @@ public class Game extends Canvas implements Runnable {
 	public static KeyInput key = new KeyInput();
 	
 	public static Player[] player2 = new Player[25];
+	private int playerAnzahl = 0;
 
 	synchronized void start() {
 		if (running)
@@ -188,15 +189,14 @@ public class Game extends Canvas implements Runnable {
 	
 	private void initNetwork() {
 
-		
-		final String host = "127.0.0.1";
+		final String host = "80.82.219.161";
 		final int port = 1337;
 		final GNetClient netclient = new GNetClient(host, port);
 		
 		netclient.setDebugging(false);
 
 		netclient.addEventListener(new ClientEventListener() {
-
+			
 			@Override
 			protected void packetReceived(ServerModel client, Packet packet) {
 				
@@ -204,8 +204,21 @@ public class Game extends Canvas implements Runnable {
 				if (packet.getPacketName().equals("log")) {
 
 					String username = (String) packet.getEntry("name");
-					if(username.equals(pname)) handler.addEntity(new Player(username, 250,250,64,64,Id.player,Game.key));
-					else handler.addEntity(new Player(username, 250,250,64,64,Id.player,null));
+					
+					if(username.equals(pname)){
+						handler.addEntity(new Player(username, 250,250,64,64,Id.player,Game.key));
+					}else{
+						handler.addEntity(new Player(username, 250,250,64,64,Id.player,null));
+					}
+					
+					/*if(username.equals(pname)){
+						player2[playerAnzahl] = new Player(username, 250,250,64,64,Id.player,Game.key);
+						handler.addEntity(player2[playerAnzahl++]);
+					}
+					else {
+						player2[playerAnzahl] = new Player(username, 250, 250, 64, 64, Id.player, null);
+						handler.addEntity(player2[playerAnzahl++]);
+					}*/
 					
 					
 				}

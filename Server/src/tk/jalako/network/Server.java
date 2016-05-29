@@ -24,7 +24,7 @@ public class Server {
 		 * jf.setVisible(true);
 		 */
 
-		final String host = "127.0.0.1";
+		final String host = "80.82.219.161";
 		final int port = 1337;
 		final GNetServer netserver = new GNetServer(host, port);
 
@@ -32,7 +32,6 @@ public class Server {
 
 			@Override
 			protected void packetReceived(ClientModel server, Packet packet) {
-
 				if (packet.getPacketName().equals("loginPacket")) {
 
 					String name = (String) packet.getEntry("playerName");
@@ -75,8 +74,8 @@ public class Server {
 						// TODO Auto-generated catch block
 						e.printStackTrace();
 					}
-					server.sendPacket(askPacket);
-					sendToAllClients(packet);
+					//server.sendPacket(askPacket);
+					sendToAllClients(askPacket);
 				}
 
 				/*
