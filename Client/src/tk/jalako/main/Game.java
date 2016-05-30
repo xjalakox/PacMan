@@ -47,7 +47,7 @@ public class Game extends Canvas implements Runnable {
 	public static Handler handler;
 	public static Sprite[] player = new Sprite[96];
 	public static KeyInput key = new KeyInput();
-	
+
 	public static Player[] player2 = new Player[25];
 	private int playerAnzahl = 0;
 
@@ -105,7 +105,7 @@ public class Game extends Canvas implements Runnable {
 	}
 
 	public void init() {
-		
+
 		initNetwork();
 		handler = new Handler();
 
@@ -172,7 +172,7 @@ public class Game extends Canvas implements Runnable {
 			}
 			render();
 			frames++;
-			
+
 			if (System.currentTimeMillis() - timer > 1000) {
 
 				timer += 1000;
@@ -180,57 +180,59 @@ public class Game extends Canvas implements Runnable {
 				ups = ticks;
 				ticks = 0;
 				frames = 0;
-			//	System.out.println("FPS: " + fps);
-			//	System.out.println("Ticks: " + ups);
+				// System.out.println("FPS: " + fps);
+				// System.out.println("Ticks: " + ups);
 			}
 		}
 		stop();
 	}
-	
+
 	private void initNetwork() {
 
-		final String host = "80.82.219.161";
+		final String host = "127.0.0.1";
 		final int port = 1337;
 		final GNetClient netclient = new GNetClient(host, port);
-		
+
 		netclient.setDebugging(false);
 
 		netclient.addEventListener(new ClientEventListener() {
-			
+
 			@Override
 			protected void packetReceived(ServerModel client, Packet packet) {
-				
 
 				if (packet.getPacketName().equals("log")) {
 
 					String username = (String) packet.getEntry("name");
-					
-					if(username.equals(pname)){
-						handler.addEntity(new Player(username, 250,250,64,64,Id.player,Game.key));
-					}else{
-						handler.addEntity(new Player(username, 250,250,64,64,Id.player,null));
+
+					if (username.equals(pname)) {
+						handler.addEntity(new Player(username, 250, 250, 64, 64, Id.player, Game.key));
+					} else {
+						handler.addEntity(new Player(username, 250, 250, 64, 64, Id.player, null));
 					}
-					
-					/*if(username.equals(pname)){
-						player2[playerAnzahl] = new Player(username, 250,250,64,64,Id.player,Game.key);
-						handler.addEntity(player2[playerAnzahl++]);
-					}
-					else {
-						player2[playerAnzahl] = new Player(username, 250, 250, 64, 64, Id.player, null);
-						handler.addEntity(player2[playerAnzahl++]);
-					}*/
-					
-					
+
+					/*
+					 * if(username.equals(pname)){ player2[playerAnzahl] = new
+					 * Player(username, 250,250,64,64,Id.player,Game.key);
+					 * handler.addEntity(player2[playerAnzahl++]); } else {
+					 * player2[playerAnzahl] = new Player(username, 250, 250,
+					 * 64, 64, Id.player, null);
+					 * handler.addEntity(player2[playerAnzahl++]); }
+					 */
+
 				}
 
 				if (packet.getPacketName().equals("askForPositionPacket")) {
-					
-					positionPacket p = new positionPacket(handler.getPlayer(pname).getX(),handler.getPlayer(pname).getY());
-					
-					
-					
+
+					positionPacket p = new positionPacket(pname, handler.getPlayer(pname).getX(),
+							handler.getPlayer(pname).getY());
+
 					client.sendPacket(p);
-					
+
+				}
+
+				if (packet.getPacketName().equals("positionPacket")) {
+					if(!pname.equals(packet.getEntry("username"))) handler.setPlayerPosition((String) packet.getEntry("username"), (int) packet.getEntry("xPos"),
+							(int) packet.getEntry("yPos"));
 				}
 			}
 
@@ -258,7 +260,7 @@ public class Game extends Canvas implements Runnable {
 
 				client.sendPacket(login);
 
-				positionPacket pPacket = new positionPacket(250, 250);
+				positionPacket pPacket = new positionPacket(pname, 250, 250);
 
 				client.sendPacket(pPacket);
 

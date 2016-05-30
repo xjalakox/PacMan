@@ -53,6 +53,8 @@ public class Handler {
 		return null;
 	}
 	
-	//Allen usern senden.
+	public void setPlayerPosition(String username, int x, int y) {
+		((Player)getPlayer(username)).setPosition(x,y);
+	}
 
 }

@@ -70,4 +70,13 @@ public class Player extends Entity {
 	public String getUsername() {
 		return username;
 	}
+	
+	public void setPosition(int x, int y) {
+		this.x = x;
+		this.y = y;
+	}
+	
+	public void setUsername(String username) {
+		this.username = username;
+	}
 }

@@ -24,7 +24,7 @@ public class Server {
 		 * jf.setVisible(true);
 		 */
 
-		final String host = "80.82.219.161";
+		final String host = "127.0.0.1";
 		final int port = 1337;
 		final GNetServer netserver = new GNetServer(host, port);
 
@@ -68,14 +68,9 @@ public class Server {
 
 					askForPositionPacket askPacket = new askForPositionPacket();
 
-					try {
-						Thread.sleep(500);
-					} catch (InterruptedException e) {
-						// TODO Auto-generated catch block
-						e.printStackTrace();
-					}
 					//server.sendPacket(askPacket);
-					sendToAllClients(askPacket);
+					sendToAllClients(packet);
+					server.sendPacket(askPacket);
 				}
 
 				/*
