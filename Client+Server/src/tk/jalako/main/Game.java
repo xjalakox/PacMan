@@ -32,6 +32,7 @@ public class Game extends Canvas implements Runnable {
 	private BufferedImage background;
 
 	private boolean running = false;
+	private int test;
 	private Thread thread;
 	private int frames;
 
@@ -72,13 +73,18 @@ public class Game extends Canvas implements Runnable {
 	}
 
 	public void tick() {
+		if(test == 20){
+			test = 0;
+			for (Entity e : Handler.entity) {
+				if (e.getId() == Id.player) {
+					new Packet02Move(((Player) e).getUsername(), ((Player) e).getX(), ((Player) e).getY()).send(client);
+				}
+			}
+		}else{
+			test++;
+		}
 		handler.tick();
 		key.tick();
-		for (Entity e : Handler.entity) {
-			if (e.getId() == Id.player) {
-				new Packet02Move(((Player) e).getUsername(), ((Player) e).getX(), ((Player) e).getY()).send(client);
-			}
-		}
 	}
 
 	public void render() {
