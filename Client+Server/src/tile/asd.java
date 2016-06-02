@@ -6,10 +6,10 @@ import java.awt.Graphics;
 import main.Handler;
 import main.Id;
 
-public class asd extends Tile{
+public class asd extends Tile {
 
-	public asd(int x, int y, int w, int h, Id id, Handler handler) {
-		super(x, y, w, h, id, handler);
+	public asd(int x, int y, int w, int h, Id id, boolean solid, long arrayzahl) {
+		super(x, y, w, h, id, solid, arrayzahl);
 
 	}
 
@@ -17,13 +17,13 @@ public class asd extends Tile{
 	public void render(Graphics g) {
 		g.setColor(Color.BLUE);
 		g.fillRect(x, y, w, h);
-		
+
 	}
 
 	@Override
 	public void tick() {
 		// TODO Auto-generated method stub
-		
+
 	}
 
 }

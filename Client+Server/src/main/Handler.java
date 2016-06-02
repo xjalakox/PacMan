@@ -4,9 +4,13 @@ import java.awt.Graphics;
 import java.util.ArrayList;
 import java.util.List;
 
+import org.json.simple.JSONArray;
+import org.json.simple.JSONObject;
+
 import entity.Entity;
 import entity.Player;
 import tile.Tile;
+import tile.asd;
 
 public class Handler {
 	public static List<Entity> entity = new ArrayList<Entity>();
@@ -48,7 +52,35 @@ public class Handler {
 	}
 
 	public void createLevel() {
+		generateLevel("Maps/map1_roof.json");
+	}
+	
+	private void generateLevel(String path) {
+		int a = 0;
+		int b = 0;
+		
+		JSONObject levelData = JSONDecoder.loadData(path);
 
+		for (int j = 0; j <= 25; j++) {
+			long opacity = (long) ((JSONObject) ((JSONArray) levelData.get("layers")).get(j)).get("opacity");
+			if (opacity == 1) {
+				JSONArray data = (JSONArray) ((JSONObject) ((JSONArray) levelData.get("layers")).get(j)).get("data");
+
+				for (int i = 0; i < data.size(); i++) {
+					long ids = (long) data.get(i);
+					if (i % 100 == 0) {
+						b++;
+						a = 0;
+					}
+
+					if (ids == 0) {
+						addTile(new asd(a * 32, b * 32, 32, 32, Id.testtile, false, (long) data.get(i)));
+					}
+					a++;
+				}
+				b = 0;
+			}
+		}
 	}
 
 	public void removePlayer(String username) {
