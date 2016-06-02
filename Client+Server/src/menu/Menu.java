@@ -32,7 +32,7 @@ import sound.SoundManager;
 public class Menu {
 	
 	public String username;
-	public static Image icon;
+	
 	
 	public Menu(){
 		
@@ -41,7 +41,7 @@ public class Menu {
 		sm.playSound(0);
 		
 		InputStream s =  Menu.class.getResourceAsStream("font.ttf");
-		icon = null;
+		Image icon = null;
         Font pixel = null;
 		try {
 			icon = ImageIO.read(Menu.class.getResourceAsStream("/logo.png"));
