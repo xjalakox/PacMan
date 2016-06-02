@@ -15,8 +15,7 @@ public class asd extends Tile {
 
 	@Override
 	public void render(Graphics g) {
-		g.setColor(Color.BLUE);
-		g.fillRect(x, y, w, h);
+		g.drawImage(main.Game.sprites[(int) arrayzahl].getBufferedImage(), x,y,w,h, null);
 
 	}
 

@@ -11,6 +11,9 @@ import java.awt.image.BufferedImage;
 
 import javax.swing.JOptionPane;
 
+import org.json.simple.JSONArray;
+import org.json.simple.JSONObject;
+
 import entity.Entity;
 import entity.Player;
 import graphics.ImageLoader;
@@ -43,7 +46,9 @@ public class Game extends Canvas implements Runnable {
 	public static KeyInput key = new KeyInput();
 	public static Player player;
 
-	private SpriteSheet sprites;
+	public static Sprite[] sprites = new Sprite[641];
+
+	private SpriteSheet spriteSheet;
 
 	private Client client;
 
@@ -73,14 +78,14 @@ public class Game extends Canvas implements Runnable {
 	}
 
 	public void tick() {
-		if(test == 20){
+		if (test == 20) {
 			test = 0;
 			for (Entity e : Handler.entity) {
 				if (e.getId() == Id.player) {
 					new Packet02Move(((Player) e).getUsername(), ((Player) e).getX(), ((Player) e).getY()).send(client);
 				}
 			}
-		}else{
+		} else {
 			test++;
 		}
 		handler.tick();
@@ -100,11 +105,10 @@ public class Game extends Canvas implements Runnable {
 		g.drawRect(0, 0, WIDTH * SCALE + 100, HEIGHT * SCALE + 100);
 		g.setColor(Color.WHITE);
 		g.fillRect(0, 0, WIDTH * SCALE + 100, HEIGHT * SCALE + 100);
-		g.drawImage(background,-200,-175,background.getWidth()/2,background.getHeight()/2,null);
+		//g.drawImage(background, -200, -175, background.getWidth() / 2, background.getHeight() / 2, null);
 		// g2d.translate(cam.getX(), cam.getY());
 		handler.render(g);
 		// g2d.translate(-cam.getX(), -cam.getY());
-		
 
 		g.setColor(Color.BLUE);
 		g.setFont(new Font("Verdana", Font.BOLD, 23));
@@ -117,17 +121,30 @@ public class Game extends Canvas implements Runnable {
 		key = new KeyInput();
 		addKeyListener(key);
 		
-		sprites = new SpriteSheet("/spritesheet.png");
+		spriteSheet = new SpriteSheet("/spritesheet.png");
 		
 		
 		
-		playerSprite[0] = new Sprite(sprites,1,6*48+1,47,47);
-		playerSprite[1] = new Sprite(sprites,49,6*48+1,47,47);
-		playerSprite[2] = new Sprite(sprites,1,7*48+1,47,47);
-		playerSprite[3] = new Sprite(sprites,49,7*48+1,47,47);
+		playerSprite[0] = new Sprite(spriteSheet,1,6*48+1,47,47);
+		playerSprite[1] = new Sprite(spriteSheet,49,6*48+1,47,47);
+		playerSprite[2] = new Sprite(spriteSheet,1,7*48+1,47,47);
+		playerSprite[3] = new Sprite(spriteSheet,49,7*48+1,47,47);
+		
+		
+		int z = 0;
+		for(int i=0;i<32;i++){
+			for(int j=0;j<20;j++){
+				sprites[z] = new Sprite(spriteSheet, i*47+j*1,j*47+j*1,47,47);
+				z++;
+			}
+			
+		}
 		
 		ImageLoader loader = new ImageLoader();
 	    background = loader.loadImage("/map.PNG");
+
+
+	    
 		
 		
 

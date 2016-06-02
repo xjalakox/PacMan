@@ -32,18 +32,20 @@ public class Handler {
 		for (Entity en : entity) {
 			en.tick();
 		}
-		for(int i = 0; i < entity.size(); i++) {
-			if(entity.get(i).isRemoved()) entity.remove(i);
+		for (int i = 0; i < entity.size(); i++) {
+			if (entity.get(i).isRemoved())
+				entity.remove(i);
 		}
 	}
 
 	public void addEntity(Entity en) {
 		entity.add(en);
 	}
-	
+
 	public void removeEntity(Entity e) {
-		for(Entity en: entity) {
-			if(e.equals(en)) en.remove();
+		for (Entity en : entity) {
+			if (e.equals(en))
+				en.remove();
 		}
 	}
 
@@ -52,45 +54,52 @@ public class Handler {
 	}
 
 	public void createLevel() {
-		generateLevel("Maps/map1_roof.json");
+		//addTile(new asd(24,24, 24, 24, Id.testtile, false, (long) 0));
+		generateLevel("map.json");
 	}
-	
+
 	private void generateLevel(String path) {
 		int a = 0;
 		int b = 0;
-		
+
 		JSONObject levelData = JSONDecoder.loadData(path);
 
-		for (int j = 0; j <= 25; j++) {
-			long opacity = (long) ((JSONObject) ((JSONArray) levelData.get("layers")).get(j)).get("opacity");
-			if (opacity == 1) {
-				JSONArray data = (JSONArray) ((JSONObject) ((JSONArray) levelData.get("layers")).get(j)).get("data");
+		for (int j = 0; j <= 2; j++) {
+			JSONArray data = (JSONArray) ((JSONObject) ((JSONArray) levelData.get("layers")).get(2)).get("data");
 
-				for (int i = 0; i < data.size(); i++) {
-					long ids = (long) data.get(i);
-					if (i % 100 == 0) {
-						b++;
-						a = 0;
-					}
-
-					if (ids == 0) {
-						addTile(new asd(a * 32, b * 32, 32, 32, Id.testtile, false, (long) data.get(i)));
-					}
-					a++;
+			for (int i = 0; i < data.size(); i++) {
+				long ids = (long) data.get(i);
+				if (i % 50 == 0) {
+					b++;
+					a = 0;
 				}
-				b = 0;
+
+				if(ids==0){
+					System.out.println("FUCK YOU LITTLE CUNT YOU JUST COSTED ME 1 HOUR OF MY FUCKING TIME");
+				}else{
+				//if (ids>400&&ids<450) {
+					addTile(new asd(a * 47, b * 47, 47, 47, Id.testtile, false, (long) data.get(i+1)));
+				//}
+				}
+				a++;
 			}
+			b = 0;
+
 		}
 	}
 
 	public void removePlayer(String username) {
 		if (!username.equals(Game.player.getUsername())) {
 			for (Entity en : entity) {
-				if (en.getId() == Id.player) if(username.equals(((Player)en).getUsername())) en.remove();
+				if (en.getId() == Id.player){
+					if (username.equals(((Player) en).getUsername())){
+						en.remove();
+					}
+				}
 			}
 		}
 	}
-	
+
 	public Entity getPlayer(String username) {
 		for (Entity entity : Handler.entity) {
 			if (entity.getId() == Id.player)
