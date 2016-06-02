@@ -24,8 +24,8 @@ import tk.jalako.network.packets.Packet02Move;
 public class Game extends Canvas implements Runnable {
 
 	private static final long serialVersionUID = 1L;
-	public static final int WIDTH = 320;
-	public static final int HEIGHT = 180;
+	public static final int WIDTH = 300;
+	public static final int HEIGHT = 250;
 	public static final int SCALE = 4;
 
 	private int fps, ups;
@@ -94,7 +94,7 @@ public class Game extends Canvas implements Runnable {
 		g.drawRect(0, 0, WIDTH * SCALE + 100, HEIGHT * SCALE + 100);
 		g.setColor(Color.WHITE);
 		g.fillRect(0, 0, WIDTH * SCALE + 100, HEIGHT * SCALE + 100);
-		g.drawImage(background,0,0,background.getWidth(),background.getHeight(),null);
+		g.drawImage(background,-200,-175,background.getWidth()/2,background.getHeight()/2,null);
 		// g2d.translate(cam.getX(), cam.getY());
 		handler.render(g);
 		// g2d.translate(-cam.getX(), -cam.getY());
@@ -111,7 +111,7 @@ public class Game extends Canvas implements Runnable {
 		key = new KeyInput();
 		addKeyListener(key);
 		
-		sprites = new SpriteSheet("/pacman.png");
+		sprites = new SpriteSheet("/spritesheet.png");
 		
 		
 		
