@@ -13,7 +13,9 @@ import javax.swing.JOptionPane;
 
 import tk.jalako.entity.Entity;
 import tk.jalako.entity.Player;
+import tk.jalako.graphics.ImageLoader;
 import tk.jalako.graphics.Sprite;
+import tk.jalako.graphics.SpriteSheet;
 import tk.jalako.network.Client;
 import tk.jalako.network.packets.Packet00Login;
 import tk.jalako.network.packets.Packet01Disconnect;
@@ -36,9 +38,11 @@ public class Game extends Canvas implements Runnable {
 	private String pname;
 
 	public static Handler handler = new Handler();
-	public static Sprite[] playerSprite = new Sprite[96];
+	public static Sprite[] playerSprite = new Sprite[4];
 	public static KeyInput key = new KeyInput();
 	public static Player player;
+
+	private SpriteSheet sprites;
 
 	private Client client;
 
@@ -90,10 +94,11 @@ public class Game extends Canvas implements Runnable {
 		g.drawRect(0, 0, WIDTH * SCALE + 100, HEIGHT * SCALE + 100);
 		g.setColor(Color.WHITE);
 		g.fillRect(0, 0, WIDTH * SCALE + 100, HEIGHT * SCALE + 100);
-
+		g.drawImage(background,0,0,background.getWidth(),background.getHeight(),null);
 		// g2d.translate(cam.getX(), cam.getY());
 		handler.render(g);
 		// g2d.translate(-cam.getX(), -cam.getY());
+		
 
 		g.setColor(Color.BLUE);
 		g.setFont(new Font("Verdana", Font.BOLD, 23));
@@ -105,12 +110,28 @@ public class Game extends Canvas implements Runnable {
 	public void init() {
 		key = new KeyInput();
 		addKeyListener(key);
+		
+		sprites = new SpriteSheet("/pacman.png");
+		
+		
+		
+		playerSprite[0] = new Sprite(sprites,1,6*48+1,47,47);
+		playerSprite[1] = new Sprite(sprites,49,6*48+1,47,47);
+		playerSprite[2] = new Sprite(sprites,1,7*48+1,47,47);
+		playerSprite[3] = new Sprite(sprites,49,7*48+1,47,47);
+		
+		ImageLoader loader = new ImageLoader();
+	    background = loader.loadImage("/map.PNG");
+		
+		
 
-		player = new Player(JOptionPane.showInputDialog(this, "Username"), 250, 250, 64, 64, Id.player, key);
+		player = new Player(JOptionPane.showInputDialog(this, "Username"), 250, 250, 24, 24, Id.player, key);
 		handler.addEntity(player);
 		client.setConnection(player.getUsername(), JOptionPane.showInputDialog(this, "IPAddress"));
 		new Packet00Login(client.getUsername(), player.getX(), player.getY()).send(client);
-		// handler.addTile(new asd(500,500,64,64,Id.testtile,handler));
+		
+	
+		
 		handler.createLevel();
 	}
 

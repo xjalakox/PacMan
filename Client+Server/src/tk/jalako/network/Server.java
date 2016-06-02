@@ -59,7 +59,7 @@ public class Server extends NetServer {
 			System.out.println("[" + address.getHostAddress() + ":" + ":" + port + "] " + packet00.getUsername()
 					+ " ist verbunden.");
 			NetUser user = new NetUser(packet00.getUsername(), address, port);
-			Player player = new Player(packet00.getUsername(), packet00.getX(), packet00.getY(), 64, 64, Id.player);
+			Player player = new Player(packet00.getUsername(), packet00.getX(), packet00.getY(), 24, 24, Id.player);
 			users.add(user);
 			players.put(user, player);
 			packet00.send(this);

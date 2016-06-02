@@ -27,8 +27,10 @@ public class Player extends Entity {
 
 	@Override
 	public void render(Graphics g) {
-		g.setColor(Color.BLUE);
-		g.fillRect(getX(), getY(), getW(), getH());
+		g.drawImage(Game.playerSprite[0].getBufferedImage(), x, y, w, h,null);
+		g.drawImage(Game.playerSprite[1].getBufferedImage(), x+24, y, w, h,null);
+		g.drawImage(Game.playerSprite[2].getBufferedImage(), x, y+24, w, h,null);
+		g.drawImage(Game.playerSprite[3].getBufferedImage(), x+24, y+24, w, h,null);
 	}
 
 	@Override
