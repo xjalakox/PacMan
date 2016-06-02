@@ -7,6 +7,7 @@ import java.awt.Graphics;
 import java.awt.Image;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
+import java.awt.image.BufferedImage;
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
@@ -32,7 +33,6 @@ public class Menu {
 	
 	public String username;
 	
-	public URL p;
 	
 	public Menu(){
 		
@@ -41,9 +41,10 @@ public class Menu {
 		sm.playSound(0);
 		
 		InputStream s =  Menu.class.getResourceAsStream("font.ttf");
-		
+		Image icon = null;
         Font pixel = null;
 		try {
+			icon = ImageIO.read(Menu.class.getResourceAsStream("/logo.png"));
 			pixel = Font.createFont(Font.TRUETYPE_FONT, s).deriveFont(Font.BOLD, 30);
 		} catch (FileNotFoundException e) {
 			e.printStackTrace();
@@ -57,6 +58,7 @@ public class Menu {
 		
 		JFrame f = new JFrame("Pacman Reloaded");
 		f.setBounds(0, 0, 1200, 800);
+		f.setIconImage(icon);
         f.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         f.setLocationRelativeTo(null);
 		
@@ -93,6 +95,9 @@ public class Menu {
 		JLabel background = new JLabel();
 		background.setBounds(0, 0, 1200, 800);
 		mainpanel.add(background);
+		
+		JLabel username_title = new JLabel("Username:");
+		username_title.setBounds(0,0,0,0);
 		
 		JTextField username_field = new JTextField();
 		username_field.setBounds(450, 500, 300, 40);
