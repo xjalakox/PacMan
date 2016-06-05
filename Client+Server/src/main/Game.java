@@ -132,9 +132,9 @@ public class Game extends Canvas implements Runnable {
 		
 		
 		int z = 0;
-		for(int i=0;i<32;i++){
-			for(int j=0;j<20;j++){
-				sprites[z] = new Sprite(spriteSheet, i*47+j*1,j*47+j*1,47,47);
+		for(int i=0;i<20;i++){
+			for(int j=0;j<32;j++){
+				sprites[z] = new Sprite(spriteSheet, j*48+1,i*48+1,47,47);
 				z++;
 			}
 			

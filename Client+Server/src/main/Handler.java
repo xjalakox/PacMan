@@ -56,6 +56,12 @@ public class Handler {
 	public void createLevel() {
 		//addTile(new asd(24,24, 24, 24, Id.testtile, false, (long) 0));
 		generateLevel("map.json");
+		//addTile(new asd(24,24, 48,48, Id.testtile, false, (long) 410));
+		//addTile(new asd(72,24, 48,48, Id.testtile, false, (long) 411));
+		//addTile(new asd(120,24, 48,48, Id.testtile, false, (long) 442));
+		//addTile(new asd(168,24, 48,48, Id.testtile, false, (long) 412));
+		//addTile(new asd(216,24, 48,48, Id.testtile, false, (long) 441));
+		//addTile(new asd(264,24, 48,48, Id.testtile, false, (long) 409));
 	}
 
 	private void generateLevel(String path) {
@@ -65,11 +71,11 @@ public class Handler {
 		JSONObject levelData = JSONDecoder.loadData(path);
 
 		for (int j = 0; j <= 2; j++) {
-			JSONArray data = (JSONArray) ((JSONObject) ((JSONArray) levelData.get("layers")).get(2)).get("data");
+			JSONArray data = (JSONArray) ((JSONObject) ((JSONArray) levelData.get("layers")).get(j)).get("data");
 
 			for (int i = 0; i < data.size(); i++) {
 				long ids = (long) data.get(i);
-				if (i % 50 == 0) {
+				if (i % 100 == 0) {
 					b++;
 					a = 0;
 				}
@@ -77,9 +83,8 @@ public class Handler {
 				if(ids==0){
 					System.out.println("FUCK YOU LITTLE CUNT YOU JUST COSTED ME 1 HOUR OF MY FUCKING TIME");
 				}else{
-				//if (ids>400&&ids<450) {
-					addTile(new asd(a * 47, b * 47, 47, 47, Id.testtile, false, (long) data.get(i+1)));
-				//}
+					addTile(new asd(a * 24, b * 24, 24, 24, Id.testtile, false, (long) data.get(i)-1));
+			
 				}
 				a++;
 			}
