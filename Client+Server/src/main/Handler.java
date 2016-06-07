@@ -1,6 +1,7 @@
 package main;
 
 import java.awt.Graphics;
+import java.awt.image.BufferedImage;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -53,15 +54,21 @@ public class Handler {
 		tile.add(ti);
 	}
 
-	public void createLevel() {
-		//addTile(new asd(24,24, 24, 24, Id.testtile, false, (long) 0));
+	public void createLevel(BufferedImage image) {
 		generateLevel("map.json");
-		//addTile(new asd(24,24, 48,48, Id.testtile, false, (long) 410));
-		//addTile(new asd(72,24, 48,48, Id.testtile, false, (long) 411));
-		//addTile(new asd(120,24, 48,48, Id.testtile, false, (long) 442));
-		//addTile(new asd(168,24, 48,48, Id.testtile, false, (long) 412));
-		//addTile(new asd(216,24, 48,48, Id.testtile, false, (long) 441));
-		//addTile(new asd(264,24, 48,48, Id.testtile, false, (long) 409));
+		
+		
+		for(int y=0; y<50; y++){
+            for(int x=0;x<50;x++)
+            {
+                image.getRGB(x,y);
+                int pixel = image.getRGB(x, y);
+                 
+                int r = (pixel >> 16) & 0xFF;
+                int g = (pixel >> 8) & 0xFF;
+                int b = (pixel) & 0xFF;
+            }
+		}
 	}
 
 	private void generateLevel(String path) {
@@ -75,7 +82,7 @@ public class Handler {
 
 			for (int i = 0; i < data.size(); i++) {
 				long ids = (long) data.get(i);
-				if (i % 100 == 0) {
+				if (i % 50 == 0) {
 					b++;
 					a = 0;
 				}

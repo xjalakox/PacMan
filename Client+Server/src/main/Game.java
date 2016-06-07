@@ -8,7 +8,9 @@ import java.awt.Graphics;
 import java.awt.Graphics2D;
 import java.awt.image.BufferStrategy;
 import java.awt.image.BufferedImage;
+import java.io.IOException;
 
+import javax.imageio.ImageIO;
 import javax.swing.JOptionPane;
 
 import org.json.simple.JSONArray;
@@ -51,6 +53,7 @@ public class Game extends Canvas implements Runnable {
 	private SpriteSheet spriteSheet;
 
 	private Client client;
+	private BufferedImage level;
 
 	synchronized void start() {
 		// Thread starten
@@ -140,6 +143,13 @@ public class Game extends Canvas implements Runnable {
 			
 		}
 		
+		try {
+            level = ImageIO.read(getClass().getResource("/level.png"));
+        } catch (IOException e) {
+            // TODO Auto-generated catch block
+            e.printStackTrace();
+        }
+		
 		ImageLoader loader = new ImageLoader();
 	    background = loader.loadImage("/map.PNG");
 
@@ -155,7 +165,7 @@ public class Game extends Canvas implements Runnable {
 		
 	
 		
-		handler.createLevel();
+		handler.createLevel(level);
 	}
 
 	@Override
