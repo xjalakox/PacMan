@@ -6,8 +6,10 @@ import java.awt.Rectangle;
 import java.net.InetAddress;
 
 import main.Game;
+import main.Handler;
 import main.Id;
 import main.KeyInput;
+import tile.Tile;
 
 public class Player extends Entity {
 	int frame = 0, frameDelay = 0;
@@ -35,6 +37,11 @@ public class Player extends Entity {
 
 	@Override
 	public void tick() {
+		for(Tile t : Handler.tile){
+			if(t.getId()==Id.Collision){
+				
+			}
+		}
 		if (key != null) {
 			if (KeyInput.up) {
 				y -= 3;

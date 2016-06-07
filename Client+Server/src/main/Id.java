@@ -1,5 +1,5 @@
 package main;
 
 public enum Id {
-	player,testentity,testtile;
+	player,testentity,testtile, Collision;
 }

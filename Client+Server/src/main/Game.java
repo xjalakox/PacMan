@@ -108,7 +108,7 @@ public class Game extends Canvas implements Runnable {
 		g.drawRect(0, 0, WIDTH * SCALE + 100, HEIGHT * SCALE + 100);
 		g.setColor(Color.WHITE);
 		g.fillRect(0, 0, WIDTH * SCALE + 100, HEIGHT * SCALE + 100);
-		//g.drawImage(background, -200, -175, background.getWidth() / 2, background.getHeight() / 2, null);
+		g.drawImage(background, -200, -175, background.getWidth() / 2, background.getHeight() / 2, null);
 		// g2d.translate(cam.getX(), cam.getY());
 		handler.render(g);
 		// g2d.translate(-cam.getX(), -cam.getY());

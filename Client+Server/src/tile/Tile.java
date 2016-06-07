@@ -16,17 +16,20 @@ public abstract class Tile {
 
 	protected Handler handler;
 
-	protected Tile(int x, int y, int w, int h, Id id, boolean solid, long arrayzahl) {
+	protected Tile(int x, int y, int w, int h, Id id, boolean solid) {
 		this.x = x;
 		this.y = y;
 		this.w = w;
 		this.h = h;
 		this.id = id;
 		this.solid = solid;
-		this.arrayzahl = arrayzahl;
 	}
 
 	public abstract void render(Graphics g);
 
 	public abstract void tick();
+
+	public Id getId() {
+		return id;
+	}
 }

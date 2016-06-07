@@ -10,8 +10,8 @@ import org.json.simple.JSONObject;
 
 import entity.Entity;
 import entity.Player;
+import tile.Collision;
 import tile.Tile;
-import tile.asd;
 
 public class Handler {
 	public static List<Entity> entity = new ArrayList<Entity>();
@@ -55,11 +55,11 @@ public class Handler {
 	}
 
 	public void createLevel(BufferedImage image) {
-		generateLevel("map.json");
+		//generateLevel("map.json");
 		
 		
-		/*for(int y=0; y<70; y++){
-            for(int x=0;x<70;x++)
+		for(int y=0; y<42; y++){
+            for(int x=0;x<42;x++)
             {
                 image.getRGB(x,y);
                 int pixel = image.getRGB(x, y);
@@ -68,9 +68,9 @@ public class Handler {
                 int g = (pixel >> 8) & 0xFF;
                 int b = (pixel) & 0xFF;
                 
-                if(r==0&&g==0&&b==0) addTile(new asd(x*24,y*24,24,24,Id.testtile,true,25));
+                if(r==0&&g==0&&b==0) addTile(new Collision(x*24+100,y*24,24,24,Id.testtile,true));
             }
-		}*/
+		}
 	}
 
 	private void generateLevel(String path) {
@@ -90,7 +90,7 @@ public class Handler {
 				}
 
 				if(ids!=0){
-					addTile(new asd(b * 24, a * 24, 24, 24, Id.testtile, false, (long) data.get(i)-1));
+					//addTile(new asd(b * 24, a * 24, 24, 24, Id.testtile, false, (long) data.get(i)-1));
 			
 				}
 				a++;
