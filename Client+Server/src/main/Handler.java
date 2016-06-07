@@ -80,14 +80,13 @@ public class Handler {
 					a = 0;
 				}
 
-				if(ids==0){
-					System.out.println("FUCK YOU LITTLE CUNT YOU JUST COSTED ME 1 HOUR OF MY FUCKING TIME");
-				}else{
-					addTile(new asd(a * 24, b * 24, 24, 24, Id.testtile, false, (long) data.get(i)-1));
+				if(ids!=0){
+					addTile(new asd(b * 24, a * 24, 24, 24, Id.testtile, false, (long) data.get(i)-1));
 			
 				}
 				a++;
 			}
+			a = 0; 
 			b = 0;
 
 		}
