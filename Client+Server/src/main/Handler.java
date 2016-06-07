@@ -58,8 +58,8 @@ public class Handler {
 		generateLevel("map.json");
 		
 		
-		for(int y=0; y<50; y++){
-            for(int x=0;x<50;x++)
+		/*for(int y=0; y<70; y++){
+            for(int x=0;x<70;x++)
             {
                 image.getRGB(x,y);
                 int pixel = image.getRGB(x, y);
@@ -67,8 +67,10 @@ public class Handler {
                 int r = (pixel >> 16) & 0xFF;
                 int g = (pixel >> 8) & 0xFF;
                 int b = (pixel) & 0xFF;
+                
+                if(r==0&&g==0&&b==0) addTile(new asd(x*24,y*24,24,24,Id.testtile,true,25));
             }
-		}
+		}*/
 	}
 
 	private void generateLevel(String path) {
@@ -82,7 +84,7 @@ public class Handler {
 
 			for (int i = 0; i < data.size(); i++) {
 				long ids = (long) data.get(i);
-				if (i % 50 == 0) {
+				if (i % 42 == 0) {
 					b++;
 					a = 0;
 				}
@@ -93,7 +95,7 @@ public class Handler {
 				}
 				a++;
 			}
-			a = 0; 
+			//a = 0; 
 			b = 0;
 
 		}

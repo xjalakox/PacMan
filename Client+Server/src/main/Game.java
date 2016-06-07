@@ -144,7 +144,7 @@ public class Game extends Canvas implements Runnable {
 		}
 		
 		try {
-            level = ImageIO.read(getClass().getResource("/level.png"));
+            level = ImageIO.read(getClass().getResource("/colision.png"));
         } catch (IOException e) {
             // TODO Auto-generated catch block
             e.printStackTrace();
