@@ -33,16 +33,20 @@ public class Player extends Entity {
 		g.drawImage(Game.playerSprite[1].getBufferedImage(), x+24, y, w, h,null);
 		g.drawImage(Game.playerSprite[2].getBufferedImage(), x, y+24, w, h,null);
 		g.drawImage(Game.playerSprite[3].getBufferedImage(), x+24, y+24, w, h,null);
+		
+		g.drawRect(getX(),getY(),getW()*2,getH()*2);
 	}
 
 	@Override
 	public void tick() {
 		for(Tile t : Handler.tile){
 			if(t.getId()==Id.Collision){
-				
+				if(t.getBoundsBottom().intersects(getBounds())){
+					key.up = false;
+				}
 			}
 		}
-		if (key != null) {
+		if (key != null&&key.key_enable) {
 			if (KeyInput.up) {
 				y -= 3;
 			} else if (KeyInput.down) {
@@ -62,7 +66,7 @@ public class Player extends Entity {
 
 	@Override
 	public Rectangle getBounds() {
-		return new Rectangle(getX() + 7, getY() + 65, getW() - 14, getH() - 65);
+		return new Rectangle(getX(),getY(),getW(),getH());
 	}
 
 	public Rectangle getBoundsBottom() {

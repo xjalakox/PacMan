@@ -68,7 +68,7 @@ public class Handler {
                 int g = (pixel >> 8) & 0xFF;
                 int b = (pixel) & 0xFF;
                 
-                if(r==0&&g==0&&b==0) addTile(new Collision(x*24+100,y*24,24,24,Id.testtile,true));
+                if(r==0&&g==0&&b==0) addTile(new Collision(x*24+94,y*24,24,24,Id.Collision,true));
             }
 		}
 	}

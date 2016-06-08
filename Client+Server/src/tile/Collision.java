@@ -15,7 +15,7 @@ public class Collision extends Tile {
 
 	@Override
 	public void render(Graphics g) {
-
+		g.drawRect(x,y,w,h);
 	}
 
 	@Override
