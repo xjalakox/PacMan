@@ -8,10 +8,18 @@ import java.util.List;
 import org.json.simple.JSONArray;
 import org.json.simple.JSONObject;
 
+import tile.Collision;
+import tile.Corner_bottomleft;
+import tile.Corner_bottomright;
+import tile.Corner_topleft;
+import tile.Corner_topright;
+import tile.Tile;
+import tile.Wall_bottom;
+import tile.Wall_left;
+import tile.Wall_right;
+import tile.Wall_top;
 import entity.Entity;
 import entity.Player;
-import tile.Collision;
-import tile.Tile;
 
 public class Handler {
 	public static List<Entity> entity = new ArrayList<Entity>();
@@ -68,7 +76,28 @@ public class Handler {
                 int g = (pixel >> 8) & 0xFF;
                 int b = (pixel) & 0xFF;
                 
-                if(r==0&&g==0&&b==0) addTile(new Collision(x*24+94,y*24,24,24,Id.Collision,true));
+                if(r==132&&g==255&&b==0) addTile(new Wall_left(x*24+94,y*24,24,24,Id.Collision,true));
+                if(r==18&&g==0&&b==255) addTile(new Wall_right(x*24+94,y*24,24,24,Id.Collision,true));
+                if(r==255&&g==0&&b==0) addTile(new Wall_top(x*24+94,y*24,24,24,Id.Collision,true));
+                if(r==255&&g==252&&b==0) addTile(new Wall_bottom(x*24+94,y*24,24,24,Id.Collision,true));
+                if(r==240&&g==0&&b==255) addTile(new Corner_topleft(x*24+94,y*24,24,24,Id.Collision,true));
+                if(r==0&&g==253&&b==255) addTile(new Corner_topright(x*24+94,y*24,24,24,Id.Collision,true));
+                if(r==255&&g==204&&b==0) addTile(new Corner_bottomleft(x*24+94,y*24,24,24,Id.Collision,true));
+                if(r==0&&g==255&&b==156) addTile(new Corner_bottomright(x*24+94,y*24,24,24,Id.Collision,true));
+                if(r==255&&g==255&&b==255) addTile(new Collision(x*24+94,y*24,24,24,Id.Collision,true));
+                
+                
+//                if(r==255&&g==109&&b==0) addTile(new spawn_left(x*24+94,y*24,24,24,Id.Collision,true));
+//                if(r==0&&g==174&&b==255) addTile(new spawn_right(x*24+94,y*24,24,24,Id.Collision,true));
+//                if(r==255&&g==0&&b==96) addTile(new spawn_cornertopleft(x*24+94,y*24,24,24,Id.Collision,true));
+//                if(r==255&&g==85&&b==0) addTile(new spawn_cornertopright(x*24+94,y*24,24,24,Id.Collision,true));
+//                if(r==0&&g==255&&b==126) addTile(new spawn_corner_bottomleft(x*24+94,y*24,24,24,Id.Collision,true));
+//                if(r==216&&g==255&&b==0) addTile(new spawn_corner_bottomright(x*24+94,y*24,24,24,Id.Collision,true));
+//                if(r==138&&g==0&&b==255) addTile(new spawn_top(x*24+94,y*24,24,24,Id.Collision,true));
+//                if(r==255&&g==0&&b==150) addTile(new spawn_bottom(x*24+94,y*24,24,24,Id.Collision,true));
+//                if(r==0&&g==255&&b==222) addTile(new spawn_openingleft(x*24+94,y*24,24,24,Id.Collision,true));
+//                if(r==0&&g==234&&b==255) addTile(new spawn_openingright(x*24+94,y*24,24,24,Id.Collision,true));
+                
             }
 		}
 	}

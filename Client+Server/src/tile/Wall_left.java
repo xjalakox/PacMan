@@ -3,20 +3,20 @@ package tile;
 import java.awt.Color;
 import java.awt.Graphics;
 
+import main.Game;
 import main.Handler;
 import main.Id;
 
-public class Collision extends Tile {
+public class Wall_left extends Tile {
 
-	public Collision(int x, int y, int w, int h, Id id, boolean solid) {
+	public Wall_left(int x, int y, int w, int h, Id id, boolean solid) {
 		super(x, y, w, h, id, solid);
 
 	}
 
 	@Override
 	public void render(Graphics g) {
-		g.setColor(Color.BLACK);
-		g.fillRect(x,y,w,h);
+		g.drawImage(Game.sprites[290].getBufferedImage(),x,y,w,h,null);
 	}
 
 	@Override
