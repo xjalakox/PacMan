@@ -16,7 +16,7 @@ public class Wall_top extends Tile {
 
 	@Override
 	public void render(Graphics g) {
-		g.drawImage(Game.sprites[280].getBufferedImage(),x,y,w,h,null);
+		g.drawImage(Game.sprites[265].getBufferedImage(),x,y,w,h,null);
 	}
 
 	@Override

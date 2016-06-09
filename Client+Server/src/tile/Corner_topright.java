@@ -16,7 +16,7 @@ public class Corner_topright extends Tile {
 
 	@Override
 	public void render(Graphics g) {
-		g.drawImage(Game.sprites[289].getBufferedImage(),x,y,w,h,null);
+		g.drawImage(Game.sprites[267].getBufferedImage(),x,y,w,h,null);
 	}
 
 	@Override
