@@ -76,15 +76,15 @@ public class Handler {
                 int g = (pixel >> 8) & 0xFF;
                 int b = (pixel) & 0xFF;
                 
-                if(r==132&&g==255&&b==0) addTile(new Wall_left(x*24+94,y*24,24,24,Id.Collision,true));
-                if(r==18&&g==0&&b==255) addTile(new Wall_right(x*24+94,y*24,24,24,Id.Collision,true));
-                if(r==255&&g==0&&b==0) addTile(new Wall_top(x*24+94,y*24,24,24,Id.Collision,true));
-                if(r==255&&g==252&&b==0) addTile(new Wall_bottom(x*24+94,y*24,24,24,Id.Collision,true));
-                if(r==240&&g==0&&b==255) addTile(new Corner_topleft(x*24+94,y*24,24,24,Id.Collision,true));
-                if(r==0&&g==253&&b==255) addTile(new Corner_topright(x*24+94,y*24,24,24,Id.Collision,true));
-                if(r==255&&g==204&&b==0) addTile(new Corner_bottomleft(x*24+94,y*24,24,24,Id.Collision,true));
-                if(r==0&&g==255&&b==156) addTile(new Corner_bottomright(x*24+94,y*24,24,24,Id.Collision,true));
-                if(r==255&&g==255&&b==255) addTile(new Collision(x*24+94,y*24,24,24,Id.Collision,true));
+                if(r==132&&g==255&&b==0) addTile(new Wall_left(x*24+94,y*24,24,24,Id.Wall,true));
+                if(r==18&&g==0&&b==255) addTile(new Wall_right(x*24+94,y*24,24,24,Id.Wall,true));
+                if(r==255&&g==0&&b==0) addTile(new Wall_top(x*24+94,y*24,24,24,Id.Wall,true));
+                if(r==255&&g==252&&b==0) addTile(new Wall_bottom(x*24+94,y*24,24,24,Id.Wall,true));
+                if(r==240&&g==0&&b==255) addTile(new Corner_topleft(x*24+94,y*24,24,24,Id.Wall,true));
+                if(r==0&&g==253&&b==255) addTile(new Corner_topright(x*24+94,y*24,24,24,Id.Wall,true));
+                if(r==255&&g==204&&b==0) addTile(new Corner_bottomleft(x*24+94,y*24,24,24,Id.Wall,true));
+                if(r==0&&g==255&&b==156) addTile(new Corner_bottomright(x*24+94,y*24,24,24,Id.Wall,true));
+                if(r==255&&g==255&&b==255) addTile(new Collision(x*24+94,y*24,24,24,Id.No_Collision,true));
                 
                 
 //                if(r==255&&g==109&&b==0) addTile(new spawn_left(x*24+94,y*24,24,24,Id.Collision,true));

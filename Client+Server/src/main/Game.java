@@ -52,7 +52,7 @@ public class Game extends Canvas implements Runnable {
 
 	private SpriteSheet spriteSheet;
 
-	private Client client;
+	public static Client client;
 	private BufferedImage level;
 
 	synchronized void start() {
@@ -70,7 +70,7 @@ public class Game extends Canvas implements Runnable {
 	}
 
 	private synchronized void stop() {
-		new Packet01Disconnect(player.getUsername()).send(client);
+		
 		if (!running)
 			return;
 		running = false;
@@ -81,7 +81,7 @@ public class Game extends Canvas implements Runnable {
 	}
 
 	public void tick() {
-		if (test == 20) {
+		if (test == 2) {
 			test = 0;
 			for (Entity e : Handler.entity) {
 				if (e.getId() == Id.player) {
@@ -158,7 +158,7 @@ public class Game extends Canvas implements Runnable {
 		
 		
 
-		player = new Player(JOptionPane.showInputDialog(this, "Username"), 250, 250, 24, 24, Id.player, key);
+		player = new Player(JOptionPane.showInputDialog(this, "Username"), 140, 100, 24, 24, Id.player, key);
 		handler.addEntity(player);
 		client.setConnection(player.getUsername(), JOptionPane.showInputDialog(this, "IPAddress"));
 		new Packet00Login(client.getUsername(), player.getX(), player.getY()).send(client);

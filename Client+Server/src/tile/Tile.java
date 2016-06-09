@@ -34,9 +34,23 @@ public abstract class Tile {
 		return id;
 	}
 
-	public Rectangle getBoundsBottom() {
-		return new Rectangle(getX(),getY(),getW(),getH());
+	public Rectangle getBoundsTop() {
+		return new Rectangle(x+6,y,w-12,h-20);
 	}
+	
+	public Rectangle getBoundsBottom() {
+		return new Rectangle(x+6,y+20,w-12,h-20);
+	}
+	
+	public Rectangle getBoundsLeft(){
+		return new Rectangle(x,y+6,w-20,h-12);
+	}
+	
+	public Rectangle getBoundsRight(){
+		return new Rectangle(x+20,y+6,w-20,h-12);
+	}
+	
+	
 
 	public int getX() {
 		return x;

@@ -9,6 +9,7 @@ import main.Game;
 import main.Handler;
 import main.Id;
 import main.KeyInput;
+import network.packets.Packet01Disconnect;
 import tile.Tile;
 
 public class Player extends Entity {
@@ -34,15 +35,25 @@ public class Player extends Entity {
 		g.drawImage(Game.playerSprite[2].getBufferedImage(), x, y+24, w, h,null);
 		g.drawImage(Game.playerSprite[3].getBufferedImage(), x+24, y+24, w, h,null);
 		
-		g.drawRect(getX(),getY(),getW()*2,getH()*2);
+		g.drawRect(getX()+10,getY()+10,getW()*2-20,getH()*2-20);
 	}
 
 	@Override
 	public void tick() {
+		if(KeyInput.quit) new Packet01Disconnect(Game.player.getUsername()).send(Game.client);
 		for(Tile t : Handler.tile){
-			if(t.getId()==Id.Collision){
+			if(t.getId()==Id.Wall){
 				if(t.getBoundsBottom().intersects(getBounds())){
 					key.up = false;
+				}
+				if(t.getBoundsTop().intersects(getBounds())){
+					key.down = false;
+				}
+				if(t.getBoundsLeft().intersects(getBounds())){
+					key.right = false;
+				}
+				if(t.getBoundsRight().intersects(getBounds())){
+					key.left = false;
 				}
 			}
 		}
@@ -66,25 +77,9 @@ public class Player extends Entity {
 
 	@Override
 	public Rectangle getBounds() {
-		return new Rectangle(getX(),getY(),getW(),getH());
+		return new Rectangle(getX()+10,getY()+10,getW()*2-20,getH()*2-20);
 	}
-
-	public Rectangle getBoundsBottom() {
-		return new Rectangle(getX() + 7, getY() + 65, getW() - 14, getH() - 65);
-	}
-
-	public Rectangle getBoundsTop() {
-		return new Rectangle(getX() * 2, getY() * 2 - 10, getW() * 2, getH() * 2 - 54);
-	}
-
-	public Rectangle getBoundsRight() {
-		return new Rectangle(getX() * 2 + 64, getY() * 2, getW() * 2 - 54, getH() * 2);
-	}
-
-	public Rectangle getBoundsLeft() {
-		return new Rectangle(getX() * 2 - 10, getY() * 2, getW() * 2 - 54, getH() * 2);
-	}
-
+	
 	public String getUsername() {
 		return username;
 	}

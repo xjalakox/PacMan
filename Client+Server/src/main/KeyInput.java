@@ -23,6 +23,7 @@ public class KeyInput implements KeyListener, FocusListener {
 	public static boolean inventory;
 	public static boolean debug;
 	public static boolean key_enable = true;
+	public static boolean quit;
 
 	public KeyInput() {
 		keyStates = new boolean[65536];
@@ -43,6 +44,7 @@ public class KeyInput implements KeyListener, FocusListener {
 		escape = keyStates[KeyEvent.VK_ESCAPE];
 		talk_npc = keyStates[KeyEvent.VK_ENTER];
 		coordinate = keyStates[KeyEvent.VK_0];
+		quit = keyStates[KeyEvent.VK_ESCAPE];
 	}
 
 	@Override
@@ -52,7 +54,7 @@ public class KeyInput implements KeyListener, FocusListener {
 
 	@Override
 	public void keyReleased(KeyEvent e) {
-		keyStates[e.getKeyCode()] = false;
+		//keyStates[e.getKeyCode()] = false;
 	}
 
 	@Override
