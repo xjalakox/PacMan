@@ -54,7 +54,7 @@ public class KeyInput implements KeyListener, FocusListener {
 
 	@Override
 	public void keyReleased(KeyEvent e) {
-		//keyStates[e.getKeyCode()] = false;
+		keyStates[e.getKeyCode()] = false;
 	}
 
 	@Override

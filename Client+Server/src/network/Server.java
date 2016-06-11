@@ -37,6 +37,7 @@ public class Server extends NetServer {
 		frame.setVisible(true);
 		
 		players = new HashMap<NetUser, Player>();
+		
 	}
 
 	public static void main(String[] args) {

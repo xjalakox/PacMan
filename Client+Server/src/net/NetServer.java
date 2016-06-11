@@ -9,6 +9,10 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 
+import entity.Entity;
+import entity.Ghost;
+import main.Id;
+
 public abstract class NetServer implements Runnable {
 
 	private Thread thread;
@@ -16,10 +20,15 @@ public abstract class NetServer implements Runnable {
 	private DatagramSocket socket;
 	private int packetSize;
 	protected List<NetUser> users;
+	private int ups;
+	private List<Entity> entity; 
+	private Ghost g;
 
 	public NetServer(int port, int packetSize) {
 		this.packetSize = packetSize;
 		users = new ArrayList<NetUser>();
+		entity = new ArrayList<Entity>();
+		g = new Ghost(200,200,24,24,Id.ghost);
 		try {
 			socket = new DatagramSocket(port);
 		} catch (SocketException e) {
@@ -41,6 +50,12 @@ public abstract class NetServer implements Runnable {
 	@Override
 	public void run() {
 		init();
+		long lastTime = System.nanoTime();
+		long timer = System.currentTimeMillis();
+		double delta = 0;
+		double ns = 1000000000.0 / 60.0;
+		int ticks = 0;
+		
 		while (running) {
 			byte[] data = new byte[packetSize];
 			DatagramPacket packet = new DatagramPacket(data, data.length);
@@ -50,7 +65,29 @@ public abstract class NetServer implements Runnable {
 				e.printStackTrace();
 			}
 			parsePacket(packet.getData(), packet.getAddress(), packet.getPort());
+
+			long now = System.nanoTime();
+			delta += (now - lastTime) / ns;
+			lastTime = now;
+			while (delta > 1) {
+				tick();
+				ticks++;
+				delta--;
+			}
+
+			if (System.currentTimeMillis() - timer > 1000) {
+
+				timer += 1000;
+				ups = ticks;
+				ticks = 0;
+				System.out.println("Ticks: " + ups);
+			}
 		}
+		stop();
+	}
+
+	private void tick() {
+		
 	}
 
 	protected abstract void init();
