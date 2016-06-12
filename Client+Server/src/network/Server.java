@@ -3,11 +3,15 @@ package network;
 import java.awt.event.WindowEvent;
 import java.awt.event.WindowListener;
 import java.net.InetAddress;
+import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 import javax.swing.JFrame;
 
+import entity.Entity;
+import entity.Ghost;
 import entity.Player;
 import main.Id;
 import net.NetServer;
@@ -16,11 +20,13 @@ import network.packets.Packet;
 import network.packets.Packet00Login;
 import network.packets.Packet01Disconnect;
 import network.packets.Packet02Move;
+import network.packets.Packet03Ghost;
 import network.packets.Packet.PacketTypes;
 
 public class Server extends NetServer {
-	
+
 	private Map<NetUser, Player> players;
+	private List<Entity> entity;
 
 	public Server(int port, int packetSize) {
 		super(port, packetSize);
@@ -35,9 +41,12 @@ public class Server extends NetServer {
 		frame.setLocationRelativeTo(null);
 		frame.addWindowListener(new WindowInput(this));
 		frame.setVisible(true);
-		
+
 		players = new HashMap<NetUser, Player>();
-		
+
+		entity = new ArrayList<Entity>();
+		entity.add(new Ghost(200, 200, 24, 24, Id.ghost, 0));
+
 	}
 
 	public static void main(String[] args) {
@@ -66,7 +75,8 @@ public class Server extends NetServer {
 			packet00.send(this);
 			for (NetUser u : users) {
 				if (players.get(u) != null && !u.equals(user)) {
-					super.send(new Packet00Login(players.get(u).getUsername(), players.get(u).getX(), players.get(u).getY()).getData(), user);
+					super.send(new Packet00Login(players.get(u).getUsername(), players.get(u).getX(),
+							players.get(u).getY()).getData(), user);
 				}
 			}
 			break;
@@ -78,12 +88,27 @@ public class Server extends NetServer {
 			Packet02Move packet02 = new Packet02Move(data);
 			packet02.send(this);
 			break;
+		case GHOST:
+			Packet03Ghost packet03 = new Packet03Ghost(data);
+
+			packet03.send(this);
 		}
 	}
 
 	@Override
+	public void tick() {
+		for(Entity e : entity) {
+			if(e instanceof Ghost) {
+				Packet03Ghost packet = new Packet03Ghost(((Ghost) e).getNetId(), e.getX(), e.getY());
+				packet.send(this);
+			}
+		}
+
+	}
+
+	@Override
 	protected void shutdown() {
-		for(NetUser user: users) {
+		for (NetUser user : users) {
 			new Packet01Disconnect(user.getUsername()).send(this);
 		}
 	}

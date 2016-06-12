@@ -19,6 +19,7 @@ import tile.Wall_left;
 import tile.Wall_right;
 import tile.Wall_top;
 import entity.Entity;
+import entity.Ghost;
 import entity.Player;
 
 public class Handler {
@@ -151,10 +152,33 @@ public class Handler {
 		}
 		return null;
 	}
+	
+	public int getGhostCount() {
+		int anzahl = 0;
+		for(Entity e : entity) {
+			if (e instanceof Ghost) anzahl++;
+		}
+		return anzahl;
+	}
 
 	public void setPlayerPosition(String username, int x, int y) {
 		if (!username.equals(Game.player.getUsername()))
 			((Player) getPlayer(username)).setPosition(x, y);
+	}
+	
+	public void setGhostPosition(int id, int x,int y){
+		if(getGhostCount() == 0) {
+			addEntity(new Ghost(x, y, 24,24, Id.ghost, id));
+		} else {
+			for(Entity e : entity) {
+				if(e instanceof Ghost) {
+					if(((Ghost)e).getNetId() == id) {
+						e.setX(x);
+						e.setY(y);
+					}
+				}
+			}
+		}
 	}
 
 }

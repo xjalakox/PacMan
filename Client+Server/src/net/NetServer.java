@@ -21,14 +21,11 @@ public abstract class NetServer implements Runnable {
 	private int packetSize;
 	protected List<NetUser> users;
 	private int ups;
-	private List<Entity> entity; 
-	private Ghost g;
 
 	public NetServer(int port, int packetSize) {
 		this.packetSize = packetSize;
 		users = new ArrayList<NetUser>();
-		entity = new ArrayList<Entity>();
-		g = new Ghost(200,200,24,24,Id.ghost);
+		
 		try {
 			socket = new DatagramSocket(port);
 		} catch (SocketException e) {
@@ -55,7 +52,6 @@ public abstract class NetServer implements Runnable {
 		double delta = 0;
 		double ns = 1000000000.0 / 60.0;
 		int ticks = 0;
-		
 		while (running) {
 			byte[] data = new byte[packetSize];
 			DatagramPacket packet = new DatagramPacket(data, data.length);
@@ -86,9 +82,7 @@ public abstract class NetServer implements Runnable {
 		stop();
 	}
 
-	private void tick() {
-		
-	}
+	public abstract void tick();
 
 	protected abstract void init();
 

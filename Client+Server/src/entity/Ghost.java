@@ -14,9 +14,12 @@ public class Ghost extends Entity {
 	private boolean up = true;
 	private boolean right = true;
 	private boolean left = true;
+	
+	private int netid;
 
-	public Ghost(int x, int y, int w, int h, Id id) {
+	public Ghost(int x, int y, int w, int h, Id id, int NetId) {
 		super(x, y, w, h, id, Game.handler);
+		netid = NetId;
 	}
 
 	@Override
@@ -89,5 +92,9 @@ public class Ghost extends Entity {
 	public void setPosition(int x, int y) {
 		this.x = x;
 		this.y = y;
+	}
+	
+	public int getNetId() {
+		return netid;
 	}
 }
