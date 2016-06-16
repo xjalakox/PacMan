@@ -28,7 +28,7 @@ public class Kreis extends Objekt {
 	}
 
 	@Override
-	public void setwh(Graphics g) {
+	public void setwh(Graphics g, int w, int h) {
 
 	}
 

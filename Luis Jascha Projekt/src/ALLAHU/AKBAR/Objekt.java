@@ -22,10 +22,26 @@ public abstract class Objekt {
 
 	public abstract void setxy(Graphics g, int x,int y);
 
-	public abstract void setwh(Graphics g);
+	public abstract void setwh(Graphics g, int w,int h);
 
 	public void löschen(Graphics g) {
 		g.clearRect(x, y, w, h);
+	}
+	
+	public int getX(){
+		return x;
+	}
+
+	public int getY() {
+		return y;
+	}
+
+	public int getW() {
+		return w;
+	}
+
+	public int getH() {
+		return h;
 	}
 
 }
