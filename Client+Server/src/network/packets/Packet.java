@@ -9,7 +9,8 @@ public abstract class Packet {
 		INVALID			(-1),
 		LOGIN			(00),
 		DISCONNECT		(01),
-		MOVE			(02);
+		MOVE			(02),
+		GHOST			(03);
 
 		private int packetId;
 

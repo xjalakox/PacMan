@@ -15,8 +15,7 @@ public class Collision extends Tile {
 
 	@Override
 	public void render(Graphics g) {
-		g.setColor(Color.BLACK);
-		g.fillRect(x,y,w,h);
+		
 	}
 
 	@Override

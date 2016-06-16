@@ -7,10 +7,11 @@ import main.Game;
 import main.Id;
 import net.NetClient;
 import network.packets.Packet;
+import network.packets.Packet.PacketTypes;
 import network.packets.Packet00Login;
 import network.packets.Packet01Disconnect;
 import network.packets.Packet02Move;
-import network.packets.Packet.PacketTypes;
+import network.packets.Packet03Ghost;
 
 public class Client extends NetClient {
 	
@@ -44,6 +45,9 @@ public class Client extends NetClient {
 			Packet02Move packet02 = new Packet02Move(data);
 			Game.handler.setPlayerPosition(packet02.getUsername(), packet02.getX(), packet02.getY());
 			break;
+		case GHOST:
+			Packet03Ghost packet03 = new Packet03Ghost(data);
+			Game.handler.setGhostPosition(packet03.getId(), packet03.getX(), packet03.getY());
 		}
 	}
 
