@@ -14,7 +14,7 @@ import javax.swing.JLabel;
 
 public class Zeichnung extends JFrame implements KeyListener {
 
-	Image image1;
+	Image image1, image2, image3;
 
 	Color hautfarbe = new Color(255, 211, 155);
 	Kreis kopf = new Kreis(450, 150, 150, 150, hautfarbe, true);
@@ -27,8 +27,12 @@ public class Zeichnung extends JFrame implements KeyListener {
 	private boolean a, b, c, d;
 
 	public Zeichnung() {
+		SoundManager m = new SoundManager();
+		m.playSound(1);
 		try {
 			image1 = ImageIO.read(Zeichnung.class.getResourceAsStream("/bg.jpg"));
+			image2 = ImageIO.read(Zeichnung.class.getResourceAsStream("/photo.png"));
+			image3 = ImageIO.read(Zeichnung.class.getResourceAsStream("/unnamed.png"));
 		} catch (IOException e) {
 			e.printStackTrace();
 		}
@@ -50,12 +54,12 @@ public class Zeichnung extends JFrame implements KeyListener {
 		arm_rechts.paint(g);
 		bein_links.paint(g);
 		bein_rechts.paint(g);
+
 	}
 
 	public void paint(Graphics g) {
 		g.clearRect(0, 0, getWidth(), getHeight());
 		g.drawImage(image1, 0, 0, 1000, 1000, null);
-
 
 		mensch(g);
 		if (a) {
@@ -63,6 +67,7 @@ public class Zeichnung extends JFrame implements KeyListener {
 			arm_links.setxy(g, 180, 320);
 			arm_links.setwh(g, 260, 50);
 			mensch(g);
+			g.drawImage(image3, 440, 140, 175, 175,null);
 			pause(200);
 			arm_links.setxy(g, 380, 320);
 			arm_links.setwh(g, 50, 260);
@@ -74,6 +79,7 @@ public class Zeichnung extends JFrame implements KeyListener {
 			arm_rechts.setxy(g, 570, 320);
 			arm_rechts.setwh(g, 260, 50);
 			mensch(g);
+			g.drawImage(image3, 615, 140, -175, 175, null);
 			pause(200);
 			arm_rechts.setxy(g, 620, 320);
 			arm_rechts.setwh(g, 50, 260);
@@ -84,6 +90,7 @@ public class Zeichnung extends JFrame implements KeyListener {
 			bein_links.setxy(g, 240, 600);
 			bein_links.setwh(g, 260, 70);
 			mensch(g);
+			g.drawImage(image3, 440, 140, 175, 175, null);
 			pause(200);
 			bein_links.setxy(g, 440, 600);
 			bein_links.setwh(g, 70, 260);
@@ -94,6 +101,7 @@ public class Zeichnung extends JFrame implements KeyListener {
 			bein_rechts.setxy(g, 540, 600);
 			bein_rechts.setwh(g, 260, 70);
 			mensch(g);
+			g.drawImage(image3, 615, 140, -175, 175, null);
 			pause(200);
 			bein_rechts.setxy(g, 540, 600);
 			bein_rechts.setwh(g, 70, 260);
