@@ -11,8 +11,9 @@ public class Kreis extends Objekt {
 
 	public void paint(Graphics g) {
 		if (füllStatus) {
+			g.setColor(c);
 			g.fillOval(x, y, w, h);
-			g.drawString("ALAHU AKBAR", x+30,y+30);
+			
 		} else {
 			g.drawOval(x, y, w, h);
 

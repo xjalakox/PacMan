@@ -12,9 +12,17 @@ import javax.swing.JLabel;
 
 public class Zeichnung extends JFrame {
 
+	Color hautfarbe = new Color(255, 211, 155);
 	Keys key = new Keys();
-	Rechteck r = new Rechteck(0, 0, 250, 250, Color.BLUE,true);
-	Kreis k = new Kreis(25,250,500,500,Color.YELLOW,true);
+	Kreis kopf = new Kreis(450,150,150,150,hautfarbe,true);
+	Rechteck körper = new Rechteck(440, 320, 170, 300, hautfarbe,true);
+	Rechteck hals = new Rechteck(500, 250, 50, 100, hautfarbe,true);
+	Rechteck arm_links = new Rechteck(380, 320, 50, 260, hautfarbe,true);
+	Rechteck arm_rechts = new Rechteck(620, 320, 50, 260, hautfarbe,true);
+	Rechteck bein_links = new Rechteck(440, 600, 70, 260, hautfarbe,true);
+	Rechteck bein_rechts = new Rechteck(540, 600, 70, 260, hautfarbe,true);
+	
+
 	Image image1;
 
 	public Zeichnung() {
@@ -38,9 +46,13 @@ public class Zeichnung extends JFrame {
 		g.clearRect(0, 0, getWidth(), getHeight());
 		g.drawImage(image1, 0,0, 1000,1000,null);
 		
-		k.paint(g);
-		r.paint(g);
-		
+		kopf.paint(g);
+		körper.paint(g);
+		hals.paint(g);
+		arm_links.paint(g);
+		arm_rechts.paint(g);
+		bein_links.paint(g);
+		bein_rechts.paint(g);
 	}
 
 	public void pause(int zeit) {
