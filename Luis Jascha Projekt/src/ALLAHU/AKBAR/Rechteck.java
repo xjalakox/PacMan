@@ -12,7 +12,6 @@ public class Rechteck extends Objekt {
 	public void paint(Graphics g) {
 		g.setColor(c);
 		g.fillRect(x, y, w, h);
-		System.out.println(w);
 
 	}
 

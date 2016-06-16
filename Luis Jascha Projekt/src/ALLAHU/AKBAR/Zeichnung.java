@@ -15,15 +15,15 @@ import javax.swing.JLabel;
 public class Zeichnung extends JFrame implements KeyListener {
 
 	Image image1;
-	
+
 	Color hautfarbe = new Color(255, 211, 155);
-	Kreis kopf = new Kreis(450,150,150,150,hautfarbe,true);
-	Rechteck körper = new Rechteck(440, 320, 170, 300, hautfarbe,true);
-	Rechteck hals = new Rechteck(500, 250, 50, 100, hautfarbe,true);
-	Rechteck arm_links = new Rechteck(380, 320, 50, 260, hautfarbe,true);
-	Rechteck arm_rechts = new Rechteck(620, 320, 50, 260, hautfarbe,true);
-	Rechteck bein_links = new Rechteck(440, 600, 70, 260, hautfarbe,true);
-	Rechteck bein_rechts = new Rechteck(540, 600, 70, 260, hautfarbe,true);
+	Kreis kopf = new Kreis(450, 150, 150, 150, hautfarbe, true);
+	Rechteck körper = new Rechteck(440, 320, 170, 300, hautfarbe, true);
+	Rechteck hals = new Rechteck(500, 250, 50, 100, hautfarbe, true);
+	Rechteck arm_links = new Rechteck(380, 320, 50, 260, hautfarbe, true);
+	Rechteck arm_rechts = new Rechteck(620, 320, 50, 260, hautfarbe, true);
+	Rechteck bein_links = new Rechteck(440, 600, 70, 260, hautfarbe, true);
+	Rechteck bein_rechts = new Rechteck(540, 600, 70, 260, hautfarbe, true);
 	private boolean a, b, c, d;
 
 	public Zeichnung() {
@@ -40,8 +40,9 @@ public class Zeichnung extends JFrame implements KeyListener {
 		setVisible(true);
 
 	}
-	
-	public void mensch(Graphics g){
+
+	public void mensch(Graphics g) {
+		g.drawImage(image1, 0, 0, 1000, 1000, null);
 		kopf.paint(g);
 		körper.paint(g);
 		hals.paint(g);
@@ -54,25 +55,50 @@ public class Zeichnung extends JFrame implements KeyListener {
 	public void paint(Graphics g) {
 		g.clearRect(0, 0, getWidth(), getHeight());
 		g.drawImage(image1, 0, 0, 1000, 1000, null);
-		
+
+
 		mensch(g);
 		if (a) {
 			a = false;
-			arm_links.setxy(g, 380-200, 320);
-			arm_links.setwh(g,260,50);
-			g.drawImage(image1, 0, 0, 1000, 1000, null);
+			arm_links.setxy(g, 180, 320);
+			arm_links.setwh(g, 260, 50);
 			mensch(g);
+			pause(200);
+			arm_links.setxy(g, 380, 320);
+			arm_links.setwh(g, 50, 260);
+			mensch(g);
+
 		}
 		if (b) {
 			b = false;
+			arm_rechts.setxy(g, 570, 320);
+			arm_rechts.setwh(g, 260, 50);
+			mensch(g);
+			pause(200);
+			arm_rechts.setxy(g, 620, 320);
+			arm_rechts.setwh(g, 50, 260);
+			mensch(g);
 		}
 		if (c) {
 			c = false;
+			bein_links.setxy(g, 240, 600);
+			bein_links.setwh(g, 260, 70);
+			mensch(g);
+			pause(200);
+			bein_links.setxy(g, 440, 600);
+			bein_links.setwh(g, 70, 260);
+			mensch(g);
 		}
 		if (d) {
 			d = false;
+			bein_rechts.setxy(g, 540, 600);
+			bein_rechts.setwh(g, 260, 70);
+			mensch(g);
+			pause(200);
+			bein_rechts.setxy(g, 540, 600);
+			bein_rechts.setwh(g, 70, 260);
+			mensch(g);
 		}
-		
 
 	}
 
