@@ -13,7 +13,7 @@ public enum SoundID {
 	private String suffix = ".wav";
 	private String name;
 	// musicvol // effectvol // mastervol//
-	private int[] volList = { 0, 0, 0};
+	private int[] volList = { -20,-20,-20};
 	private int vol;
 	
 	SoundID(int id, String name, int vol) {
