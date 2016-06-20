@@ -16,7 +16,7 @@ public class spawn_right extends Tile {
 
 	@Override
 	public void render(Graphics g) {
-		g.drawImage(Game.sprites[267].getBufferedImage(),x,y,w,h,null);
+		g.drawImage(Game.sprites[147].getBufferedImage(),x,y,w,h,null);
 	}
 
 	@Override

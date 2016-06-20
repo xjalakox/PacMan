@@ -16,7 +16,7 @@ public class spawn_openingleft extends Tile {
 
 	@Override
 	public void render(Graphics g) {
-		g.drawImage(Game.sprites[267].getBufferedImage(),x,y,w,h,null);
+		g.drawImage(Game.sprites[177].getBufferedImage(),x,y,w,h,null);
 	}
 
 	@Override
