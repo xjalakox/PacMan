@@ -23,7 +23,7 @@ import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.JTextField;
 
-import ALLAHU.AKBAR.SoundManager;
+
 
 
 
@@ -37,7 +37,7 @@ public class Menu {
 	public Menu(){
 		
 		//////////////////////////////////////////GENERALS/////////////////////////////////////////////////////
-		SoundManager sm = new SoundManager();
+		main.SoundManager sm = new main.SoundManager();
 		sm.playSound(0);
 		
 		InputStream s =  Menu.class.getResourceAsStream("font.ttf");
@@ -60,6 +60,7 @@ public class Menu {
 		f.setBounds(0, 0, 1200, 800);
 		f.setIconImage(icon);
         f.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+        f.setResizable(false);
         f.setLocationRelativeTo(null);
 		
 
@@ -77,7 +78,61 @@ public class Menu {
 		username_label.setForeground(Color.WHITE);
 		lobbypanel.add(username_label);
 		
-		JLabel background2 = new JLabel(new ImageIcon(getClass().getResource("/res/backgrounds/lobby.png")));
+		JLabel pacman = new JLabel();
+		pacman.setIcon(new ImageIcon(getClass().getResource("/res/buttons/pacman_default.png")));
+		pacman.setBounds(180, 240, 285, 297);
+		pacman.addMouseListener(new MouseAdapter() {
+									
+					boolean sgHover = false;
+							
+					public void mouseEntered(MouseEvent evt) {
+						pacman.setIcon(new ImageIcon(getClass().getResource("/res/buttons/pacman_hover.png")));
+						sgHover = true;
+						sm.playSound(2);
+					}
+					public void mouseExited(MouseEvent evt) {
+						pacman.setIcon(new ImageIcon(getClass().getResource("/res/buttons/pacman_default.png")));
+						sgHover = false;
+					}
+					public void mousePressed(MouseEvent evt) {
+						pacman.setIcon(new ImageIcon(getClass().getResource("/res/buttons/pacman_pressed.png")));
+					}
+					public void mouseReleased(MouseEvent evt) {
+						if (sgHover == true) {
+							pacman.setIcon(new ImageIcon(getClass().getResource("/res/buttons/pacman_hover.png")));
+						}
+					}
+		});
+		lobbypanel.add(pacman);
+		
+		JLabel ghost = new JLabel();
+		ghost.setIcon(new ImageIcon(getClass().getResource("/res/buttons/ghost_default.png")));
+		ghost.setBounds(780, 240, 285, 297);
+		ghost.addMouseListener(new MouseAdapter() {
+									
+					boolean sgHover = false;
+							
+					public void mouseEntered(MouseEvent evt) {
+						ghost.setIcon(new ImageIcon(getClass().getResource("/res/buttons/ghost_hover.png")));
+						sgHover = true;
+						sm.playSound(2);
+					}
+					public void mouseExited(MouseEvent evt) {
+						ghost.setIcon(new ImageIcon(getClass().getResource("/res/buttons/ghost_default.png")));
+						sgHover = false;
+					}
+					public void mousePressed(MouseEvent evt) {
+						ghost.setIcon(new ImageIcon(getClass().getResource("/res/buttons/ghost_pressed.png")));
+					}
+					public void mouseReleased(MouseEvent evt) {
+						if (sgHover == true) {
+							ghost.setIcon(new ImageIcon(getClass().getResource("/res/buttons/ghost_hover.png")));
+						}
+					}
+		});
+		lobbypanel.add(ghost);
+		
+		JLabel background2 = new JLabel(new ImageIcon(getClass().getResource("/res/backgrounds/character_choose.png")));
 		background2.setBounds(0, 0, 1200, 800);
 		lobbypanel.add(background2);
         /////////////////////////////////LOBBY-SCREEN///////////////////////////////////////

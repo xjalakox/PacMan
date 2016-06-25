@@ -1,4 +1,4 @@
-package ALLAHU.AKBAR;
+package main;
 
 public enum SoundID {
 	//template		(	id,	name,			vol),

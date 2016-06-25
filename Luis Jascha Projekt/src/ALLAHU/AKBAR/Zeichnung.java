@@ -14,7 +14,7 @@ import javax.swing.JLabel;
 
 public class Zeichnung extends JFrame implements KeyListener {
 
-	Image image1, image2, image3;
+	Image image1, image3;
 
 	Color hautfarbe = new Color(255, 211, 155);
 	Kreis kopf = new Kreis(450, 150, 150, 150, hautfarbe, true);
@@ -31,7 +31,6 @@ public class Zeichnung extends JFrame implements KeyListener {
 		m.playSound(1);
 		try {
 			image1 = ImageIO.read(Zeichnung.class.getResourceAsStream("/bg.jpg"));
-			image2 = ImageIO.read(Zeichnung.class.getResourceAsStream("/photo.png"));
 			image3 = ImageIO.read(Zeichnung.class.getResourceAsStream("/unnamed.png"));
 		} catch (IOException e) {
 			e.printStackTrace();
