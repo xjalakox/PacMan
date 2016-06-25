@@ -1,5 +1,6 @@
 package entity;
 
+import java.awt.Color;
 import java.awt.Graphics;
 import java.awt.Rectangle;
 
@@ -18,15 +19,16 @@ public class Player extends Entity {
 	private boolean up = true;
 	private boolean right = true;
 	private boolean left = true;
+	private boolean keyInputEnabled = false;
 
 	public Player(String username, int x, int y, int w, int h, Id id, KeyInput key) {
-		super(x, y, w, h, id, Game.handler);
+		super(x, y, w, h, id, Game.handler, username);
 		this.key = key;
 		this.username = username;
 	}
 
 	public Player(String username, int x, int y, int w, int h, Id id) {
-		super(x, y, w, h, id, Game.handler);
+		super(x, y, w, h, id, Game.handler, username);
 		this.username = username;
 	}
 
@@ -37,92 +39,99 @@ public class Player extends Entity {
 		g.drawImage(Game.playerSprite[2].getBufferedImage(), x, y + 24, w, h, null);
 		g.drawImage(Game.playerSprite[3].getBufferedImage(), x + 24, y + 24, w, h, null);
 
-		g.drawRect(getX() + 5, getY() + 5, getW() * 2 - 10, getH() * 2 - 10);
+		g.setColor(Color.RED);
+		//g.drawRect(getX() -3 , getY() -3 , getW() * 2 + 6, getH() * 2 + 6);
 	}
 
 	@Override
 	public void tick() {
-		if (key != null && key.key_enable) {
-			if (KeyInput.up && up) {
-				if (!collisionu()) {
-					up = false;
-				}else{
-					up = true;
+		
+		if (key != null && key.key_enable && keyInputEnabled) {
+			if(!collisionu()){
+				if(KeyInput.up){
+					up=true;
+					down=false;
 				}
-				setVelX(0);
-				setVelY(-3);
-			} else if (KeyInput.down && down) {
-				if (!collisiond()) {
-					down = false;
-				}else{
-					down = true;
-				}
-				setVelX(0);
-				setVelY(3);
-			} else if (KeyInput.right && right) {
-				if (!collisionr()) {
-					right = false;
-				}else{
-					right = true;
-				}
+			}else{
+				up=false;
 				setVelY(0);
-				setVelX(3);
-			} else if (KeyInput.left && left) {
-				if (!collisionl()) {
-					left = false;
-				}else{
-					left = true;
+			}
+			
+			if(!collisiond()){
+				if(KeyInput.down){
+					down=true;
+					up=false;
 				}
+			}else{
+				down=false;
 				setVelY(0);
+			}
+			
+			if(!collisionr()){
+				if(KeyInput.right){
+					right=true;
+					left=false;
+					up=false;
+					down=false;
+				}
+			}else{
+				right=false;
+				setVelX(0);
+			}
+			
+			if(!collisionl()){
+				if(KeyInput.left){
+					left=true;
+					right=false;
+					up=false;
+					down=false;
+				}
+			}else{
+				left=false;
+				setVelX(0);
+			}
+			
+			if(left){
 				setVelX(-3);
+				setVelY(0);
+			}
+			if(right){
+				setVelX(3);
+				setVelY(0);
+			}
+			if(up){
+				setVelY(-3);
+				setVelX(0);
+			}
+			if(down){
+				setVelY(3);
+				setVelX(0);
+			}
+		}
+	
+		for (Entity en : Handler.entity) {
+			if (en.getId() == Id.ghost) {
+				if (en.getBounds().intersects(getBounds())) {
+					remove();
+				}
 			}
 		}
 
-		for (Tile t : Handler.tile) {
-			if (t.getId() == Id.Wall) {
-				if (t.getBoundsBottom().intersects(getBounds())) {
-					key.up = false;
-					if (!up) {
-						up = true;
-						setVelX(0);
-						setVelY(0);
-					}
-
-				}
-				if (t.getBoundsTop().intersects(getBounds())) {
-					KeyInput.down = false;
-					if (!down) {
-						down = true;
-						setVelX(0);
-						setVelY(0);
-					}
-				}
-				if (t.getBoundsLeft().intersects(getBounds())) {
-					key.right = false;
-					if (!right) {
-						right = true;
-						setVelX(0);
-						setVelY(0);
-					}
-
-				}
-				if (t.getBoundsRight().intersects(getBounds())) {
-					key.left = false;
-					if (!left) {
-						left = true;
-						setVelX(0);
-						setVelY(0);
-					}
-
+		for (Tile tile : Handler.tile) {
+			if (tile.getId() == Id.point) {
+				if (tile.getBounds().intersects(getBounds())) {
+					tile.remove();
 				}
 			}
 		}
+			
 
 		x += velX;
 		y += velY;
 
-		if (KeyInput.quit)
+		if (KeyInput.quit) {
 			new Packet01Disconnect(Game.player.getUsername()).send(Game.client);
+		}
 	}
 
 	private boolean collisionr() {
@@ -174,19 +183,19 @@ public class Player extends Entity {
 
 	@Override
 	public Rectangle getBounds() {
-		return new Rectangle(getX() + 5, getY() + 5, getW() * 2 - 10, getH() * 2 - 10);
+		return new Rectangle(getX() -3 , getY() -3 , getW() * 2 + 6, getH() * 2 + 6);
 	}
 
 	public String getUsername() {
 		return username;
 	}
 
-	public void setPosition(int x, int y) {
-		this.x = x;
-		this.y = y;
-	}
-
 	public void setUsername(String username) {
 		this.username = username;
+	}
+
+	public void setMovementEnabled(boolean b) {
+		this.keyInputEnabled = true;
+		
 	}
 }

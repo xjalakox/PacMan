@@ -1,32 +1,40 @@
 package network;
 
+import java.awt.Font;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 import java.awt.event.WindowEvent;
 import java.awt.event.WindowListener;
 import java.net.InetAddress;
-import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import javax.swing.JButton;
 import javax.swing.JFrame;
+import javax.swing.JLabel;
+import javax.swing.JPanel;
 
-import entity.Entity;
-import entity.Ghost;
-import entity.Player;
 import main.Id;
 import net.NetServer;
 import net.NetUser;
 import network.packets.Packet;
+import network.packets.Packet.PacketTypes;
 import network.packets.Packet00Login;
 import network.packets.Packet01Disconnect;
 import network.packets.Packet02Move;
-import network.packets.Packet03Ghost;
-import network.packets.Packet.PacketTypes;
+import network.packets.Packet03Move_Enabled;
+import entity.Entity;
+import entity.Ghost;
+import entity.Player;
 
-public class Server extends NetServer {
+public class Server extends NetServer implements ActionListener {
 
-	private Map<NetUser, Player> players;
+	private Map<NetUser, Entity> players;
 	private List<Entity> entity;
+	private JButton bla;
+	public static JLabel players_frame;
+	private int tick;
 
 	public Server(int port, int packetSize) {
 		super(port, packetSize);
@@ -35,6 +43,8 @@ public class Server extends NetServer {
 
 	@Override
 	protected void init() {
+		players = new HashMap<NetUser, Entity>();
+		
 		JFrame frame = new JFrame();
 		frame.setTitle("Server");
 		frame.setSize(240, 180);
@@ -42,22 +52,38 @@ public class Server extends NetServer {
 		frame.addWindowListener(new WindowInput(this));
 		frame.setVisible(true);
 
-		players = new HashMap<NetUser, Player>();
+		JPanel p = new JPanel();
+		p.setBounds(0, 0, 240, 180);
+		frame.add(p);
+		
+		JButton bla = new JButton("Spiel starten");
+		bla.setFont(new Font("TimesRoman", Font.PLAIN, 40));
+		bla.setBounds(0, 0, 240, 180);
+		p.add(bla);
+		bla.addActionListener(this);
+		
+		JLabel players_frame = new JLabel();
+		players_frame.setBounds(0,0,240,180);
+		players_frame.setText("Playeranzahl " + players.size()); 
+		p.add(players_frame);
 
-		entity = new ArrayList<Entity>();
-		entity.add(new Ghost(200, 200, 24, 24, Id.ghost, 0));
+		frame.pack();
+
+		
+		
+		
 
 	}
 
 	public static void main(String[] args) {
 		if (args != null)
-			new Server(Integer.parseInt(args[0]), Integer.parseInt(args[1]));
+			new Server(1337, 1024);
 		else
 			new Server(1402, 64);
 	}
 
 	@Override
-	protected void parsePacket(byte[] data, InetAddress address, int port) {
+	public void parsePacket(byte[] data, InetAddress address, int port) {
 		String message = new String(data).trim();
 		PacketTypes type = Packet.lookupPacket(message.substring(0, 2));
 		switch (type) {
@@ -66,17 +92,44 @@ public class Server extends NetServer {
 			break;
 		case LOGIN:
 			Packet00Login packet00 = new Packet00Login(data);
-			System.out.println("[" + address.getHostAddress() + ":" + ":" + port + "] " + packet00.getUsername()
-					+ " ist verbunden.");
-			NetUser user = new NetUser(packet00.getUsername(), address, port);
-			Player player = new Player(packet00.getUsername(), packet00.getX(), packet00.getY(), 24, 24, Id.player);
-			users.add(user);
-			players.put(user, player);
-			packet00.send(this);
-			for (NetUser u : users) {
-				if (players.get(u) != null && !u.equals(user)) {
-					super.send(new Packet00Login(players.get(u).getUsername(), players.get(u).getX(),
-							players.get(u).getY()).getData(), user);
+			if (packet00.getChoice().equalsIgnoreCase("pacman")) {
+				System.out.println(packet00.getChoice());
+				System.out.println("[" + address.getHostAddress() + ":" + ":"
+						+ port + "] " + packet00.getUsername()
+						+ " ist verbunden.");
+				NetUser user = new NetUser(packet00.getUsername(), address,
+						port);
+				Player player = new Player(packet00.getUsername(),
+						packet00.getX(), packet00.getY(), 24, 24, Id.player);
+				users.add(user);
+				players.put(user, player);
+				packet00.send(this);
+				for (NetUser u : users) {
+					if (players.get(u) != null && !u.equals(user)) {
+						super.send(new Packet00Login(players.get(u)
+								.getUsername(), players.get(u).getX(), players
+								.get(u).getY(), "pacman").getData(), user);
+					}
+				}
+			}
+			if (packet00.getChoice().equalsIgnoreCase("ghost")) {
+				System.out.println(packet00.getChoice());
+				System.out.println("[" + address.getHostAddress() + ":" + ":"
+						+ port + "] " + packet00.getUsername()
+						+ " ist verbunden.");
+				NetUser user = new NetUser(packet00.getUsername(), address,
+						port);
+				Ghost player = new Ghost(packet00.getUsername(),
+						packet00.getX(), packet00.getY(), 24, 24, Id.ghost);
+				users.add(user);
+				players.put(user, player);
+				packet00.send(this);
+				for (NetUser u : users) {
+					if (players.get(u) != null && !u.equals(user)) {
+						super.send(new Packet00Login(players.get(u)
+								.getUsername(), players.get(u).getX(), players
+								.get(u).getY(), "ghost").getData(), user);
+					}
 				}
 			}
 			break;
@@ -88,22 +141,14 @@ public class Server extends NetServer {
 			Packet02Move packet02 = new Packet02Move(data);
 			packet02.send(this);
 			break;
-		case GHOST:
-			Packet03Ghost packet03 = new Packet03Ghost(data);
-
+		case MOVE_ENABLED:
+			Packet03Move_Enabled packet03 = new Packet03Move_Enabled(data);
 			packet03.send(this);
 		}
 	}
 
 	@Override
 	public void tick() {
-		for(Entity e : entity) {
-			if(e instanceof Ghost) {
-				Packet03Ghost packet = new Packet03Ghost(((Ghost) e).getNetId(), e.getX(), e.getY());
-				packet.send(this);
-			}
-		}
-
 	}
 
 	@Override
@@ -155,5 +200,19 @@ public class Server extends NetServer {
 		public void windowOpened(WindowEvent e) {
 
 		}
+		
+
+	}
+
+	@Override
+	public void actionPerformed(ActionEvent e) {
+		for (NetUser u : users) {
+			System.out.println(u.getUsername()
+					+ " hat Movement Packet erhalten");
+			super.send(new Packet03Move_Enabled(players.get(u).getUsername(),
+					"true").getData(), u);
+
+		}
+
 	}
 }

@@ -2,25 +2,23 @@ package network.packets;
 
 import network.Client;
 import network.Server;
+import tile.Tile;
 
-public class Packet02Move extends Packet {
+public class Packet04Remove_Tile extends Packet {
 
 	private String username;
-	private int x, y;
+	private Tile t;
 
-	public Packet02Move(byte[] data) {
+	public Packet04Remove_Tile(byte[] data) {
 		super(PacketTypes.MOVE.getId());
 		String[] message = readData(data).split(",");
 		username = message[0];
-		x = Integer.parseInt(message[1]);
-		y = Integer.parseInt(message[2]);
+
 	}
 
-	public Packet02Move(String username, int x, int y) {
+	public Packet04Remove_Tile(String username, String movement) {
 		super(PacketTypes.MOVE.getId());
 		this.username = username;
-		this.x = x;
-		this.y = y;
 	}
 
 	public void send(Client client) {
@@ -32,18 +30,10 @@ public class Packet02Move extends Packet {
 	}
 
 	public byte[] getData() {
-		return ("02" + username + "," + x + "," + y).getBytes();
+		return ("04" + username).getBytes();
 	}
 
 	public String getUsername() {
 		return username;
-	}
-
-	public int getX() {
-		return x;
-	}
-
-	public int getY() {
-		return y;
 	}
 }

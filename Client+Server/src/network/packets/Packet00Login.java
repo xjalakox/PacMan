@@ -5,7 +5,7 @@ import network.Server;
 
 public class Packet00Login extends Packet {
 
-	private String username;
+	private String username, choice;
 	private int x, y;
 
 	public Packet00Login(byte[] data) {
@@ -14,13 +14,15 @@ public class Packet00Login extends Packet {
 		username = message[0];
 		x = Integer.parseInt(message[1]);
 		y = Integer.parseInt(message[2]);
+		choice = message[3];
 	}
 
-	public Packet00Login(String username, int x, int y) {
+	public Packet00Login(String username, int x, int y, String choice) {
 		super(PacketTypes.LOGIN.getId());
 		this.username = username;
 		this.x = x;
 		this.y = y;
+		this.choice = choice;
 	}
 
 	public void send(Client client) {
@@ -32,7 +34,7 @@ public class Packet00Login extends Packet {
 	}
 
 	public byte[] getData() {
-		return ("00" + username + "," + x + "," + y).getBytes();
+		return ("00" + username + "," + x + "," + y + "," + choice).getBytes();
 	}
 
 	public String getUsername() {
@@ -45,6 +47,10 @@ public class Packet00Login extends Packet {
 
 	public int getY() {
 		return y;
+	}
+	
+	public String getChoice() {
+		return choice;
 	}
 
 }

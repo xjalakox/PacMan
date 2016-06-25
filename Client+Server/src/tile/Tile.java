@@ -10,8 +10,9 @@ public abstract class Tile {
 	protected int facing;
 	protected int x, y, w, h;
 	protected int velX, velY;
-	protected boolean solid;
+	protected boolean solid, removed;
 	protected long arrayzahl;
+	
 
 	protected Id id;
 
@@ -82,6 +83,19 @@ public abstract class Tile {
 
 	public void setH(int h) {
 		this.h = h;
+	}
+	
+	public Rectangle getBounds() {
+		return new Rectangle(x+10,y+10,w-20,h-20);
+	}
+
+	
+	public boolean isRemoved() {
+		return removed;
+	}
+	
+	public void remove() {
+		removed = true;
 	}
 	
 	

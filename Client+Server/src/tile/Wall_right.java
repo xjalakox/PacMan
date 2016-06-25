@@ -17,14 +17,6 @@ public class Wall_right extends Tile {
 	@Override
 	public void render(Graphics g) {
 		g.drawImage(Game.sprites[291].getBufferedImage(),x,y,w,h,null);
-		g.setColor(Color.GREEN);
-		g.fillRect(x+6,y+20,w-12,h-20);
-		g.setColor(Color.YELLOW);
-		g.fillRect(x,y+6,w-20,h-12);
-		g.setColor(Color.BLUE);
-		g.fillRect(x+20,y+6,w-20,h-12);
-		g.setColor(Color.RED);
-		g.fillRect(x+6,y,w-12,h-20);
 	}
 
 	@Override

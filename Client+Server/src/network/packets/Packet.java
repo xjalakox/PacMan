@@ -10,7 +10,8 @@ public abstract class Packet {
 		LOGIN			(00),
 		DISCONNECT		(01),
 		MOVE			(02),
-		GHOST			(03);
+		MOVE_ENABLED	(03),
+		REMOVE_TILE		(04);
 
 		private int packetId;
 

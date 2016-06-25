@@ -17,6 +17,7 @@ import org.json.simple.JSONArray;
 import org.json.simple.JSONObject;
 
 import entity.Entity;
+import entity.Ghost;
 import entity.Player;
 import graphics.ImageLoader;
 import graphics.Sprite;
@@ -41,12 +42,12 @@ public class Game extends Canvas implements Runnable {
 	private Thread thread;
 	private int frames;
 
-	private String pname;
-
 	public static Handler handler = new Handler();
 	public static Sprite[] playerSprite = new Sprite[4];
 	public static KeyInput key = new KeyInput();
 	public static Player player;
+	public static Ghost ghost;
+	public static String username;
 
 	public static Sprite[] sprites = new Sprite[641];
 
@@ -54,6 +55,7 @@ public class Game extends Canvas implements Runnable {
 
 	public static Client client;
 	private BufferedImage level;
+	private String choice;
 
 	synchronized void start() {
 		// Thread starten
@@ -70,7 +72,7 @@ public class Game extends Canvas implements Runnable {
 	}
 
 	private synchronized void stop() {
-		
+
 		if (!running)
 			return;
 		running = false;
@@ -81,11 +83,14 @@ public class Game extends Canvas implements Runnable {
 	}
 
 	public void tick() {
-		if (test == 2) {
+		if (test == 1) {
 			test = 0;
 			for (Entity e : Handler.entity) {
 				if (e.getId() == Id.player) {
 					new Packet02Move(((Player) e).getUsername(), ((Player) e).getX(), ((Player) e).getY()).send(client);
+				}
+				if (e.getId() == Id.ghost) {
+					new Packet02Move(((Ghost) e).getUsername(), ((Ghost) e).getX(), ((Ghost) e).getY()).send(client);
 				}
 			}
 		} else {
@@ -103,12 +108,15 @@ public class Game extends Canvas implements Runnable {
 		}
 		Graphics g = bs.getDrawGraphics();
 		Graphics2D g2d = (Graphics2D) g;
+		g.setColor(Color.BLACK);
+		g.fillRect(0,0,300*4,250*4);
 
 		// g.drawImage(background,0 , 0, getWidth(), getHeight(), this);
 		g.drawRect(0, 0, WIDTH * SCALE + 100, HEIGHT * SCALE + 100);
 		g.setColor(Color.WHITE);
 		g.fillRect(0, 0, WIDTH * SCALE + 100, HEIGHT * SCALE + 100);
-		//g.drawImage(background, -200, -175, background.getWidth() / 2, background.getHeight() / 2, null);
+		// g.drawImage(background, -200, -175, background.getWidth() / 2,
+		// background.getHeight() / 2, null);
 		// g2d.translate(cam.getX(), cam.getY());
 		handler.render(g);
 		// g2d.translate(-cam.getX(), -cam.getY());
@@ -123,48 +131,51 @@ public class Game extends Canvas implements Runnable {
 	public void init() {
 		key = new KeyInput();
 		addKeyListener(key);
-		
+
 		spriteSheet = new SpriteSheet("/spritesheet.png");
-		
-		
-		
-		playerSprite[0] = new Sprite(spriteSheet,1,6*48+1,47,47);
-		playerSprite[1] = new Sprite(spriteSheet,49,6*48+1,47,47);
-		playerSprite[2] = new Sprite(spriteSheet,1,7*48+1,47,47);
-		playerSprite[3] = new Sprite(spriteSheet,49,7*48+1,47,47);
-		
-		
+
+		playerSprite[0] = new Sprite(spriteSheet, 1, 6 * 48 + 1, 47, 47);
+		playerSprite[1] = new Sprite(spriteSheet, 49, 6 * 48 + 1, 47, 47);
+		playerSprite[2] = new Sprite(spriteSheet, 1, 7 * 48 + 1, 47, 47);
+		playerSprite[3] = new Sprite(spriteSheet, 49, 7 * 48 + 1, 47, 47);
+
 		int z = 0;
-		for(int i=0;i<20;i++){
-			for(int j=0;j<32;j++){
-				sprites[z] = new Sprite(spriteSheet, j*48+1,i*48+1,47,47);
+		for (int i = 0; i < 20; i++) {
+			for (int j = 0; j < 32; j++) {
+				sprites[z] = new Sprite(spriteSheet, j * 48 + 1, i * 48 + 1, 47, 47);
 				z++;
 			}
-			
+
 		}
-		
+
 		try {
-            level = ImageIO.read(getClass().getResource("/colision.png"));
-        } catch (IOException e) {
-            // TODO Auto-generated catch block
-            e.printStackTrace();
-        }
-		
+			level = ImageIO.read(getClass().getResource("/colision.png"));
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+
 		ImageLoader loader = new ImageLoader();
-	    background = loader.loadImage("/map.PNG");
+		background = loader.loadImage("/map.PNG");
 
+		int t = JOptionPane.showConfirmDialog(null, "Als PacMan spielen?", "Pacman oder Geist", JOptionPane.YES_OPTION,
+				JOptionPane.INFORMATION_MESSAGE, null);
 
-	    
-		
-		
+		if (t == 0) {
+			String name = JOptionPane.showInputDialog(this, "Name");
+			player = new Player(name, 140, 100, 24, 24, Id.player, key);
+			client.setConnection(name, JOptionPane.showInputDialog(this, "IPAddress"));
+			handler.addEntity(player);
+			new Packet00Login(client.getUsername(), player.getX(), player.getY(), "pacman").send(client);
+		} else if (t == 1) {
+			System.out.println("ghost");
+			String name = JOptionPane.showInputDialog(this, "Name");
+			ghost = new Ghost(name, 530, 100, 24, 24, Id.ghost, key);
+			client.setConnection(name, JOptionPane.showInputDialog(this, "IPAddress"));
+			handler.addEntity(ghost);
+			new Packet00Login(client.getUsername(), ghost.getX(), ghost.getY(), "ghost").send(client);
+		}
 
-		player = new Player(JOptionPane.showInputDialog(this, "Username"), 140, 100, 24, 24, Id.player, key);
-		handler.addEntity(player);
-		client.setConnection(player.getUsername(), JOptionPane.showInputDialog(this, "IPAddress"));
-		new Packet00Login(client.getUsername(), player.getX(), player.getY()).send(client);
-		
-	
-		
 		handler.createLevel(level);
 	}
 

@@ -11,18 +11,20 @@ public abstract class Entity {
 	protected int x, y, w, h;
 	protected int velX, velY;
 	protected boolean removed;
+	protected String username;
 
 	protected Id id;
 
 	protected Handler handler;
 
-	protected Entity(int x, int y, int w, int h, Id id, Handler handler) {
+	protected Entity(int x, int y, int w, int h, Id id, Handler handler,String username) {
 		this.x = x;
 		this.y = y;
 		this.w = w;
 		this.h = h;
 		this.id = id;
 		this.handler = handler;
+		this.username = username;
 		removed = false;
 	}
 
@@ -102,7 +104,16 @@ public abstract class Entity {
 		removed = true;
 	}
 	
+	public void setPosition(int x, int y) {
+		this.x = x;
+		this.y = y;
+	}
+	
 	public boolean isRemoved() {
 		return removed;
+	}
+	
+	public String getUsername() {
+		return username;
 	}
 }

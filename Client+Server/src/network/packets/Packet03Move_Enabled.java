@@ -2,25 +2,25 @@ package network.packets;
 
 import network.Client;
 import network.Server;
+import network.packets.Packet.PacketTypes;
 
-public class Packet02Move extends Packet {
+public class Packet03Move_Enabled extends Packet {
 
 	private String username;
-	private int x, y;
+	private String movement;
 
-	public Packet02Move(byte[] data) {
+	public Packet03Move_Enabled(byte[] data) {
 		super(PacketTypes.MOVE.getId());
 		String[] message = readData(data).split(",");
 		username = message[0];
-		x = Integer.parseInt(message[1]);
-		y = Integer.parseInt(message[2]);
+		movement = message[1];
+
 	}
 
-	public Packet02Move(String username, int x, int y) {
+	public Packet03Move_Enabled(String username, String movement) {
 		super(PacketTypes.MOVE.getId());
 		this.username = username;
-		this.x = x;
-		this.y = y;
+		this.movement = movement;
 	}
 
 	public void send(Client client) {
@@ -32,18 +32,14 @@ public class Packet02Move extends Packet {
 	}
 
 	public byte[] getData() {
-		return ("02" + username + "," + x + "," + y).getBytes();
+		return ("03" + username + "," + movement).getBytes();
 	}
 
 	public String getUsername() {
 		return username;
 	}
 
-	public int getX() {
-		return x;
-	}
-
-	public int getY() {
-		return y;
+	public String getMovement() {
+		return movement;
 	}
 }
