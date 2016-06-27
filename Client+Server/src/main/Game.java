@@ -56,6 +56,8 @@ public class Game extends Canvas implements Runnable {
 	public static Client client;
 	private BufferedImage level;
 	private String choice;
+	private boolean pacman;
+	private String name;
 
 	synchronized void start() {
 		// Thread starten
@@ -109,7 +111,7 @@ public class Game extends Canvas implements Runnable {
 		Graphics g = bs.getDrawGraphics();
 		Graphics2D g2d = (Graphics2D) g;
 		g.setColor(Color.BLACK);
-		g.fillRect(0,0,300*4,250*4);
+		g.fillRect(0, 0, 300 * 4, 250 * 4);
 
 		// g.drawImage(background,0 , 0, getWidth(), getHeight(), this);
 		g.drawRect(0, 0, WIDTH * SCALE + 100, HEIGHT * SCALE + 100);
@@ -158,21 +160,16 @@ public class Game extends Canvas implements Runnable {
 		ImageLoader loader = new ImageLoader();
 		background = loader.loadImage("/map.PNG");
 
-		int t = JOptionPane.showConfirmDialog(null, "Als PacMan spielen?", "Pacman oder Geist", JOptionPane.YES_OPTION,
-				JOptionPane.INFORMATION_MESSAGE, null);
-
-		if (t == 0) {
+		if (pacman) {
 			System.out.println("pacman");
-			String name = JOptionPane.showInputDialog(this, "Name");
 			player = new Player(name, 140, 100, 24, 24, Id.player, key);
-			client.setConnection(name, JOptionPane.showInputDialog(this, "IPAddress"));
+			client.setConnection(name, "localhost:1337");
 			handler.addEntity(player);
 			new Packet00Login(client.getUsername(), player.getX(), player.getY(), "pacman").send(client);
-		} else if (t == 1) {
+		} else if (!pacman) {
 			System.out.println("ghost");
-			String name = JOptionPane.showInputDialog(this, "Name");
 			ghost = new Ghost(name, 530, 100, 24, 24, Id.ghost, key);
-			client.setConnection(name, JOptionPane.showInputDialog(this, "IPAddress"));
+			client.setConnection(name, "localhost:1337");
 			handler.addEntity(ghost);
 			new Packet00Login(client.getUsername(), ghost.getX(), ghost.getY(), "ghost").send(client);
 		}
@@ -215,7 +212,9 @@ public class Game extends Canvas implements Runnable {
 		stop();
 	}
 
-	public Game() {
+	public Game(boolean pacman, String name) {
+		this.pacman = pacman;
+		this.name = name;
 		Dimension size = new Dimension(WIDTH * SCALE, HEIGHT * SCALE);
 		setPreferredSize(size);
 		setMaximumSize(size);
