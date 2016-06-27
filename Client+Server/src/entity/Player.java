@@ -19,7 +19,6 @@ public class Player extends Entity {
 	private boolean up = true;
 	private boolean right = true;
 	private boolean left = true;
-	private boolean keyInputEnabled = false;
 
 	public Player(String username, int x, int y, int w, int h, Id id, KeyInput key) {
 		super(x, y, w, h, id, Game.handler, username);
@@ -108,14 +107,6 @@ public class Player extends Entity {
 				setVelX(0);
 			}
 		}
-	
-		for (Entity en : Handler.entity) {
-			if (en.getId() == Id.ghost) {
-				if (en.getBounds().intersects(getBounds())) {
-					remove();
-				}
-			}
-		}
 
 		for (Tile tile : Handler.tile) {
 			if (tile.getId() == Id.point) {
@@ -192,10 +183,5 @@ public class Player extends Entity {
 
 	public void setUsername(String username) {
 		this.username = username;
-	}
-
-	public void setMovementEnabled(boolean b) {
-		this.keyInputEnabled = true;
-		
 	}
 }

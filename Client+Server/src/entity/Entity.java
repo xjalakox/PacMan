@@ -16,6 +16,7 @@ public abstract class Entity {
 	protected Id id;
 
 	protected Handler handler;
+	protected boolean keyInputEnabled;
 
 	protected Entity(int x, int y, int w, int h, Id id, Handler handler,String username) {
 		this.x = x;
@@ -26,6 +27,7 @@ public abstract class Entity {
 		this.handler = handler;
 		this.username = username;
 		removed = false;
+		keyInputEnabled = false;
 	}
 
 	public abstract void render(Graphics g);
@@ -107,6 +109,11 @@ public abstract class Entity {
 	public void setPosition(int x, int y) {
 		this.x = x;
 		this.y = y;
+	}
+	
+	public void setMovementEnabled(boolean b) {
+		this.keyInputEnabled = true;
+
 	}
 	
 	public boolean isRemoved() {

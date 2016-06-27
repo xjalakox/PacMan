@@ -22,7 +22,6 @@ public class Ghost extends Entity {
 	private int test, test2, test3;
 
 	private int netid;
-	private boolean keyInputEnabled = false;
 
 	public Ghost(String username, int x, int y, int w, int h, Id id, KeyInput key) {
 		super(x, y, w, h, id, Game.handler, username);
@@ -37,70 +36,11 @@ public class Ghost extends Entity {
 
 	@Override
 	public void render(Graphics g) {
-		if (test2 == 20) {
-			test2 = 0;
-			System.out.println(test);
-			test = (int) (Math.random() * 4);
-			test3 = test;
-			if (test == 0) {
-				g.drawImage(Game.sprites[390].getBufferedImage(), x, y, w, h, null);
-				g.drawImage(Game.sprites[391].getBufferedImage(), x + 24, y, w, h, null);
-				g.drawImage(Game.sprites[422].getBufferedImage(), x, y + 24, w, h, null);
-				g.drawImage(Game.sprites[423].getBufferedImage(), x + 24, y + 24, w, h, null);
-			} else if (test == 1) {
-				g.drawImage(Game.sprites[560].getBufferedImage(), x, y, w, h, null);
-				g.drawImage(Game.sprites[561].getBufferedImage(), x + 24, y, w, h, null);
-				g.drawImage(Game.sprites[470].getBufferedImage(), x, y + 24, w, h, null);
-				g.drawImage(Game.sprites[471].getBufferedImage(), x + 24, y + 24, w, h, null);
-			} else if (test == 2) {
+		g.drawImage(Game.sprites[390].getBufferedImage(), x, y, w, h, null);
+		g.drawImage(Game.sprites[391].getBufferedImage(), x + 24, y, w, h, null);
+		g.drawImage(Game.sprites[422].getBufferedImage(), x, y + 24, w, h, null);
+		g.drawImage(Game.sprites[423].getBufferedImage(), x + 24, y + 24, w, h, null);
 
-				g.drawImage(Game.sprites[390].getBufferedImage(), x, y, w, h, null);
-				g.drawImage(Game.sprites[391].getBufferedImage(), x + 24, y, w, h, null);
-				g.drawImage(Game.sprites[422].getBufferedImage(), x, y + 24, w, h, null);
-				g.drawImage(Game.sprites[423].getBufferedImage(), x + 24, y + 24, w, h, null);
-			} else {
-				g.drawImage(Game.sprites[560].getBufferedImage(), x, y, w, h, null);
-				g.drawImage(Game.sprites[561].getBufferedImage(), x + 24, y, w, h, null);
-				g.drawImage(Game.sprites[470].getBufferedImage(), x, y + 24, w, h, null);
-				g.drawImage(Game.sprites[471].getBufferedImage(), x + 24, y + 24, w, h, null);
-			}
-		} else {
-			if (test == 0) {
-				g.drawImage(Game.sprites[390].getBufferedImage(), x, y, w, h, null);
-				g.drawImage(Game.sprites[391].getBufferedImage(), x + 24, y, w, h, null);
-				g.drawImage(Game.sprites[422].getBufferedImage(), x, y + 24, w, h, null);
-				g.drawImage(Game.sprites[423].getBufferedImage(), x + 24, y + 24, w, h, null);
-			} else if (test == 1) {
-				g.drawImage(Game.sprites[560].getBufferedImage(), x, y, w, h, null);
-				g.drawImage(Game.sprites[561].getBufferedImage(), x + 24, y, w, h, null);
-				g.drawImage(Game.sprites[501].getBufferedImage(), x, y + 24, w, h, null);
-				g.drawImage(Game.sprites[502].getBufferedImage(), x + 24, y + 24, w, h, null);
-			} else if (test == 2) {
-
-				g.drawImage(Game.sprites[390].getBufferedImage(), x, y, w, h, null);
-				g.drawImage(Game.sprites[391].getBufferedImage(), x + 24, y, w, h, null);
-				g.drawImage(Game.sprites[422].getBufferedImage(), x, y + 24, w, h, null);
-				g.drawImage(Game.sprites[423].getBufferedImage(), x + 24, y + 24, w, h, null);
-			} else {
-				g.drawImage(Game.sprites[560].getBufferedImage(), x, y, w, h, null);
-				g.drawImage(Game.sprites[561].getBufferedImage(), x + 24, y, w, h, null);
-				g.drawImage(Game.sprites[470].getBufferedImage(), x, y + 24, w, h, null);
-				g.drawImage(Game.sprites[471].getBufferedImage(), x + 24, y + 24, w, h, null);
-			}
-
-			test2++;
-		}
-		
-		/*
-		 * g.drawImage(Game.playerSprite[0].getBufferedImage(), x, y, w, h,
-		 * null); g.drawImage(Game.playerSprite[1].getBufferedImage(), x + 24,
-		 * y, w, h, null); g.drawImage(Game.playerSprite[2].getBufferedImage(),
-		 * x, y + 24, w, h, null);
-		 * g.drawImage(Game.playerSprite[3].getBufferedImage(), x + 24, y + 24,
-		 * w, h, null);
-		 */
-
-		// g.drawRect(getX() + 5, getY() + 5, getW() * 2 - 10, getH() * 2 - 10);
 	}
 
 	@Override
@@ -168,15 +108,7 @@ public class Ghost extends Entity {
 				setVelX(0);
 			}
 		}
-
-		for (Entity en : Handler.entity) {
-			if (en.getId() == Id.player) {
-				if (en.getBounds().intersects(getBounds())) {
-					en.remove();
-				}
-			}
-		}
-
+		
 		for (Tile tile : Handler.tile) {
 			if (tile.getId() == Id.point) {
 				for (Entity en : Handler.entity) {
@@ -259,10 +191,5 @@ public class Ghost extends Entity {
 
 	public void setUsername(String username) {
 		this.username = username;
-	}
-
-	public void setMovementEnabled(boolean b) {
-		this.keyInputEnabled = true;
-
 	}
 }

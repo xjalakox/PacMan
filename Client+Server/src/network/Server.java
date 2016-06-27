@@ -92,11 +92,10 @@ public class Server extends NetServer implements ActionListener {
 			break;
 		case LOGIN:
 			Packet00Login packet00 = new Packet00Login(data);
-			if (packet00.getChoice().equalsIgnoreCase("pacman")) {
-				System.out.println(packet00.getChoice());
+			if (packet00.getChoice().equalsIgnoreCase("ghost")) {
 				System.out.println("[" + address.getHostAddress() + ":" + ":"
 						+ port + "] " + packet00.getUsername()
-						+ " ist verbunden.");
+						+ " ist verbunden als " + packet00.getChoice());
 				NetUser user = new NetUser(packet00.getUsername(), address,
 						port);
 				Player player = new Player(packet00.getUsername(),
@@ -111,12 +110,10 @@ public class Server extends NetServer implements ActionListener {
 								.get(u).getY(), "pacman").getData(), user);
 					}
 				}
-			}
-			if (packet00.getChoice().equalsIgnoreCase("ghost")) {
-				System.out.println(packet00.getChoice());
+			} else if (packet00.getChoice().equalsIgnoreCase("pacman")) {
 				System.out.println("[" + address.getHostAddress() + ":" + ":"
 						+ port + "] " + packet00.getUsername()
-						+ " ist verbunden.");
+						+ " ist verbunden als: " + packet00.getChoice() );
 				NetUser user = new NetUser(packet00.getUsername(), address,
 						port);
 				Ghost player = new Ghost(packet00.getUsername(),
@@ -208,8 +205,8 @@ public class Server extends NetServer implements ActionListener {
 	public void actionPerformed(ActionEvent e) {
 		for (NetUser u : users) {
 			System.out.println(u.getUsername()
-					+ " hat Movement Packet erhalten");
-			super.send(new Packet03Move_Enabled(players.get(u).getUsername(),
+					+ " hat Movement Packet gesendet bekommen!");
+			send(new Packet03Move_Enabled(players.get(u).getUsername(),
 					"true").getData(), u);
 
 		}

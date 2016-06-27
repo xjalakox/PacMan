@@ -66,7 +66,7 @@ public class Game extends Canvas implements Runnable {
 		thread.start();
 
 		// Network CLIENT starten
-		client = new Client(this, 64);
+		client = new Client(this, 1024);
 		client.start();
 
 	}
@@ -162,6 +162,7 @@ public class Game extends Canvas implements Runnable {
 				JOptionPane.INFORMATION_MESSAGE, null);
 
 		if (t == 0) {
+			System.out.println("pacman");
 			String name = JOptionPane.showInputDialog(this, "Name");
 			player = new Player(name, 140, 100, 24, 24, Id.player, key);
 			client.setConnection(name, JOptionPane.showInputDialog(this, "IPAddress"));

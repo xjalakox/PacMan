@@ -33,6 +33,7 @@ import entity.Player;
 public class Handler {
 	public static List<Entity> entity = new ArrayList<Entity>();
 	public static List<Tile> tile = new ArrayList<Tile>();
+	private int t;
 
 	public void render(Graphics g) {
 		for (Tile ti : tile) {
@@ -44,8 +45,17 @@ public class Handler {
 	}
 
 	public void tick() {
+		t = 0;
 		for (Tile ti : tile) {
 			ti.tick();
+			if (ti.getId() == Id.point) {
+				t++;
+			}
+		}
+		if(t==0){
+			System.out.println("yes");
+		}else{
+			System.out.println(t);
 		}
 		for (Entity en : entity) {
 			en.tick();
@@ -62,6 +72,7 @@ public class Handler {
 
 	public void addEntity(Entity en) {
 		entity.add(en);
+		System.out.println(en.getId() + " hinzugefügt");
 	}
 
 	public void removeEntity(Entity e) {
@@ -94,69 +105,48 @@ public class Handler {
 				int b = (pixel) & 0xFF;
 
 				if (r == 132 && g == 255 && b == 0)
-					addTile(new Wall_left(x * 24 + 94, y * 24, 24, 24, Id.Wall,
-							true));
+					addTile(new Wall_left(x * 24 + 94, y * 24, 24, 24, Id.Wall, true));
 				if (r == 18 && g == 0 && b == 255)
-					addTile(new Wall_right(x * 24 + 94, y * 24, 24, 24,
-							Id.Wall, true));
+					addTile(new Wall_right(x * 24 + 94, y * 24, 24, 24, Id.Wall, true));
 				if (r == 255 && g == 0 && b == 0)
-					addTile(new Wall_top(x * 24 + 94, y * 24, 24, 24, Id.Wall,
-							true));
+					addTile(new Wall_top(x * 24 + 94, y * 24, 24, 24, Id.Wall, true));
 				if (r == 255 && g == 252 && b == 0)
-					addTile(new Wall_bottom(x * 24 + 94, y * 24, 24, 24,
-							Id.Wall, true));
+					addTile(new Wall_bottom(x * 24 + 94, y * 24, 24, 24, Id.Wall, true));
 				if (r == 240 && g == 0 && b == 255)
-					addTile(new Corner_topleft(x * 24 + 94, y * 24, 24, 24,
-							Id.Wall, true));
+					addTile(new Corner_topleft(x * 24 + 94, y * 24, 24, 24, Id.Wall, true));
 				if (r == 0 && g == 253 && b == 255)
-					addTile(new Corner_topright(x * 24 + 94, y * 24, 24, 24,
-							Id.Wall, true));
+					addTile(new Corner_topright(x * 24 + 94, y * 24, 24, 24, Id.Wall, true));
 				if (r == 255 && g == 204 && b == 0)
-					addTile(new Corner_bottomleft(x * 24 + 94, y * 24, 24, 24,
-							Id.Wall, true));
+					addTile(new Corner_bottomleft(x * 24 + 94, y * 24, 24, 24, Id.Wall, true));
 				if (r == 0 && g == 255 && b == 156)
-					addTile(new Corner_bottomright(x * 24 + 94, y * 24, 24, 24,
-							Id.Wall, true));
+					addTile(new Corner_bottomright(x * 24 + 94, y * 24, 24, 24, Id.Wall, true));
 				if (r == 255 && g == 255 && b == 255)
-					addTile(new Collision(x * 24 + 94, y * 24, 24, 24,
-							Id.No_Collision, true));
+					addTile(new Collision(x * 24 + 94, y * 24, 24, 24, Id.No_Collision, true));
 				if (r == 103 && g == 75 && b == 148)
-					addTile(new Collision(x * 24 + 94, y * 24, 24, 24,
-							Id.No_Collision, true));
+					addTile(new Collision(x * 24 + 94, y * 24, 24, 24, Id.No_Collision, true));
 				if (r == 103 && g == 75 && b == 148)
-					addTile(new Points(x * 24 + 94 - 24, y * 24 - 24, 48, 48,
-							Id.point, true));
+					addTile(new Points(x * 24 + 94 - 24, y * 24 - 24, 48, 48, Id.point, true));
 
 				if (r == 255 && g == 109 && b == 0)
-					addTile(new spawn_left(x * 24 + 94, y * 24, 24, 24,
-							Id.Wall, true));
+					addTile(new spawn_left(x * 24 + 94, y * 24, 24, 24, Id.Wall, true));
 				if (r == 0 && g == 174 && b == 255)
-					addTile(new spawn_right(x * 24 + 94, y * 24, 24, 24,
-							Id.Wall, true));
+					addTile(new spawn_right(x * 24 + 94, y * 24, 24, 24, Id.Wall, true));
 				if (r == 255 && g == 0 && b == 96)
-					addTile(new spawn_cornertopleft(x * 24 + 94, y * 24, 24,
-							24, Id.Wall, true));
+					addTile(new spawn_cornertopleft(x * 24 + 94, y * 24, 24, 24, Id.Wall, true));
 				if (r == 255 && g == 85 && b == 0)
-					addTile(new spawn_cornertopright(x * 24 + 94, y * 24, 24,
-							24, Id.Wall, true));
+					addTile(new spawn_cornertopright(x * 24 + 94, y * 24, 24, 24, Id.Wall, true));
 				if (r == 0 && g == 255 && b == 126)
-					addTile(new spawn_cornerbottomleft(x * 24 + 94, y * 24, 24,
-							24, Id.Wall, true));
+					addTile(new spawn_cornerbottomleft(x * 24 + 94, y * 24, 24, 24, Id.Wall, true));
 				if (r == 216 && g == 255 && b == 0)
-					addTile(new spawn_cornerbottomright(x * 24 + 94, y * 24,
-							24, 24, Id.Wall, true));
+					addTile(new spawn_cornerbottomright(x * 24 + 94, y * 24, 24, 24, Id.Wall, true));
 				if (r == 138 && g == 0 && b == 255)
-					addTile(new spawn_top(x * 24 + 94, y * 24, 24, 24, Id.Wall,
-							true));
+					addTile(new spawn_top(x * 24 + 94, y * 24, 24, 24, Id.Wall, true));
 				if (r == 255 && g == 0 && b == 150)
-					addTile(new spawn_bottom(x * 24 + 94, y * 24, 24, 24,
-							Id.Wall, true));
+					addTile(new spawn_bottom(x * 24 + 94, y * 24, 24, 24, Id.Wall, true));
 				if (r == 0 && g == 255 && b == 222)
-					addTile(new spawn_openingleft(x * 24 + 94, y * 24, 24, 24,
-							Id.Wall, true));
+					addTile(new spawn_openingleft(x * 24 + 94, y * 24, 24, 24, Id.Wall, true));
 				if (r == 0 && g == 234 && b == 255)
-					addTile(new spawn_openingright(x * 24 + 94, y * 24, 24, 24,
-							Id.Wall, true));
+					addTile(new spawn_openingright(x * 24 + 94, y * 24, 24, 24, Id.Wall, true));
 
 			}
 		}
@@ -180,16 +170,24 @@ public class Handler {
 	}
 
 	public Entity getPlayer(String username) {
-		for (Entity entity : Handler.entity) {
-			if (entity.getId() == Id.player) {
-				if (((Player) entity).getUsername().equals(username)) {
-					return entity;
-				}
+		/*
+		 * for (Entity entity : Handler.entity) { if (entity.getId() ==
+		 * Id.player) { if (((Player) entity).getUsername().equals(username)) {
+		 * return entity; } } if (entity.getId() == Id.ghost) { if (((Ghost)
+		 * entity).getUsername().equals(username)) { return entity; } } }
+		 */
+		for (Entity e : Handler.entity) {
+			if (e.getUsername().equalsIgnoreCase(username)) {
+				return e;
 			}
-			if (entity.getId() == Id.ghost) {
-				if (((Ghost) entity).getUsername().equals(username)) {
-					return entity;
-				}
+		}
+		return null;
+	}
+
+	public Id getPlayerId(String username) {
+		for (Entity e : Handler.entity) {
+			if (e.getUsername().equalsIgnoreCase(username)) {
+				return e.getId();
 			}
 		}
 		return null;
@@ -210,9 +208,7 @@ public class Handler {
 
 	public void setPlayerKeyinputEnabled(String username, boolean b) {
 		for (Entity entity : Handler.entity) {
-			if (entity.getId() == Id.player) {
-				((Player) entity).setMovementEnabled(true);
-			}
+			entity.setMovementEnabled(b);
 		}
 
 	}
