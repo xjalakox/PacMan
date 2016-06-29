@@ -8,6 +8,8 @@ import main.Game;
 import main.Handler;
 import main.Id;
 import main.KeyInput;
+import main.Menu;
+import main.SoundManager;
 import network.packets.Packet01Disconnect;
 import tile.Tile;
 
@@ -19,6 +21,7 @@ public class Player extends Entity {
 	private boolean up = true;
 	private boolean right = true;
 	private boolean left = true;
+
 
 	public Player(String username, int x, int y, int w, int h, Id id, KeyInput key) {
 		super(x, y, w, h, id, Game.handler, username);
@@ -112,6 +115,7 @@ public class Player extends Entity {
 			if (tile.getId() == Id.point) {
 				if (tile.getBounds().intersects(getBounds())) {
 					tile.remove();
+					Menu.sm.playSound(4);
 				}
 			}
 		}

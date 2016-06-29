@@ -131,6 +131,8 @@ public class Game extends Canvas implements Runnable {
 	}
 
 	public void init() {
+		SoundManager sm = new SoundManager();
+		sm.playSound(3);
 		key = new KeyInput();
 		addKeyListener(key);
 

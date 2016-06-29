@@ -20,12 +20,13 @@ import javax.swing.JTextField;
 public class Menu {
 
 	public String username;
+	public static SoundManager sm;
 	JTextField username_field = new JTextField();
 
 	public Menu() {
 
-		////////////////////////////////////////// GENERALS/////////////////////////////////////////////////////
-		SoundManager sm = new SoundManager();
+		////////////////////////////////////////// GENERALS /////////////////////////////////////////////////////
+		sm = new SoundManager();
 		sm.playSound(0);
 
 		InputStream s = Menu.class.getResourceAsStream("font.ttf");
@@ -41,7 +42,7 @@ public class Menu {
 		} catch (IOException e) {
 			e.printStackTrace();
 		}
-		////////////////////////////////////////// GENERALS/////////////////////////////////////////////////////
+		////////////////////////////////////////// GENERALS /////////////////////////////////////////////////////
 
 		JFrame f = new JFrame("Pacman Reloaded");
 		f.setBounds(0, 0, 1200, 800);
@@ -50,7 +51,7 @@ public class Menu {
 		f.setResizable(false);
 		f.setLocationRelativeTo(null);
 
-		///////////////////////////////// LOBBY-SCREEN///////////////////////////////////////
+		///////////////////////////////// LOBBY-SCREEN ///////////////////////////////////////
 		JPanel lobbypanel = new JPanel();
 		lobbypanel.setBounds(0, 0, 1200, 800);
 		lobbypanel.setLayout(null);
@@ -64,25 +65,25 @@ public class Menu {
 		lobbypanel.add(username_label);
 
 		JLabel pacman = new JLabel();
-		pacman.setIcon(new ImageIcon(getClass().getResource("/res/buttons/pacman_default.png")));
+		pacman.setIcon(new ImageIcon(getClass().getResource("/buttons/pacman_default.png")));
 		pacman.setBounds(180, 240, 285, 297);
 		pacman.addMouseListener(new MouseAdapter() {
 
 			boolean sgHover = false;
 
 			public void mouseEntered(MouseEvent evt) {
-				pacman.setIcon(new ImageIcon(getClass().getResource("/res/buttons/pacman_hover.png")));
+				pacman.setIcon(new ImageIcon(getClass().getResource("/buttons/pacman_hover.png")));
 				sgHover = true;
-				sm.playSound(2);
+				sm.playSound(1);
 			}
 
 			public void mouseExited(MouseEvent evt) {
-				pacman.setIcon(new ImageIcon(getClass().getResource("/res/buttons/pacman_default.png")));
+				pacman.setIcon(new ImageIcon(getClass().getResource("/buttons/pacman_default.png")));
 				sgHover = false;
 			}
 
 			public void mousePressed(MouseEvent evt) {
-				pacman.setIcon(new ImageIcon(getClass().getResource("/res/buttons/pacman_pressed.png")));
+				pacman.setIcon(new ImageIcon(getClass().getResource("/buttons/pacman_pressed.png")));
 				Game Anastasias_Mann_Hermman_Mann_hat_die_übelst_krassen_Stahlbeton_nüsse_und_Anastia_schnabulliert_diese_voller_Genüsslichkeit = new Game(
 						true, "kevin1");
 
@@ -98,6 +99,7 @@ public class Menu {
 				Anastasias_Mann_Hermman_Mann_hat_die_übelst_krassen_Stahlbeton_nüsse_und_Anastia_schnabulliert_diese_voller_Genüsslichkeit
 						.start();
 				f.dispose();
+				sm.playSound(2);
 			}
 
 				
@@ -106,33 +108,33 @@ public class Menu {
 
 			public void mouseReleased(MouseEvent evt) {
 				if (sgHover == true) {
-					pacman.setIcon(new ImageIcon(getClass().getResource("/res/buttons/pacman_hover.png")));
+					pacman.setIcon(new ImageIcon(getClass().getResource("/buttons/pacman_hover.png")));
 				}
 			}
 		});
 		lobbypanel.add(pacman);
 
 		JLabel ghost = new JLabel();
-		ghost.setIcon(new ImageIcon(getClass().getResource("/res/buttons/ghost_default.png")));
+		ghost.setIcon(new ImageIcon(getClass().getResource("/buttons/ghost_default.png")));
 		ghost.setBounds(780, 240, 285, 297);
 		ghost.addMouseListener(new MouseAdapter() {
 
 			boolean sgHover = false;
 
 			public void mouseEntered(MouseEvent evt) {
-				ghost.setIcon(new ImageIcon(getClass().getResource("/res/buttons/ghost_hover.png")));
+				ghost.setIcon(new ImageIcon(getClass().getResource("/buttons/ghost_hover.png")));
 				sgHover = true;
-				sm.playSound(2);
+				sm.playSound(1);
 			}
 
 			public void mouseExited(MouseEvent evt) {
-				ghost.setIcon(new ImageIcon(getClass().getResource("/res/buttons/ghost_default.png")));
+				ghost.setIcon(new ImageIcon(getClass().getResource("/buttons/ghost_default.png")));
 				sgHover = false;
 			}
 
 			public void mousePressed(MouseEvent evt) {
-				ghost.setIcon(new ImageIcon(getClass().getResource("/res/buttons/ghost_pressed.png")));
-				pacman.setIcon(new ImageIcon(getClass().getResource("/res/buttons/pacman_pressed.png")));
+				ghost.setIcon(new ImageIcon(getClass().getResource("/buttons/ghost_pressed.png")));
+				pacman.setIcon(new ImageIcon(getClass().getResource("/buttons/pacman_pressed.png")));
 				Game Anastasias_Mann_Hermman_Mann_hat_die_übelst_krassen_Stahlbeton_nüsse_und_Anastia_schnabulliert_diese_voller_Genüsslichkeit = new Game(
 						false, "kevin2");
 
@@ -148,17 +150,18 @@ public class Menu {
 				Anastasias_Mann_Hermman_Mann_hat_die_übelst_krassen_Stahlbeton_nüsse_und_Anastia_schnabulliert_diese_voller_Genüsslichkeit
 						.start();
 				f.dispose();
+				sm.playSound(2);
 			}
 
 			public void mouseReleased(MouseEvent evt) {
 				if (sgHover == true) {
-					ghost.setIcon(new ImageIcon(getClass().getResource("/res/buttons/ghost_hover.png")));
+					ghost.setIcon(new ImageIcon(getClass().getResource("/buttons/ghost_hover.png")));
 				}
 			}
 		});
 		lobbypanel.add(ghost);
 
-		JLabel background2 = new JLabel(new ImageIcon(getClass().getResource("/res/backgrounds/character_choose.png")));
+		JLabel background2 = new JLabel(new ImageIcon(getClass().getResource("/backgrounds/character_choose.png")));
 		background2.setBounds(0, 0, 1200, 800);
 		lobbypanel.add(background2);
 		///////////////////////////////// LOBBY-SCREEN///////////////////////////////////////
@@ -183,27 +186,27 @@ public class Menu {
 		mainpanel.add(username_field);
 
 		JLabel start = new JLabel();
-		start.setIcon(new ImageIcon(getClass().getResource("/res/buttons/start_default.png")));
+		start.setIcon(new ImageIcon(getClass().getResource("/buttons/start_default.png")));
 		start.setBounds(450, 600, 350, 130);
 		start.addMouseListener(new MouseAdapter() {
 
 			boolean sgHover = false;
 
 			public void mouseEntered(MouseEvent evt) {
-				start.setIcon(new ImageIcon(getClass().getResource("/res/buttons/start_hover.png")));
+				start.setIcon(new ImageIcon(getClass().getResource("/buttons/start_hover.png")));
 				sgHover = true;
-				sm.playSound(2);
+				sm.playSound(1);
 			}
 
 			public void mouseExited(MouseEvent evt) {
-				start.setIcon(new ImageIcon(getClass().getResource("/res/buttons/start_default.png")));
+				start.setIcon(new ImageIcon(getClass().getResource("/buttons/start_default.png")));
 				sgHover = false;
 			}
 
 			public void mousePressed(MouseEvent evt) {
-				start.setIcon(new ImageIcon(getClass().getResource("/res/buttons/start_pressed.png")));
+				start.setIcon(new ImageIcon(getClass().getResource("/buttons/start_pressed.png")));
 				sm.stopSound(0);
-				sm.playSound(3);
+				sm.playSound(2);
 				mainpanel.setVisible(false);
 				lobbypanel.setVisible(true);
 				username = username_field.getText();
@@ -212,17 +215,17 @@ public class Menu {
 
 			public void mouseReleased(MouseEvent evt) {
 				if (sgHover == true) {
-					start.setIcon(new ImageIcon(getClass().getResource("/res/buttons/start_hover.png")));
+					start.setIcon(new ImageIcon(getClass().getResource("/buttons/start_hover.png")));
 				}
 			}
 		});
 		mainpanel.add(start);
 
-		JLabel title = new JLabel(new ImageIcon(getClass().getResource("/res/backgrounds/title.png")));
+		JLabel title = new JLabel(new ImageIcon(getClass().getResource("/backgrounds/title.png")));
 		title.setBounds(150, 60, 900, 150);
 		mainpanel.add(title);
 
-		JLabel gif = new JLabel(new ImageIcon(getClass().getResource("/res/backgrounds/loadingscreen.gif")));
+		JLabel gif = new JLabel(new ImageIcon(getClass().getResource("/backgrounds/loadingscreen.gif")));
 		gif.setBounds(0, -100, 1200, 800);
 		mainpanel.add(gif);
 		///////////////////////////////// START-SCREEN///////////////////////////////////////
