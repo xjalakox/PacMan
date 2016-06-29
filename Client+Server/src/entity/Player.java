@@ -19,6 +19,10 @@ public class Player extends Entity {
 	private boolean up = true;
 	private boolean right = true;
 	private boolean left = true;
+	private int leben = 3;
+	private int frametimer = 0;
+	private boolean renderend;
+	private boolean visible = true;
 
 	public Player(String username, int x, int y, int w, int h, Id id, KeyInput key) {
 		super(x, y, w, h, id, Game.handler, username);
@@ -33,79 +37,112 @@ public class Player extends Entity {
 
 	@Override
 	public void render(Graphics g) {
-		g.drawImage(Game.playerSprite[0].getBufferedImage(), x, y, w, h, null);
-		g.drawImage(Game.playerSprite[1].getBufferedImage(), x + 24, y, w, h, null);
-		g.drawImage(Game.playerSprite[2].getBufferedImage(), x, y + 24, w, h, null);
-		g.drawImage(Game.playerSprite[3].getBufferedImage(), x + 24, y + 24, w, h, null);
+		if (renderend) {
+			g.drawString("test", 500, 500);
+		} else if(visible) {
 
-		g.setColor(Color.RED);
-		//g.drawRect(getX() -3 , getY() -3 , getW() * 2 + 6, getH() * 2 + 6);
+			g.drawImage(Game.playerSprite[0].getBufferedImage(), x, y, w, h, null);
+			g.drawImage(Game.playerSprite[1].getBufferedImage(), x + 24, y, w, h, null);
+			g.drawImage(Game.playerSprite[2].getBufferedImage(), x, y + 24, w, h, null);
+			g.drawImage(Game.playerSprite[3].getBufferedImage(), x + 24, y + 24, w, h, null);
+
+			g.setColor(Color.RED);
+			// g.drawRect(getX() -3 , getY() -3 , getW() * 2 + 6, getH() * 2 +
+			// 6);
+		} else {
+			
+		}
 	}
 
 	@Override
 	public void tick() {
-		
+		if (frametimer > 0) {
+			frametimer--;
+		}else{
+			setVisible(true);
+		}
 		if (key != null && key.key_enable && keyInputEnabled) {
-			if(!collisionu()){
-				if(KeyInput.up){
-					up=true;
-					down=false;
+			if (!collisionu()) {
+				if (KeyInput.up) {
+					up = true;
+					down = false;
 				}
-			}else{
-				up=false;
+			} else {
+				up = false;
 				setVelY(0);
 			}
-			
-			if(!collisiond()){
-				if(KeyInput.down){
-					down=true;
-					up=false;
+
+			if (!collisiond()) {
+				if (KeyInput.down) {
+					down = true;
+					up = false;
 				}
-			}else{
-				down=false;
+			} else {
+				down = false;
 				setVelY(0);
 			}
-			
-			if(!collisionr()){
-				if(KeyInput.right){
-					right=true;
-					left=false;
-					up=false;
-					down=false;
+
+			if (!collisionr()) {
+				if (KeyInput.right) {
+					right = true;
+					left = false;
+					up = false;
+					down = false;
 				}
-			}else{
-				right=false;
+			} else {
+				right = false;
 				setVelX(0);
 			}
-			
-			if(!collisionl()){
-				if(KeyInput.left){
-					left=true;
-					right=false;
-					up=false;
-					down=false;
+
+			if (!collisionl()) {
+				if (KeyInput.left) {
+					left = true;
+					right = false;
+					up = false;
+					down = false;
 				}
-			}else{
-				left=false;
+			} else {
+				left = false;
 				setVelX(0);
 			}
-			
-			if(left){
+
+			if (left) {
 				setVelX(-3);
 				setVelY(0);
 			}
-			if(right){
+			if (right) {
 				setVelX(3);
 				setVelY(0);
 			}
-			if(up){
+			if (up) {
 				setVelY(-3);
 				setVelX(0);
 			}
-			if(down){
+			if (down) {
 				setVelY(3);
 				setVelX(0);
 			}
+		}
+
+		for (Entity en : Handler.entity) {
+			if (en.getId() == Id.ghost) {
+				if (en.getBounds().intersects(getBounds())) {
+					System.out.println(frametimer);
+					// Animation des Todes machen || Leben -1
+					if (frametimer > 0) {
+						
+					} else {
+						setVisible(false);
+						if (leben <= 0) {
+							end();
+						} else {
+							frametimer = 180;
+							leben--;
+						}
+					}
+				}
+			}
+
 		}
 
 		for (Tile tile : Handler.tile) {
@@ -115,7 +152,6 @@ public class Player extends Entity {
 				}
 			}
 		}
-			
 
 		x += velX;
 		y += velY;
@@ -123,6 +159,17 @@ public class Player extends Entity {
 		if (KeyInput.quit) {
 			new Packet01Disconnect(Game.player.getUsername()).send(Game.client);
 		}
+	}
+
+	private void setVisible(boolean b) {
+		visible = b;
+
+	}
+
+	private void end() {
+
+		renderend = true;
+
 	}
 
 	private boolean collisionr() {
@@ -174,7 +221,7 @@ public class Player extends Entity {
 
 	@Override
 	public Rectangle getBounds() {
-		return new Rectangle(getX() -3 , getY() -3 , getW() * 2 + 6, getH() * 2 + 6);
+		return new Rectangle(getX() - 3, getY() - 3, getW() * 2 + 6, getH() * 2 + 6);
 	}
 
 	public String getUsername() {
