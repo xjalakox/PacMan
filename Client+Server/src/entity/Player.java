@@ -176,8 +176,10 @@ public class Player extends Entity {
 			for (Entity en : Handler.entity) {
 				if (en.getId() == Id.ghost) {
 					if (en.getBoundsNormal().intersects(getBoundsNormal())) {
-						if (boaty_mc_boat_face) {
+						if (Ghost.bomb) {
 							
+							en.setX(500);
+							en.setY(500);
 						} else {
 							// TODO Animation des Todes machen
 							if (frametimer > 0) {
@@ -199,6 +201,13 @@ public class Player extends Entity {
 					if (tile.getBounds().intersects(getBounds())) {
 						tile.remove();
 						Handler.sm.playSound(4);
+					}
+				}
+				if(tile.getId() == Id.bomb) {
+					if (tile.getBounds().intersects(getBounds())) {
+						tile.remove();
+						Ghost.bombtimer = 300;
+						Ghost.bomb = true;
 					}
 				}
 			}

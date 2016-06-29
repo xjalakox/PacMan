@@ -155,8 +155,8 @@ public class Handler {
 					addTile(new spawn_openingleft(x * 24 + 94, y * 24, 24, 24, Id.Wall, true));
 				if (r == 0 && g == 234 && b == 255)
 					addTile(new spawn_openingright(x * 24 + 94, y * 24, 24, 24, Id.Wall, true));
-				if(r == 47 && g  == 79 && b == 151) {
-					addTile(new bomb(x*24+94, y*24, 24, 24, Id.bomb, true));
+				if (r == 47 && g == 79 && b == 151) {
+					addTile(new bomb(x * 24 + 94, y * 24, 24, 24, Id.bomb, true));
 				}
 
 			}

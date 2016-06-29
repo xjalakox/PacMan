@@ -18,7 +18,7 @@ public class Ghost extends Entity {
 	private KeyInput key;
 	private String username;
 
-	private int netid;
+	public static int bombtimer = 0;
 	public static boolean bomb;
 
 	public Ghost(String username, int x, int y, int w, int h, Id id, KeyInput key) {
@@ -34,17 +34,29 @@ public class Ghost extends Entity {
 
 	@Override
 	public void render(Graphics g) {
-		g.drawImage(Game.sprites[390].getBufferedImage(), x, y, w, h, null);
-		g.drawImage(Game.sprites[391].getBufferedImage(), x + 24, y, w, h, null);
-		g.drawImage(Game.sprites[422].getBufferedImage(), x, y + 24, w, h, null);
-		g.drawImage(Game.sprites[423].getBufferedImage(), x + 24, y + 24, w, h, null);
-
+		if (bomb) {
+			
+			g.drawImage(Game.sprites[272].getBufferedImage(), x, y, w, h, null);
+			g.drawImage(Game.sprites[273].getBufferedImage(), x + 24, y, w, h, null);
+			g.drawImage(Game.sprites[306].getBufferedImage(), x, y + 24, w, h, null);
+			g.drawImage(Game.sprites[307].getBufferedImage(), x + 24, y + 24, w, h, null);
+		} else {
+			g.drawImage(Game.sprites[390].getBufferedImage(), x, y, w, h, null);
+			g.drawImage(Game.sprites[391].getBufferedImage(), x + 24, y, w, h, null);
+			g.drawImage(Game.sprites[422].getBufferedImage(), x, y + 24, w, h, null);
+			g.drawImage(Game.sprites[423].getBufferedImage(), x + 24, y + 24, w, h, null);
+		}
 		g.drawRect(getX(), getY(), getW() * 2, getH() * 2);
 
 	}
 
 	@Override
 	public void tick() {
+		if (bombtimer >= 1) {
+			bombtimer--;
+		} else {
+			bomb = false;
+		}
 
 		if (key != null && key.key_enable && keyInputEnabled) {
 			if (!collisionu()) {
@@ -200,10 +212,6 @@ public class Ghost extends Entity {
 	@Override
 	public Rectangle getBounds() {
 		return new Rectangle(getX() - 3, getY() - 3, getW() * 2 + 6, getH() * 2 + 6);
-	}
-
-	public int getNetId() {
-		return netid;
 	}
 
 	public String getUsername() {
