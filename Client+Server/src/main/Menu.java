@@ -17,10 +17,13 @@ import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.JTextField;
 
+import network.Server;
+
 public class Menu {
 
 	public String username;
 	JTextField username_field = new JTextField();
+	private Font pixel;
 
 	public Menu() {
 
@@ -30,7 +33,7 @@ public class Menu {
 
 		InputStream s = Menu.class.getResourceAsStream("font.ttf");
 		Image icon = null;
-		Font pixel = null;
+		pixel = null;
 		try {
 			icon = ImageIO.read(Menu.class.getResourceAsStream("/logo.png"));
 			pixel = Font.createFont(Font.TRUETYPE_FONT, s).deriveFont(Font.BOLD, 30);
@@ -90,6 +93,7 @@ public class Menu {
 				frame.add(
 						Anastasias_Mann_Hermman_Mann_hat_die_übelst_krassen_Stahlbeton_nüsse_und_Anastia_schnabulliert_diese_voller_Genüsslichkeit);
 				frame.pack();
+				frame.setFont(pixel);
 				frame.setResizable(false);
 				frame.setLocationRelativeTo(null);
 				frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);

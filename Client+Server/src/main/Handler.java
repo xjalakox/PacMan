@@ -210,7 +210,5 @@ public class Handler {
 		for (Entity entity : Handler.entity) {
 			entity.setMovementEnabled(b);
 		}
-
 	}
-
 }
