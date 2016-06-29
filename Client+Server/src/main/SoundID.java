@@ -8,7 +8,7 @@ public enum SoundID {
 	jump					(  	1,  "jump"	,           1),
 	powerup					(	2,	"powerup",			1),
 	intro					(	3,	"intro",			1),
-	chomp					(	4,	"chomp",			1);
+	chomp					(	4,	"chomp2",			1);
 			
 	
 	

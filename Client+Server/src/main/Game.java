@@ -44,6 +44,7 @@ public class Game extends Canvas implements Runnable {
 
 	public static Handler handler = new Handler();
 	public static Sprite[] playerSprite = new Sprite[4];
+	public static Sprite[] ghostSprite = new Sprite[32];
 	public static KeyInput key = new KeyInput();
 	public static Player player;
 	public static Ghost ghost;
@@ -52,6 +53,7 @@ public class Game extends Canvas implements Runnable {
 	public static Sprite[] sprites = new Sprite[641];
 
 	private SpriteSheet spriteSheet;
+	private SpriteSheet ghostSheet;
 
 	public static Client client;
 	private BufferedImage level;
@@ -85,25 +87,20 @@ public class Game extends Canvas implements Runnable {
 	}
 
 	public void tick() {
-		if (test == 1) {
-			test = 0;
-			for (Entity e : Handler.entity) {
-				if (e.getId() == Id.player) {
-					new Packet02Move(((Player) e).getUsername(), ((Player) e).getX(), ((Player) e).getY()).send(client);
-				}
-				if (e.getId() == Id.ghost) {
-					new Packet02Move(((Ghost) e).getUsername(), ((Ghost) e).getX(), ((Ghost) e).getY()).send(client);
-				}
+		for (Entity e : Handler.entity) {
+			if (e.getId() == Id.player) {
+				new Packet02Move(((Player) e).getUsername(), ((Player) e).getX(), ((Player) e).getY()).send(client);
 			}
-		} else {
-			test++;
+			if (e.getId() == Id.ghost) {
+				new Packet02Move(((Ghost) e).getUsername(), ((Ghost) e).getX(), ((Ghost) e).getY()).send(client);
+			}
 		}
 		handler.tick();
 		key.tick();
 	}
 
 	public void render() {
-		
+
 		BufferStrategy bs = getBufferStrategy();
 		if (bs == null) {
 			createBufferStrategy(4);
@@ -113,16 +110,10 @@ public class Game extends Canvas implements Runnable {
 		Graphics2D g2d = (Graphics2D) g;
 		g.setColor(Color.BLACK);
 		g.fillRect(0, 0, 300 * 4, 250 * 4);
-
-		// g.drawImage(background,0 , 0, getWidth(), getHeight(), this);
 		g.drawRect(0, 0, WIDTH * SCALE + 100, HEIGHT * SCALE + 100);
 		g.setColor(Color.WHITE);
 		g.fillRect(0, 0, WIDTH * SCALE + 100, HEIGHT * SCALE + 100);
-		// g.drawImage(background, -200, -175, background.getWidth() / 2,
-		// background.getHeight() / 2, null);
-		// g2d.translate(cam.getX(), cam.getY());
 		handler.render(g);
-		// g2d.translate(-cam.getX(), -cam.getY());
 
 		g.setColor(Color.BLUE);
 		g.setFont(new Font("Verdana", Font.BOLD, 23));
@@ -185,10 +176,10 @@ public class Game extends Canvas implements Runnable {
 		init();
 		requestFocus();
 		long lastTime = System.nanoTime();
-		long timer = System.currentTimeMillis();
 		double delta = 0;
 		double ns = 1000000000.0 / 60.0;
 		int ticks = 0;
+		long timer = System.currentTimeMillis();
 		while (running) {
 			long now = System.nanoTime();
 			delta += (now - lastTime) / ns;

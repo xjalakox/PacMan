@@ -152,7 +152,7 @@ public class Player extends Entity {
 			if (tile.getId() == Id.point) {
 				if (tile.getBounds().intersects(getBounds())) {
 					tile.remove();
-					Menu.sm.playSound(4);
+					Handler.sm.playSound(4);
 				}
 			}
 		}

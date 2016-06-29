@@ -5,6 +5,8 @@ import java.awt.image.BufferedImage;
 import java.util.ArrayList;
 import java.util.List;
 
+import entity.Entity;
+import entity.Player;
 import tile.Collision;
 import tile.Corner_bottomleft;
 import tile.Corner_bottomright;
@@ -26,14 +28,12 @@ import tile.spawn_openingleft;
 import tile.spawn_openingright;
 import tile.spawn_right;
 import tile.spawn_top;
-import entity.Entity;
-import entity.Ghost;
-import entity.Player;
 
 public class Handler {
 	public static List<Entity> entity = new ArrayList<Entity>();
 	public static List<Tile> tile = new ArrayList<Tile>();
 	private int t;
+	public static SoundManager sm = new SoundManager();
 
 	public void render(Graphics g) {
 		for (Tile ti : tile) {
