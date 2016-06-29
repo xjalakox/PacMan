@@ -55,7 +55,7 @@ public class Handler {
 		if(t==0){
 			System.out.println("yes");
 		}else{
-			System.out.println(t);
+			
 		}
 		for (Entity en : entity) {
 			en.tick();

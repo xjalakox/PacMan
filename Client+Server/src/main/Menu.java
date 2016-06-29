@@ -3,18 +3,12 @@ package main;
 import java.awt.Color;
 import java.awt.Font;
 import java.awt.FontFormatException;
-import java.awt.Graphics;
 import java.awt.Image;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
-import java.awt.image.BufferedImage;
-import java.io.File;
-import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.io.InputStream;
-import java.net.URI;
-import java.net.URL;
 
 import javax.imageio.ImageIO;
 import javax.swing.ImageIcon;
@@ -31,7 +25,7 @@ public class Menu {
 	public Menu() {
 
 		////////////////////////////////////////// GENERALS/////////////////////////////////////////////////////
-		main.SoundManager sm = new main.SoundManager();
+		SoundManager sm = new SoundManager();
 		sm.playSound(0);
 
 		InputStream s = Menu.class.getResourceAsStream("font.ttf");
@@ -90,7 +84,7 @@ public class Menu {
 			public void mousePressed(MouseEvent evt) {
 				pacman.setIcon(new ImageIcon(getClass().getResource("/res/buttons/pacman_pressed.png")));
 				Game Anastasias_Mann_Hermman_Mann_hat_die_übelst_krassen_Stahlbeton_nüsse_und_Anastia_schnabulliert_diese_voller_Genüsslichkeit = new Game(
-						true, username_field.getText());
+						true, "kevin1");
 
 				JFrame frame = new JFrame("Pacman Reloaded");
 				frame.add(
@@ -139,7 +133,7 @@ public class Menu {
 				ghost.setIcon(new ImageIcon(getClass().getResource("/res/buttons/ghost_pressed.png")));
 				pacman.setIcon(new ImageIcon(getClass().getResource("/res/buttons/pacman_pressed.png")));
 				Game Anastasias_Mann_Hermman_Mann_hat_die_übelst_krassen_Stahlbeton_nüsse_und_Anastia_schnabulliert_diese_voller_Genüsslichkeit = new Game(
-						false, username_field.getText());
+						false, "kevin2");
 
 				JFrame frame = new JFrame("Pacman Reloaded");
 				frame.add(

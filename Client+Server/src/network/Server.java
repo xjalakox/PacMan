@@ -1,21 +1,28 @@
 package network;
 
 import java.awt.Font;
+import java.awt.FontFormatException;
+import java.awt.Image;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.WindowEvent;
 import java.awt.event.WindowListener;
+import java.io.FileNotFoundException;
+import java.io.IOException;
+import java.io.InputStream;
 import java.net.InetAddress;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import javax.imageio.ImageIO;
 import javax.swing.JButton;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
 
 import main.Id;
+import main.Menu;
 import net.NetServer;
 import net.NetUser;
 import network.packets.Packet;
@@ -33,7 +40,6 @@ public class Server extends NetServer implements ActionListener {
 	private Map<NetUser, Entity> players;
 	private List<Entity> entity;
 	private JButton bla;
-	public static JLabel players_frame;
 	private int tick;
 
 	public Server(int port, int packetSize) {
@@ -43,35 +49,43 @@ public class Server extends NetServer implements ActionListener {
 
 	@Override
 	protected void init() {
+
+		InputStream s = Menu.class.getResourceAsStream("font.ttf");
+		Image icon = null;
+		Font pixel = null;
+		try {
+			icon = ImageIO.read(Menu.class.getResourceAsStream("/logo.png"));
+			pixel = Font.createFont(Font.TRUETYPE_FONT, s).deriveFont(Font.BOLD, 30);
+		} catch (FileNotFoundException e) {
+			e.printStackTrace();
+		} catch (FontFormatException e) {
+			e.printStackTrace();
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
+
 		players = new HashMap<NetUser, Entity>();
-		
+
 		JFrame frame = new JFrame();
 		frame.setTitle("Server");
 		frame.setSize(240, 180);
 		frame.setLocationRelativeTo(null);
 		frame.addWindowListener(new WindowInput(this));
 		frame.setVisible(true);
+		frame.setFont(pixel);
+		frame.setIconImage(icon);
 
 		JPanel p = new JPanel();
 		p.setBounds(0, 0, 240, 180);
 		frame.add(p);
-		
+
 		JButton bla = new JButton("Spiel starten");
-		bla.setFont(new Font("TimesRoman", Font.PLAIN, 40));
+		bla.setFont(pixel);
 		bla.setBounds(0, 0, 240, 180);
 		p.add(bla);
 		bla.addActionListener(this);
-		
-		JLabel players_frame = new JLabel();
-		players_frame.setBounds(0,0,240,180);
-		players_frame.setText("Playeranzahl " + players.size()); 
-		p.add(players_frame);
 
 		frame.pack();
-
-		
-		
-		
 
 	}
 
@@ -93,39 +107,31 @@ public class Server extends NetServer implements ActionListener {
 		case LOGIN:
 			Packet00Login packet00 = new Packet00Login(data);
 			if (packet00.getChoice().equalsIgnoreCase("ghost")) {
-				System.out.println("[" + address.getHostAddress() + ":" + ":"
-						+ port + "] " + packet00.getUsername()
+				System.out.println("[" + address.getHostAddress() + ":" + ":" + port + "] " + packet00.getUsername()
 						+ " ist verbunden als " + packet00.getChoice());
-				NetUser user = new NetUser(packet00.getUsername(), address,
-						port);
-				Player player = new Player(packet00.getUsername(),
-						packet00.getX(), packet00.getY(), 24, 24, Id.player);
+				NetUser user = new NetUser(packet00.getUsername(), address, port);
+				Player player = new Player(packet00.getUsername(), packet00.getX(), packet00.getY(), 24, 24, Id.player);
 				users.add(user);
 				players.put(user, player);
 				packet00.send(this);
 				for (NetUser u : users) {
 					if (players.get(u) != null && !u.equals(user)) {
-						super.send(new Packet00Login(players.get(u)
-								.getUsername(), players.get(u).getX(), players
-								.get(u).getY(), "pacman").getData(), user);
+						super.send(new Packet00Login(players.get(u).getUsername(), players.get(u).getX(),
+								players.get(u).getY(), "pacman").getData(), user);
 					}
 				}
 			} else if (packet00.getChoice().equalsIgnoreCase("pacman")) {
-				System.out.println("[" + address.getHostAddress() + ":" + ":"
-						+ port + "] " + packet00.getUsername()
-						+ " ist verbunden als: " + packet00.getChoice() );
-				NetUser user = new NetUser(packet00.getUsername(), address,
-						port);
-				Ghost player = new Ghost(packet00.getUsername(),
-						packet00.getX(), packet00.getY(), 24, 24, Id.ghost);
+				System.out.println("[" + address.getHostAddress() + ":" + ":" + port + "] " + packet00.getUsername()
+						+ " ist verbunden als: " + packet00.getChoice());
+				NetUser user = new NetUser(packet00.getUsername(), address, port);
+				Ghost player = new Ghost(packet00.getUsername(), packet00.getX(), packet00.getY(), 24, 24, Id.ghost);
 				users.add(user);
 				players.put(user, player);
 				packet00.send(this);
 				for (NetUser u : users) {
 					if (players.get(u) != null && !u.equals(user)) {
-						super.send(new Packet00Login(players.get(u)
-								.getUsername(), players.get(u).getX(), players
-								.get(u).getY(), "ghost").getData(), user);
+						super.send(new Packet00Login(players.get(u).getUsername(), players.get(u).getX(),
+								players.get(u).getY(), "ghost").getData(), user);
 					}
 				}
 			}
@@ -197,17 +203,14 @@ public class Server extends NetServer implements ActionListener {
 		public void windowOpened(WindowEvent e) {
 
 		}
-		
 
 	}
 
 	@Override
 	public void actionPerformed(ActionEvent e) {
 		for (NetUser u : users) {
-			System.out.println(u.getUsername()
-					+ " hat Movement Packet gesendet bekommen!");
-			send(new Packet03Move_Enabled(players.get(u).getUsername(),
-					"true").getData(), u);
+			System.out.println(u.getUsername() + " hat Movement Packet gesendet bekommen!");
+			send(new Packet03Move_Enabled(players.get(u).getUsername(), "true").getData(), u);
 
 		}
 
