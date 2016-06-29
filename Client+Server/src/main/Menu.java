@@ -18,6 +18,7 @@ import javax.swing.JPanel;
 import javax.swing.JTextField;
 
 import network.Server;
+import sound.SoundManager;
 
 public class Menu {
 
@@ -47,7 +48,7 @@ public class Menu {
 		}
 		////////////////////////////////////////// GENERALS /////////////////////////////////////////////////////
 
-		JFrame f = new JFrame("Pacman Reloaded");
+		JFrame f = new JFrame("Pacman");
 		f.setBounds(0, 0, 1200, 800);
 		f.setIconImage(icon);
 		f.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
@@ -90,7 +91,7 @@ public class Menu {
 				Game Anastasias_Mann_Hermman_Mann_hat_die_übelst_krassen_Stahlbeton_nüsse_und_Anastia_schnabulliert_diese_voller_Genüsslichkeit = new Game(
 						true, "kevin1");
 
-				JFrame frame = new JFrame("Pacman Reloaded");
+				JFrame frame = new JFrame("Pacman");
 				frame.add(
 						Anastasias_Mann_Hermman_Mann_hat_die_übelst_krassen_Stahlbeton_nüsse_und_Anastia_schnabulliert_diese_voller_Genüsslichkeit);
 				frame.pack();
@@ -142,7 +143,7 @@ public class Menu {
 				Game Anastasias_Mann_Hermman_Mann_hat_die_übelst_krassen_Stahlbeton_nüsse_und_Anastia_schnabulliert_diese_voller_Genüsslichkeit = new Game(
 						false, "kevin2");
 
-				JFrame frame = new JFrame("Pacman Reloaded");
+				JFrame frame = new JFrame("Pacman");
 				frame.add(
 						Anastasias_Mann_Hermman_Mann_hat_die_übelst_krassen_Stahlbeton_nüsse_und_Anastia_schnabulliert_diese_voller_Genüsslichkeit);
 				frame.pack();

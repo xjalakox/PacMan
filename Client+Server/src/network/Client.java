@@ -37,13 +37,11 @@ public class Client extends NetClient {
 			Packet00Login packet00 = new Packet00Login(data);
 			if (packet00.getChoice().equalsIgnoreCase("pacman")) {
 				if (!username.equals(packet00.getUsername())) {
-					System.out.println("Anderer Spieler als PACMAN verbunden.");
 					Game.handler.addEntity(
 							new Player(packet00.getUsername(), packet00.getX(), packet00.getY(), 24, 24, Id.player));
 				}
 			} else if (packet00.getChoice().equalsIgnoreCase("ghost")) {
 				if (!username.equals(packet00.getUsername())) {
-					System.out.println("Anderer Spieler als GHOST verbunden.");
 					Game.handler.addEntity(
 							new Ghost(packet00.getUsername(), packet00.getX(), packet00.getY(), 24, 24, Id.ghost));
 				}

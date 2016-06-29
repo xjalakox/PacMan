@@ -9,28 +9,39 @@ import main.Handler;
 import main.Id;
 import main.KeyInput;
 import main.Menu;
-import main.SoundManager;
 import network.packets.Packet01Disconnect;
+import sound.SoundManager;
 import tile.Tile;
 
 public class Player extends Entity {
-	int frame = 0, frameDelay = 0;
 	private KeyInput key;
 	private String username;
 	private boolean down = true;
 	private boolean up = true;
 	private boolean right = true;
 	private boolean left = true;
-	private int leben = 3;
+	private int deaths = 0;
 	private int frametimer = 0;
+	private int ticks, seconds, minutes;
 	private boolean renderend;
 	private boolean visible = true;
-
+	private int SpawnPosX[] = new int[4];
+	private int SpawnPosY[] = new int[4];
+	private boolean dead;
 
 	public Player(String username, int x, int y, int w, int h, Id id, KeyInput key) {
 		super(x, y, w, h, id, Game.handler, username);
 		this.key = key;
 		this.username = username;
+		SpawnPosX[0] = 143;
+		SpawnPosX[1] = 143;
+		SpawnPosX[2] = 1004;
+		SpawnPosX[3] = 1004;
+
+		SpawnPosY[0] = 49;
+		SpawnPosY[1] = 910;
+		SpawnPosY[2] = 910;
+		SpawnPosY[3] = 49;
 	}
 
 	public Player(String username, int x, int y, int w, int h, Id id) {
@@ -41,29 +52,59 @@ public class Player extends Entity {
 	@Override
 	public void render(Graphics g) {
 		if (renderend) {
-			g.drawString("test", 500, 500);
-		} else if(visible) {
+			// TODO setFont(Game.pixel);
+			/*g.clearRect(500, 500, 300, 300);
+
+			g.drawRect(500, 500, 300, 300);
+			g.setColor(Color.RED);
+			g.drawString("Pacman ist " + deaths + " mal gestorben und hat \n" + minutes + " Minuten und " + seconds
+					+ " gebraucht um das Spiel zu gewinnen", 500, 500);*/
+		} else if (visible) {
 
 			g.drawImage(Game.playerSprite[0].getBufferedImage(), x, y, w, h, null);
 			g.drawImage(Game.playerSprite[1].getBufferedImage(), x + 24, y, w, h, null);
 			g.drawImage(Game.playerSprite[2].getBufferedImage(), x, y + 24, w, h, null);
 			g.drawImage(Game.playerSprite[3].getBufferedImage(), x + 24, y + 24, w, h, null);
 
+			/*g.setColor(Color.RED);
+			g.drawRect(getX(), getY(), getW() * 2, getH() * 2);
+
 			g.setColor(Color.RED);
-			// g.drawRect(getX() -3 , getY() -3 , getW() * 2 + 6, getH() * 2 +
-			// 6);
+			g.drawString("Pacman ist " + deaths + " mal gestorben und hat " + minutes + " Minuten und " + seconds
+					+ " Sekunden gebraucht um das Spiel zu gewinnen", 450, 500);
+			g.drawString(minutes + " Minuten und " + seconds + " gebraucht um das Spiel zu gewinnen", 450, 550);*/
 		} else {
-			
+
 		}
 	}
 
 	@Override
 	public void tick() {
-		if (frametimer > 0) {
-			frametimer--;
-		}else{
-			setVisible(true);
+		if (ticks >= 60) {
+			seconds++;
+			ticks = 0;
+		} else {
+			ticks++;
 		}
+
+		if (seconds >= 60) {
+			minutes++;
+			seconds = 0;
+		}
+
+		if (frametimer > 0) {
+			setX(-200);
+			setY(-200);
+			frametimer--;
+		} else if (dead) {
+			int spawnpos;
+			spawnpos = (int) (Math.random() * 4);
+			setX(SpawnPosX[spawnpos]);
+			setY(SpawnPosY[spawnpos]);
+			setVisible(true);
+			dead = false;
+		}
+
 		if (key != null && key.key_enable && keyInputEnabled) {
 			if (!collisionu()) {
 				if (KeyInput.up) {
@@ -129,19 +170,15 @@ public class Player extends Entity {
 
 		for (Entity en : Handler.entity) {
 			if (en.getId() == Id.ghost) {
-				if (en.getBounds().intersects(getBounds())) {
-					System.out.println(frametimer);
-					// Animation des Todes machen || Leben -1
+				if (en.getBoundsNormal().intersects(getBoundsNormal())) {
+					// TODO Animation des Todes machen
 					if (frametimer > 0) {
-						
+
 					} else {
+						dead = true;
 						setVisible(false);
-						if (leben <= 0) {
-							end();
-						} else {
-							frametimer = 180;
-							leben--;
-						}
+						frametimer = 180;
+						deaths++;
 					}
 				}
 			}
@@ -167,12 +204,6 @@ public class Player extends Entity {
 
 	private void setVisible(boolean b) {
 		visible = b;
-
-	}
-
-	private void end() {
-
-		renderend = true;
 
 	}
 
@@ -235,4 +266,9 @@ public class Player extends Entity {
 	public void setUsername(String username) {
 		this.username = username;
 	}
+
+	public void renderend(boolean renderend) {
+		this.renderend = renderend;
+	}
+
 }

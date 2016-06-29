@@ -1,6 +1,5 @@
 package entity;
 
-import java.awt.Color;
 import java.awt.Graphics;
 import java.awt.Rectangle;
 
@@ -12,14 +11,12 @@ import network.packets.Packet01Disconnect;
 import tile.Tile;
 
 public class Ghost extends Entity {
-	int frame = 0, frameDelay = 0;
 	private boolean down = true;
 	private boolean up = true;
 	private boolean right = true;
 	private boolean left = true;
 	private KeyInput key;
 	private String username;
-	private int test, test2, test3;
 
 	private int netid;
 
@@ -40,6 +37,8 @@ public class Ghost extends Entity {
 		g.drawImage(Game.sprites[391].getBufferedImage(), x + 24, y, w, h, null);
 		g.drawImage(Game.sprites[422].getBufferedImage(), x, y + 24, w, h, null);
 		g.drawImage(Game.sprites[423].getBufferedImage(), x + 24, y + 24, w, h, null);
+		
+		g.drawRect(getX(), getY(), getW() * 2, getH() * 2);
 
 	}
 
@@ -180,7 +179,7 @@ public class Ghost extends Entity {
 	public Rectangle getBounds() {
 		return new Rectangle(getX() - 3, getY() - 3, getW() * 2 + 6, getH() * 2 + 6);
 	}
-
+	
 	public int getNetId() {
 		return netid;
 	}

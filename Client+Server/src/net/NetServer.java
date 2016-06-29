@@ -9,10 +9,6 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 
-import network.packets.Packet03Move_Enabled;
-import entity.Entity;
-import entity.Ghost;
-import main.Id;
 
 public abstract class NetServer implements Runnable {
 

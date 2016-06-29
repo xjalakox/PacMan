@@ -26,6 +26,7 @@ import network.Client;
 import network.packets.Packet00Login;
 import network.packets.Packet01Disconnect;
 import network.packets.Packet02Move;
+import sound.SoundManager;
 
 public class Game extends Canvas implements Runnable {
 
@@ -155,13 +156,11 @@ public class Game extends Canvas implements Runnable {
 		background = loader.loadImage("/map.PNG");
 
 		if (pacman) {
-			System.out.println("pacman");
 			player = new Player(name, 140, 100, 24, 24, Id.player, key);
 			client.setConnection(name, "localhost:1337");
 			handler.addEntity(player);
 			new Packet00Login(client.getUsername(), player.getX(), player.getY(), "pacman").send(client);
 		} else if (!pacman) {
-			System.out.println("ghost");
 			ghost = new Ghost(name, 530, 100, 24, 24, Id.ghost, key);
 			client.setConnection(name, "localhost:1337");
 			handler.addEntity(ghost);
@@ -199,8 +198,6 @@ public class Game extends Canvas implements Runnable {
 				ups = ticks;
 				ticks = 0;
 				frames = 0;
-				// System.out.println("FPS: " + fps);
-				// System.out.println("Ticks: " + ups);
 			}
 		}
 		stop();

@@ -7,6 +7,7 @@ import java.util.List;
 
 import entity.Entity;
 import entity.Player;
+import sound.SoundManager;
 import tile.Collision;
 import tile.Corner_bottomleft;
 import tile.Corner_bottomright;
@@ -33,9 +34,17 @@ public class Handler {
 	public static List<Entity> entity = new ArrayList<Entity>();
 	public static List<Tile> tile = new ArrayList<Tile>();
 	private int t;
+	private boolean end;
 	public static SoundManager sm = new SoundManager();
 
 	public void render(Graphics g) {
+		if(end){
+			for(Entity en : entity) {
+				if(en.getId()==Id.player) {
+					((Player) en).renderend(true);
+				}
+			}
+		}
 		for (Tile ti : tile) {
 			ti.render(g);
 		}
@@ -53,9 +62,7 @@ public class Handler {
 			}
 		}
 		if(t==0){
-			System.out.println("yes");
-		}else{
-			
+			end = true;
 		}
 		for (Entity en : entity) {
 			en.tick();
@@ -72,7 +79,6 @@ public class Handler {
 
 	public void addEntity(Entity en) {
 		entity.add(en);
-		System.out.println(en.getId() + " hinzugefügt");
 	}
 
 	public void removeEntity(Entity e) {

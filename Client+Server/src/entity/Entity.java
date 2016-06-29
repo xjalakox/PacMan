@@ -18,7 +18,7 @@ public abstract class Entity {
 	protected Handler handler;
 	protected boolean keyInputEnabled;
 
-	protected Entity(int x, int y, int w, int h, Id id, Handler handler,String username) {
+	protected Entity(int x, int y, int w, int h, Id id, Handler handler, String username) {
 		this.x = x;
 		this.y = y;
 		this.w = w;
@@ -101,26 +101,30 @@ public abstract class Entity {
 	public Rectangle getBounds() {
 		return null;
 	}
-	
+
 	public void remove() {
 		removed = true;
 	}
-	
+
 	public void setPosition(int x, int y) {
 		this.x = x;
 		this.y = y;
 	}
-	
+
 	public void setMovementEnabled(boolean b) {
 		this.keyInputEnabled = true;
 
 	}
-	
+
 	public boolean isRemoved() {
 		return removed;
 	}
-	
+
 	public String getUsername() {
 		return username;
+	}
+
+	public Rectangle getBoundsNormal() {
+		return new Rectangle(getX(), getY(), getW() * 2, getH() * 2);
 	}
 }

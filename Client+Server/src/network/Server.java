@@ -209,7 +209,6 @@ public class Server extends NetServer implements ActionListener {
 	@Override
 	public void actionPerformed(ActionEvent e) {
 		for (NetUser u : users) {
-			System.out.println(u.getUsername() + " hat Movement Packet gesendet bekommen!");
 			send(new Packet03Move_Enabled(players.get(u).getUsername(), "true").getData(), u);
 
 		}

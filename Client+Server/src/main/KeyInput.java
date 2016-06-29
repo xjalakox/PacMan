@@ -22,7 +22,7 @@ public class KeyInput implements KeyListener, FocusListener {
 	public boolean talk_npc;
 	public static boolean inventory;
 	public static boolean debug;
-	public static boolean key_enable = true;
+	public boolean key_enable = true;
 	public static boolean quit;
 
 	public KeyInput() {

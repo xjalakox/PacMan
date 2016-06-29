@@ -1,25 +1,24 @@
 package sound;
 
 public enum SoundID {
-	//template		(	id,	name,			vol),
+	//template				(	id,	name,				vol),
 	
 	//Music
-	intro			(	0,	"intro",		1),
-	
-	//Effects
-	
-	eat           	(	1,  "eatfruit",    1),
-	jump           	(	2,  "jump",        1),
-	powerup         (	3,  "powerup",     1);
+	intermission			(	0,	"intermission",		1),
+	jump					(  	1,  "jump"	,           1),
+	powerup					(	2,	"powerup",			1),
+	intro					(	3,	"intro",			1),
+	chomp					(	4,	"chomp2",			1);
+			
 	
 	
 	
 	private int id;
-	private String prefix = "sound/";
+	private String prefix = "/sound/";
 	private String suffix = ".wav";
 	private String name;
 	// musicvol // effectvol // mastervol//
-	private int[] volList = { -20, -20, -20};
+	private int[] volList = { -20,-20,-20};
 	private int vol;
 	
 	SoundID(int id, String name, int vol) {

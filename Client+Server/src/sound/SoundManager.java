@@ -15,7 +15,7 @@ public class SoundManager {
         try {
         	soundList[id] = new Sound(id);
             clipList[id] = AudioSystem.getClip();
-            clipList[id].open(AudioSystem.getAudioInputStream(new File(soundList[id].getPath())));
+            clipList[id].open(AudioSystem.getAudioInputStream(SoundManager.class.getResourceAsStream(soundList[id].getPath())));
             gainControl[id] = 
             (FloatControl) clipList[id].getControl(FloatControl.Type.MASTER_GAIN);
             gainControl[id].setValue(soundList[id].getVolume());
@@ -26,7 +26,6 @@ public class SoundManager {
     
     public void stopSound(int id) {
     	try {
-    		//System.out.println("Schlieﬂt " + clipList[id]);
     		clipList[id].stop();
     	} catch(Exception ex) {} 
     }
