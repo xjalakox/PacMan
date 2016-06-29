@@ -25,6 +25,7 @@ public class Menu {
 	public static SoundManager sm;
 	JTextField username_field = new JTextField();
 	private Font pixel;
+	private Image icon;
 
 	public Menu() {
 
@@ -33,7 +34,7 @@ public class Menu {
 		sm.playSound(0);
 
 		InputStream s = Menu.class.getResourceAsStream("font.ttf");
-		Image icon = null;
+		icon = null;
 		pixel = null;
 		try {
 			icon = ImageIO.read(Menu.class.getResourceAsStream("/logo.png"));
@@ -91,6 +92,7 @@ public class Menu {
 						true, "kevin1");
 
 				JFrame frame = new JFrame("Pacman");
+				frame.setIconImage(icon);
 				frame.add(
 						Anastasias_Mann_Hermman_Mann_hat_die_übelst_krassen_Stahlbeton_nüsse_und_Anastia_schnabulliert_diese_voller_Genüsslichkeit);
 				frame.pack();
@@ -143,6 +145,7 @@ public class Menu {
 						false, "kevin2");
 
 				JFrame frame = new JFrame("Pacman");
+				frame.setIconImage(icon);
 				frame.add(
 						Anastasias_Mann_Hermman_Mann_hat_die_übelst_krassen_Stahlbeton_nüsse_und_Anastia_schnabulliert_diese_voller_Genüsslichkeit);
 				frame.pack();
