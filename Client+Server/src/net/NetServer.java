@@ -16,8 +16,8 @@ public abstract class NetServer implements Runnable {
 	private boolean running;
 	private DatagramSocket socket;
 	private int packetSize;
-	protected List<NetUser> users;
 	private int ups;
+	protected List<NetUser> users;
 
 	public NetServer(int port, int packetSize) {
 		this.packetSize = packetSize;
@@ -70,8 +70,8 @@ public abstract class NetServer implements Runnable {
 
 			if (System.currentTimeMillis() - timer > 1000) {
 
-				timer += 1000;
 				ups = ticks;
+				timer += 1000;
 				ticks = 0;
 			}
 		}
