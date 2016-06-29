@@ -3,7 +3,6 @@ package tile;
 import java.awt.Color;
 import java.awt.Graphics;
 
-import main.Handler;
 import main.Id;
 
 public class Collision extends Tile {

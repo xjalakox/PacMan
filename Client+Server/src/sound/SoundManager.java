@@ -1,6 +1,5 @@
 package sound;
 
-import java.io.File;
 import javax.sound.sampled.AudioSystem;
 import javax.sound.sampled.Clip;
 import javax.sound.sampled.FloatControl;
@@ -49,9 +48,6 @@ public class SoundManager {
 		}
 		public int getVolume() {
 			return this.vol;
-		}
-		public void setVolume(int vol) {
-			this.vol = vol;
 		}
 	}
 	

@@ -3,9 +3,7 @@ package tile;
 import java.awt.Color;
 import java.awt.Graphics;
 
-import entity.Entity;
 import main.Game;
-import main.Handler;
 import main.Id;
 
 public class Points extends Tile {

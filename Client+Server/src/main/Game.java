@@ -11,11 +11,6 @@ import java.awt.image.BufferedImage;
 import java.io.IOException;
 
 import javax.imageio.ImageIO;
-import javax.swing.JOptionPane;
-
-import org.json.simple.JSONArray;
-import org.json.simple.JSONObject;
-
 import entity.Entity;
 import entity.Ghost;
 import entity.Player;
@@ -24,7 +19,6 @@ import graphics.Sprite;
 import graphics.SpriteSheet;
 import network.Client;
 import network.packets.Packet00Login;
-import network.packets.Packet01Disconnect;
 import network.packets.Packet02Move;
 import sound.SoundManager;
 
@@ -39,7 +33,6 @@ public class Game extends Canvas implements Runnable {
 	private BufferedImage background;
 
 	private boolean running = false;
-	private int test;
 	private Thread thread;
 	private int frames;
 
@@ -54,7 +47,6 @@ public class Game extends Canvas implements Runnable {
 	public static Sprite[] sprites = new Sprite[641];
 
 	private SpriteSheet spriteSheet;
-	private SpriteSheet ghostSheet;
 
 	public static Client client;
 	private BufferedImage level;

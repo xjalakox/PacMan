@@ -8,9 +8,7 @@ import main.Game;
 import main.Handler;
 import main.Id;
 import main.KeyInput;
-import main.Menu;
 import network.packets.Packet01Disconnect;
-import sound.SoundManager;
 import tile.Tile;
 
 public class Player extends Entity {
@@ -28,6 +26,7 @@ public class Player extends Entity {
 	private int SpawnPosX[] = new int[4];
 	private int SpawnPosY[] = new int[4];
 	private boolean dead;
+	private boolean ticking = true;
 
 	public Player(String username, int x, int y, int w, int h, Id id, KeyInput key) {
 		super(x, y, w, h, id, Game.handler, username);
@@ -53,12 +52,12 @@ public class Player extends Entity {
 	public void render(Graphics g) {
 		if (renderend) {
 			// TODO setFont(Game.pixel);
-			/*g.clearRect(500, 500, 300, 300);
-
-			g.drawRect(500, 500, 300, 300);
+			g.clearRect(440, 400, 310, 300);
+			g.drawRect(440, 400, 310, 300);
 			g.setColor(Color.RED);
-			g.drawString("Pacman ist " + deaths + " mal gestorben und hat \n" + minutes + " Minuten und " + seconds
-					+ " gebraucht um das Spiel zu gewinnen", 500, 500);*/
+			g.drawString("Pacman ist " + deaths + " mal gestorben und hat", 450, 500);
+			g.drawString(minutes + " Minuten und " + seconds + " Sekunden", 450, 550);
+			g.drawString("gebraucht um das Spiel zu gewinnen", 450, 600);
 		} else if (visible) {
 
 			g.drawImage(Game.playerSprite[0].getBufferedImage(), x, y, w, h, null);
@@ -66,13 +65,17 @@ public class Player extends Entity {
 			g.drawImage(Game.playerSprite[2].getBufferedImage(), x, y + 24, w, h, null);
 			g.drawImage(Game.playerSprite[3].getBufferedImage(), x + 24, y + 24, w, h, null);
 
-			/*g.setColor(Color.RED);
+			g.setColor(Color.RED);
 			g.drawRect(getX(), getY(), getW() * 2, getH() * 2);
 
+			// Das hier ist nur zum ausprobieren ob die Schrift da rein passt
+			// und so...
+			g.clearRect(440, 400, 310, 300);
+			g.drawRect(440, 400, 310, 300);
 			g.setColor(Color.RED);
-			g.drawString("Pacman ist " + deaths + " mal gestorben und hat " + minutes + " Minuten und " + seconds
-					+ " Sekunden gebraucht um das Spiel zu gewinnen", 450, 500);
-			g.drawString(minutes + " Minuten und " + seconds + " gebraucht um das Spiel zu gewinnen", 450, 550);*/
+			g.drawString("Pacman ist " + deaths + " mal gestorben und hat", 450, 500);
+			g.drawString(minutes + " Minuten und " + seconds + " Sekunden", 450, 550);
+			g.drawString("gebraucht um das Spiel zu gewinnen", 450, 600);
 		} else {
 
 		}
@@ -80,125 +83,127 @@ public class Player extends Entity {
 
 	@Override
 	public void tick() {
-		if (ticks >= 60) {
-			seconds++;
-			ticks = 0;
-		} else {
-			ticks++;
-		}
-
-		if (seconds >= 60) {
-			minutes++;
-			seconds = 0;
-		}
-
-		if (frametimer > 0) {
-			setX(-200);
-			setY(-200);
-			frametimer--;
-		} else if (dead) {
-			int spawnpos;
-			spawnpos = (int) (Math.random() * 4);
-			setX(SpawnPosX[spawnpos]);
-			setY(SpawnPosY[spawnpos]);
-			setVisible(true);
-			dead = false;
-		}
-
-		if (key != null && key.key_enable && keyInputEnabled) {
-			if (!collisionu()) {
-				if (KeyInput.up) {
-					up = true;
-					down = false;
-				}
+		if (ticking) {
+			if (ticks >= 60) {
+				seconds++;
+				ticks = 0;
 			} else {
-				up = false;
-				setVelY(0);
+				ticks++;
 			}
 
-			if (!collisiond()) {
-				if (KeyInput.down) {
-					down = true;
+			if (seconds >= 60) {
+				minutes++;
+				seconds = 0;
+			}
+
+			if (frametimer > 0) {
+				setX(-200);
+				setY(-200);
+				frametimer--;
+			} else if (dead) {
+				int spawnpos;
+				spawnpos = (int) (Math.random() * 4);
+				setX(SpawnPosX[spawnpos]);
+				setY(SpawnPosY[spawnpos]);
+				setVisible(true);
+				dead = false;
+			}
+
+			if (key != null && key.key_enable && keyInputEnabled) {
+				if (!collisionu()) {
+					if (KeyInput.up) {
+						up = true;
+						down = false;
+					}
+				} else {
 					up = false;
+					setVelY(0);
 				}
-			} else {
-				down = false;
-				setVelY(0);
-			}
 
-			if (!collisionr()) {
-				if (KeyInput.right) {
-					right = true;
-					left = false;
-					up = false;
+				if (!collisiond()) {
+					if (KeyInput.down) {
+						down = true;
+						up = false;
+					}
+				} else {
 					down = false;
+					setVelY(0);
 				}
-			} else {
-				right = false;
-				setVelX(0);
-			}
 
-			if (!collisionl()) {
-				if (KeyInput.left) {
-					left = true;
+				if (!collisionr()) {
+					if (KeyInput.right) {
+						right = true;
+						left = false;
+						up = false;
+						down = false;
+					}
+				} else {
 					right = false;
-					up = false;
-					down = false;
+					setVelX(0);
 				}
-			} else {
-				left = false;
-				setVelX(0);
+
+				if (!collisionl()) {
+					if (KeyInput.left) {
+						left = true;
+						right = false;
+						up = false;
+						down = false;
+					}
+				} else {
+					left = false;
+					setVelX(0);
+				}
+
+				if (left) {
+					setVelX(-3);
+					setVelY(0);
+				}
+				if (right) {
+					setVelX(3);
+					setVelY(0);
+				}
+				if (up) {
+					setVelY(-3);
+					setVelX(0);
+				}
+				if (down) {
+					setVelY(3);
+					setVelX(0);
+				}
 			}
 
-			if (left) {
-				setVelX(-3);
-				setVelY(0);
-			}
-			if (right) {
-				setVelX(3);
-				setVelY(0);
-			}
-			if (up) {
-				setVelY(-3);
-				setVelX(0);
-			}
-			if (down) {
-				setVelY(3);
-				setVelX(0);
-			}
-		}
+			for (Entity en : Handler.entity) {
+				if (en.getId() == Id.ghost) {
+					if (en.getBoundsNormal().intersects(getBoundsNormal())) {
+						// TODO Animation des Todes machen
+						if (frametimer > 0) {
 
-		for (Entity en : Handler.entity) {
-			if (en.getId() == Id.ghost) {
-				if (en.getBoundsNormal().intersects(getBoundsNormal())) {
-					// TODO Animation des Todes machen
-					if (frametimer > 0) {
+						} else {
+							dead = true;
+							setVisible(false);
+							frametimer = 180;
+							deaths++;
+						}
+					}
+				}
 
-					} else {
-						dead = true;
-						setVisible(false);
-						frametimer = 180;
-						deaths++;
+			}
+
+			for (Tile tile : Handler.tile) {
+				if (tile.getId() == Id.point) {
+					if (tile.getBounds().intersects(getBounds())) {
+						tile.remove();
+						Handler.sm.playSound(4);
 					}
 				}
 			}
 
-		}
+			x += velX;
+			y += velY;
 
-		for (Tile tile : Handler.tile) {
-			if (tile.getId() == Id.point) {
-				if (tile.getBounds().intersects(getBounds())) {
-					tile.remove();
-					Handler.sm.playSound(4);
-				}
+			if (KeyInput.quit) {
+				new Packet01Disconnect(Game.player.getUsername()).send(Game.client);
 			}
-		}
-
-		x += velX;
-		y += velY;
-
-		if (KeyInput.quit) {
-			new Packet01Disconnect(Game.player.getUsername()).send(Game.client);
 		}
 	}
 
@@ -269,6 +274,10 @@ public class Player extends Entity {
 
 	public void renderend(boolean renderend) {
 		this.renderend = renderend;
+	}
+	
+	public void setticking(boolean ticking) {
+		this.ticking = ticking;
 	}
 
 }

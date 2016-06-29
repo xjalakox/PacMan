@@ -1,10 +1,8 @@
 package tile;
 
-import java.awt.Color;
 import java.awt.Graphics;
 
 import main.Game;
-import main.Handler;
 import main.Id;
 
 public class spawn_bottom extends Tile {

@@ -42,6 +42,7 @@ public class Handler {
 			for(Entity en : entity) {
 				if(en.getId()==Id.player) {
 					((Player) en).renderend(true);
+					((Player) en).setticking(false);
 				}
 			}
 		}

@@ -2,7 +2,6 @@ package network.packets;
 
 import network.Client;
 import network.Server;
-import network.packets.Packet.PacketTypes;
 
 public class Packet03Move_Enabled extends Packet {
 
