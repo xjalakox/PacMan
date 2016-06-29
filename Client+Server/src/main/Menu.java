@@ -97,6 +97,7 @@ public class Menu {
 
 				Anastasias_Mann_Hermman_Mann_hat_die_übelst_krassen_Stahlbeton_nüsse_und_Anastia_schnabulliert_diese_voller_Genüsslichkeit
 						.start();
+				f.dispose();
 			}
 
 				
@@ -146,7 +147,7 @@ public class Menu {
 
 				Anastasias_Mann_Hermman_Mann_hat_die_übelst_krassen_Stahlbeton_nüsse_und_Anastia_schnabulliert_diese_voller_Genüsslichkeit
 						.start();
-				
+				f.dispose();
 			}
 
 			public void mouseReleased(MouseEvent evt) {
