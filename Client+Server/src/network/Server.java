@@ -135,11 +135,6 @@ public class Server extends NetServer implements ActionListener {
 					}
 				}
 			}
-			
-			for (NetUser u : users) {
-				send(new Packet03Move_Enabled(players.get(u).getUsername(), "true").getData(), u);
-
-			}
 			break;
 		case DISCONNECT:
 			Packet01Disconnect packet01 = new Packet01Disconnect(data);
