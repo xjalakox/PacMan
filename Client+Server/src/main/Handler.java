@@ -19,7 +19,7 @@ import tile.Wall_bottom;
 import tile.Wall_left;
 import tile.Wall_right;
 import tile.Wall_top;
-import tile.bomb;
+//import tile.bomb;
 import tile.spawn_bottom;
 import tile.spawn_cornerbottomleft;
 import tile.spawn_cornerbottomright;
@@ -156,7 +156,7 @@ public class Handler {
 				if (r == 0 && g == 234 && b == 255)
 					addTile(new spawn_openingright(x * 24 + 94, y * 24, 24, 24, Id.Wall, true));
 				if(r == 47 && g  == 79 && b == 151) {
-					addTile(new bomb(x*24+94, y*24, 24, 24, Id.bomb, true));
+//					addTile(new bomb(x*24+94, y*24, 24, 24, Id.bomb, true));
 				}
 
 			}

@@ -21,6 +21,7 @@ public class Player extends Entity {
 	private int deaths = 0;
 	private int frametimer = 0;
 	private int ticks, seconds, minutes;
+	private int frame,framedelay;
 	private boolean renderend;
 	private boolean visible = true;
 	private int SpawnPosX[] = new int[4];
@@ -28,6 +29,7 @@ public class Player extends Entity {
 	private boolean dead;
 	private boolean ticking = true;
 	private boolean boaty_mc_boat_face;
+	private boolean dying;
 
 	public Player(String username, int x, int y, int w, int h, Id id, KeyInput key) {
 		super(x, y, w, h, id, Game.handler, username);
@@ -60,12 +62,14 @@ public class Player extends Entity {
 			g.drawString(minutes + " Minuten und " + seconds + " Sekunden", 450, 550);
 			g.drawString("gebraucht um das Spiel zu gewinnen", 450, 600);
 		} else if (visible) {
-
-			g.drawImage(Game.playerSprite[0].getBufferedImage(), x, y, w, h, null);
-			g.drawImage(Game.playerSprite[1].getBufferedImage(), x + 24, y, w, h, null);
-			g.drawImage(Game.playerSprite[2].getBufferedImage(), x, y + 24, w, h, null);
-			g.drawImage(Game.playerSprite[3].getBufferedImage(), x + 24, y + 24, w, h, null);
-
+			if(!dying){
+				g.drawImage(Game.playerSprite[0].getBufferedImage(), x, y, w, h, null);
+				g.drawImage(Game.playerSprite[1].getBufferedImage(), x + 24, y, w, h, null);
+				g.drawImage(Game.playerSprite[2].getBufferedImage(), x, y + 24, w, h, null);
+				g.drawImage(Game.playerSprite[3].getBufferedImage(), x + 24, y + 24, w, h, null);
+				}else{
+					g.drawImage(Game.deathsprite[frame].getBufferedImage(),x,y,w+25,h+25,null);
+				}
 			g.setColor(Color.RED);
 			g.drawRect(getX(), getY(), getW() * 2, getH() * 2);
 
@@ -85,6 +89,22 @@ public class Player extends Entity {
 	@Override
 	public void tick() {
 		if (ticking) {
+			if(dying){
+				if(frame!=10){
+				framedelay+=8;
+				}else{
+					framedelay++;
+				}
+				if(framedelay==40){
+					frame++;
+					framedelay=0;
+				}
+				if(frame==11){
+					frame=0;
+					dying=false;
+				}
+			}
+			
 			if (ticks >= 60) {
 				seconds++;
 				ticks = 0;
@@ -183,6 +203,7 @@ public class Player extends Entity {
 							if (frametimer > 0) {
 
 							} else {
+								dying=true;
 								dead = true;
 								setVisible(false);
 								frametimer = 180;

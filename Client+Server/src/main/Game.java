@@ -39,13 +39,13 @@ public class Game extends Canvas implements Runnable {
 	public static Handler handler = new Handler();
 	public static Sprite[] playerSprite = new Sprite[4];
 	public static Sprite[] ghostSprite = new Sprite[32];
+	public static Sprite[] deathsprite = new Sprite[11];
 	public static KeyInput key = new KeyInput();
 	public static Player player;
 	public static Ghost ghost;
 	public static String username;
 
 	public static Sprite[] sprites = new Sprite[641];
-
 	private SpriteSheet spriteSheet;
 
 	public static Client client;
@@ -128,6 +128,10 @@ public class Game extends Canvas implements Runnable {
 		playerSprite[2] = new Sprite(spriteSheet, 1, 7 * 48 + 1, 47, 47);
 		playerSprite[3] = new Sprite(spriteSheet, 49, 7 * 48 + 1, 47, 47);
 
+		for(int i=0;i<deathsprite.length;i++){
+			deathsprite[i] = new Sprite(spriteSheet,(96*i)+4*96,14*48,94,94);
+		}
+		
 		int z = 0;
 		for (int i = 0; i < 20; i++) {
 			for (int j = 0; j < 32; j++) {
