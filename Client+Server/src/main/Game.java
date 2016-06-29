@@ -149,12 +149,12 @@ public class Game extends Canvas implements Runnable {
 
 		if (pacman) {
 			player = new Player(name, 140, 100, 24, 24, Id.player, key);
-			client.setConnection(name, "80.82.219.161:1337");
+			client.setConnection(name, "localhost:1337");
 			handler.addEntity(player);
 			new Packet00Login(client.getUsername(), player.getX(), player.getY(), "pacman").send(client);
 		} else if (!pacman) {
 			ghost = new Ghost(name, 530, 100, 24, 24, Id.ghost, key);
-			client.setConnection(name, "80.82.219.161:1337");
+			client.setConnection(name, "localhost:1337");
 			handler.addEntity(ghost);
 			new Packet00Login(client.getUsername(), ghost.getX(), ghost.getY(), "ghost").send(client);
 		}

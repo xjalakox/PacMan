@@ -19,6 +19,7 @@ public class Ghost extends Entity {
 	private String username;
 
 	private int netid;
+	public static boolean bomb;
 
 	public Ghost(String username, int x, int y, int w, int h, Id id, KeyInput key) {
 		super(x, y, w, h, id, Game.handler, username);
@@ -37,7 +38,7 @@ public class Ghost extends Entity {
 		g.drawImage(Game.sprites[391].getBufferedImage(), x + 24, y, w, h, null);
 		g.drawImage(Game.sprites[422].getBufferedImage(), x, y + 24, w, h, null);
 		g.drawImage(Game.sprites[423].getBufferedImage(), x + 24, y + 24, w, h, null);
-		
+
 		g.drawRect(getX(), getY(), getW() * 2, getH() * 2);
 
 	}
@@ -91,23 +92,44 @@ public class Ghost extends Entity {
 			}
 
 			if (left) {
-				setVelX(-4);
-				setVelY(0);
+				if (bomb) {
+					setVelX(-2);
+					setVelY(0);
+				} else {
+					setVelX(-4);
+					setVelY(0);
+				}
 			}
 			if (right) {
-				setVelX(4);
-				setVelY(0);
+				if (bomb) {
+					setVelX(2);
+					setVelY(0);
+				} else {
+					setVelX(4);
+					setVelY(0);
+				}
 			}
 			if (up) {
-				setVelY(-4);
-				setVelX(0);
+				if (bomb) {
+					setVelY(-2);
+					setVelX(0);
+				} else {
+					setVelY(-4);
+					setVelX(0);
+				}
 			}
 			if (down) {
-				setVelY(4);
-				setVelX(0);
+				if (bomb) {
+					setVelY(2);
+					setVelX(0);
+
+				} else {
+					setVelY(4);
+					setVelX(0);
+				}
 			}
 		}
-		
+
 		for (Tile tile : Handler.tile) {
 			if (tile.getId() == Id.point) {
 				for (Entity en : Handler.entity) {
@@ -179,7 +201,7 @@ public class Ghost extends Entity {
 	public Rectangle getBounds() {
 		return new Rectangle(getX() - 3, getY() - 3, getW() * 2 + 6, getH() * 2 + 6);
 	}
-	
+
 	public int getNetId() {
 		return netid;
 	}

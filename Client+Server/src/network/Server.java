@@ -50,7 +50,7 @@ public class Server extends NetServer implements ActionListener {
 	protected void init() {
 		players = new HashMap<NetUser, Entity>();
 
-		/*InputStream s = Menu.class.getResourceAsStream("font.ttf");
+		InputStream s = Menu.class.getResourceAsStream("font.ttf");
 		Image icon = null;
 		Font pixel = null;
 		try {
@@ -85,7 +85,7 @@ public class Server extends NetServer implements ActionListener {
 		p.add(bla);
 		bla.addActionListener(this);
 
-		frame.pack();*/
+		frame.pack();
 
 	}
 
