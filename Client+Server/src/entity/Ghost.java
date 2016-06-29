@@ -91,19 +91,19 @@ public class Ghost extends Entity {
 			}
 
 			if (left) {
-				setVelX(-3);
+				setVelX(-4);
 				setVelY(0);
 			}
 			if (right) {
-				setVelX(3);
+				setVelX(4);
 				setVelY(0);
 			}
 			if (up) {
-				setVelY(-3);
+				setVelY(-4);
 				setVelX(0);
 			}
 			if (down) {
-				setVelY(3);
+				setVelY(4);
 				setVelX(0);
 			}
 		}

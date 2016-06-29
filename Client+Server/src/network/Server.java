@@ -48,8 +48,9 @@ public class Server extends NetServer implements ActionListener {
 
 	@Override
 	protected void init() {
+		players = new HashMap<NetUser, Entity>();
 
-		InputStream s = Menu.class.getResourceAsStream("font.ttf");
+		/*InputStream s = Menu.class.getResourceAsStream("font.ttf");
 		Image icon = null;
 		Font pixel = null;
 		try {
@@ -84,7 +85,7 @@ public class Server extends NetServer implements ActionListener {
 		p.add(bla);
 		bla.addActionListener(this);
 
-		frame.pack();
+		frame.pack();*/
 
 	}
 
@@ -133,6 +134,11 @@ public class Server extends NetServer implements ActionListener {
 								players.get(u).getY(), "ghost").getData(), user);
 					}
 				}
+			}
+			
+			for (NetUser u : users) {
+				send(new Packet03Move_Enabled(players.get(u).getUsername(), "true").getData(), u);
+
 			}
 			break;
 		case DISCONNECT:

@@ -27,6 +27,7 @@ public class Player extends Entity {
 	private int SpawnPosY[] = new int[4];
 	private boolean dead;
 	private boolean ticking = true;
+	private boolean boaty_mc_boat_face;
 
 	public Player(String username, int x, int y, int w, int h, Id id, KeyInput key) {
 		super(x, y, w, h, id, Game.handler, username);
@@ -175,14 +176,18 @@ public class Player extends Entity {
 			for (Entity en : Handler.entity) {
 				if (en.getId() == Id.ghost) {
 					if (en.getBoundsNormal().intersects(getBoundsNormal())) {
-						// TODO Animation des Todes machen
-						if (frametimer > 0) {
-
+						if (boaty_mc_boat_face) {
+							
 						} else {
-							dead = true;
-							setVisible(false);
-							frametimer = 180;
-							deaths++;
+							// TODO Animation des Todes machen
+							if (frametimer > 0) {
+
+							} else {
+								dead = true;
+								setVisible(false);
+								frametimer = 180;
+								deaths++;
+							}
 						}
 					}
 				}
@@ -275,7 +280,7 @@ public class Player extends Entity {
 	public void renderend(boolean renderend) {
 		this.renderend = renderend;
 	}
-	
+
 	public void setticking(boolean ticking) {
 		this.ticking = ticking;
 	}

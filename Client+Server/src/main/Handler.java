@@ -19,6 +19,7 @@ import tile.Wall_bottom;
 import tile.Wall_left;
 import tile.Wall_right;
 import tile.Wall_top;
+import tile.bomb;
 import tile.spawn_bottom;
 import tile.spawn_cornerbottomleft;
 import tile.spawn_cornerbottomright;
@@ -38,9 +39,9 @@ public class Handler {
 	public static SoundManager sm = new SoundManager();
 
 	public void render(Graphics g) {
-		if(end){
-			for(Entity en : entity) {
-				if(en.getId()==Id.player) {
+		if (end) {
+			for (Entity en : entity) {
+				if (en.getId() == Id.player) {
 					((Player) en).renderend(true);
 					((Player) en).setticking(false);
 				}
@@ -62,7 +63,7 @@ public class Handler {
 				t++;
 			}
 		}
-		if(t==0){
+		if (t == 0) {
 			end = true;
 		}
 		for (Entity en : entity) {
@@ -154,6 +155,9 @@ public class Handler {
 					addTile(new spawn_openingleft(x * 24 + 94, y * 24, 24, 24, Id.Wall, true));
 				if (r == 0 && g == 234 && b == 255)
 					addTile(new spawn_openingright(x * 24 + 94, y * 24, 24, 24, Id.Wall, true));
+				if(r == 47 && g  == 79 && b == 151) {
+					addTile(new bomb(x*24+94, y*24, 24, 24, Id.bomb, true));
+				}
 
 			}
 		}
