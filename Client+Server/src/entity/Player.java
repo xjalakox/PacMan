@@ -21,7 +21,7 @@ public class Player extends Entity {
 	private int deaths = 0;
 	private int frametimer = 0;
 	private int ticks, seconds, minutes;
-	private int frame,framedelay;
+	private int frame, framedelay;
 	private boolean renderend;
 	private boolean visible = true;
 	private int SpawnPosX[] = new int[4];
@@ -30,6 +30,7 @@ public class Player extends Entity {
 	private boolean ticking = true;
 	private boolean boaty_mc_boat_face;
 	private boolean dying;
+	private int renderanim,renderanim_save;
 
 	public Player(String username, int x, int y, int w, int h, Id id, KeyInput key) {
 		super(x, y, w, h, id, Game.handler, username);
@@ -55,32 +56,42 @@ public class Player extends Entity {
 	public void render(Graphics g) {
 		if (renderend) {
 			// TODO setFont(Game.pixel);
-			g.clearRect(440, 400, 310, 300);
-			g.drawRect(440, 400, 310, 300);
+			g.setFont(Game.pixel);
+			g.clearRect(440, 400, 660, 300);
+			g.drawRect(440, 400, 660, 300);
 			g.setColor(Color.RED);
 			g.drawString("Pacman ist " + deaths + " mal gestorben und hat", 450, 500);
 			g.drawString(minutes + " Minuten und " + seconds + " Sekunden", 450, 550);
 			g.drawString("gebraucht um das Spiel zu gewinnen", 450, 600);
 		} else if (visible) {
-			if(!dying){
-				g.drawImage(Game.playerSprite[0].getBufferedImage(), x, y, w, h, null);
-				g.drawImage(Game.playerSprite[1].getBufferedImage(), x + 24, y, w, h, null);
-				g.drawImage(Game.playerSprite[2].getBufferedImage(), x, y + 24, w, h, null);
-				g.drawImage(Game.playerSprite[3].getBufferedImage(), x + 24, y + 24, w, h, null);
-				}else{
-					g.drawImage(Game.deathsprite[frame].getBufferedImage(),x,y,w+25,h+25,null);
+			if (!dying) {
+				if (renderanim == 1) {
+					g.drawImage(Game.playerSprite[0].getBufferedImage(), x, y, w, h, null);
+					g.drawImage(Game.playerSprite[1].getBufferedImage(), x + 24, y, w, h, null);
+					g.drawImage(Game.playerSprite[2].getBufferedImage(), x, y + 24, w, h, null);
+					g.drawImage(Game.playerSprite[3].getBufferedImage(), x + 24, y + 24, w, h, null);
+				} else if (renderanim == 2) {
+					g.drawImage(Game.playerSprite[4].getBufferedImage(), x, y, w, h, null);
+					g.drawImage(Game.playerSprite[5].getBufferedImage(), x + 24, y, w, h, null);
+					g.drawImage(Game.playerSprite[6].getBufferedImage(), x, y + 24, w, h, null);
+					g.drawImage(Game.playerSprite[7].getBufferedImage(), x + 24, y + 24, w, h, null);
+				} else if (renderanim == 3) {
+					g.drawImage(Game.playerSprite[8].getBufferedImage(), x, y, w, h, null);
+					g.drawImage(Game.playerSprite[9].getBufferedImage(), x + 24, y, w, h, null);
+					g.drawImage(Game.playerSprite[10].getBufferedImage(), x, y + 24, w, h, null);
+					g.drawImage(Game.playerSprite[11].getBufferedImage(), x + 24, y + 24, w, h, null);
+				} else if (renderanim == 4) {
+					g.drawImage(Game.playerSprite[12].getBufferedImage(), x, y, w, h, null);
+					g.drawImage(Game.playerSprite[13].getBufferedImage(), x + 24, y, w, h, null);
+					g.drawImage(Game.playerSprite[14].getBufferedImage(), x, y + 24, w, h, null);
+					g.drawImage(Game.playerSprite[15].getBufferedImage(), x + 24, y + 24, w, h, null);
+				} else {
+					
 				}
+			} else {
+				g.drawImage(Game.deathsprite[frame].getBufferedImage(), x, y, w + 25, h + 25, null);
+			}
 			g.setColor(Color.RED);
-			g.drawRect(getX(), getY(), getW() * 2, getH() * 2);
-
-			// Das hier ist nur zum ausprobieren ob die Schrift da rein passt
-			// und so...
-			g.clearRect(440, 400, 310, 300);
-			g.drawRect(440, 400, 310, 300);
-			g.setColor(Color.RED);
-			g.drawString("Pacman ist " + deaths + " mal gestorben und hat", 450, 500);
-			g.drawString(minutes + " Minuten und " + seconds + " Sekunden", 450, 550);
-			g.drawString("gebraucht um das Spiel zu gewinnen", 450, 600);
 		} else {
 
 		}
@@ -89,22 +100,22 @@ public class Player extends Entity {
 	@Override
 	public void tick() {
 		if (ticking) {
-			if(dying){
-				if(frame!=10){
-				framedelay+=8;
-				}else{
+			if (dying) {
+				if (frame != 10) {
+					framedelay += 8;
+				} else {
 					framedelay++;
 				}
-				if(framedelay==40){
+				if (framedelay == 40) {
 					frame++;
-					framedelay=0;
+					framedelay = 0;
 				}
-				if(frame==11){
-					frame=0;
-					dying=false;
+				if (frame == 11) {
+					frame = 0;
+					dying = false;
 				}
 			}
-			
+
 			if (ticks >= 60) {
 				seconds++;
 				ticks = 0;
@@ -121,7 +132,7 @@ public class Player extends Entity {
 				setX(-200);
 				setY(-200);
 				frametimer--;
-			} else if (dead) {
+			} else if (dead && !dying) {
 				int spawnpos;
 				spawnpos = (int) (Math.random() * 4);
 				setX(SpawnPosX[spawnpos]);
@@ -176,28 +187,33 @@ public class Player extends Entity {
 				}
 
 				if (left) {
+					renderanim = 1;
 					setVelX(-3);
 					setVelY(0);
 				}
 				if (right) {
+					renderanim = 3;
 					setVelX(3);
 					setVelY(0);
 				}
 				if (up) {
+					renderanim = 2;
 					setVelY(-3);
 					setVelX(0);
 				}
 				if (down) {
+					renderanim = 4;
 					setVelY(3);
 					setVelX(0);
 				}
+				renderanim_save = renderanim;
 			}
 
 			for (Entity en : Handler.entity) {
 				if (en.getId() == Id.ghost) {
 					if (en.getBoundsNormal().intersects(getBoundsNormal())) {
 						if (Ghost.bomb) {
-							
+
 							en.setX(500);
 							en.setY(500);
 						} else {
@@ -205,7 +221,7 @@ public class Player extends Entity {
 							if (frametimer > 0) {
 
 							} else {
-								dying=true;
+								dying = true;
 								dead = true;
 								setVisible(false);
 								frametimer = 180;
@@ -224,7 +240,7 @@ public class Player extends Entity {
 						Handler.sm.playSound(4);
 					}
 				}
-				if(tile.getId() == Id.bomb) {
+				if (tile.getId() == Id.bomb) {
 					if (tile.getBounds().intersects(getBounds())) {
 						tile.remove();
 						Ghost.bombtimer = 300;
@@ -238,6 +254,9 @@ public class Player extends Entity {
 
 			if (KeyInput.quit) {
 				new Packet01Disconnect(Game.player.getUsername()).send(Game.client);
+			}
+			if(renderanim == 0){
+				renderanim = renderanim_save;
 			}
 		}
 	}

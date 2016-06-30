@@ -4,11 +4,15 @@ import java.awt.Canvas;
 import java.awt.Color;
 import java.awt.Dimension;
 import java.awt.Font;
+import java.awt.FontFormatException;
 import java.awt.Graphics;
 import java.awt.Graphics2D;
+import java.awt.Image;
 import java.awt.image.BufferStrategy;
 import java.awt.image.BufferedImage;
+import java.io.FileNotFoundException;
 import java.io.IOException;
+import java.io.InputStream;
 
 import javax.imageio.ImageIO;
 import entity.Entity;
@@ -37,13 +41,15 @@ public class Game extends Canvas implements Runnable {
 	private int frames;
 
 	public static Handler handler = new Handler();
-	public static Sprite[] playerSprite = new Sprite[4];
+	public static Sprite[] playerSprite = new Sprite[16];
 	public static Sprite[] ghostSprite = new Sprite[32];
 	public static Sprite[] deathsprite = new Sprite[11];
 	public static KeyInput key = new KeyInput();
 	public static Player player;
 	public static Ghost ghost;
 	public static String username;
+
+	public static Font pixel;
 
 	public static Sprite[] sprites = new Sprite[641];
 	private SpriteSheet spriteSheet;
@@ -116,6 +122,17 @@ public class Game extends Canvas implements Runnable {
 	}
 
 	public void init() {
+		InputStream s = Menu.class.getResourceAsStream("font.ttf");
+		try {
+			pixel = Font.createFont(Font.TRUETYPE_FONT, s).deriveFont(Font.BOLD, 30);
+		} catch (FileNotFoundException e) {
+			e.printStackTrace();
+		} catch (FontFormatException e) {
+			e.printStackTrace();
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
+
 		SoundManager sm = new SoundManager();
 		sm.playSound(3);
 		key = new KeyInput();
@@ -128,10 +145,25 @@ public class Game extends Canvas implements Runnable {
 		playerSprite[2] = new Sprite(spriteSheet, 1, 7 * 48 + 1, 47, 47);
 		playerSprite[3] = new Sprite(spriteSheet, 49, 7 * 48 + 1, 47, 47);
 
-		for(int i=0;i<deathsprite.length;i++){
-			deathsprite[i] = new Sprite(spriteSheet,(96*i)+4*96,14*48,94,94);
+		playerSprite[4] = new Sprite(spriteSheet, 2 * 48, 6 * 48 + 1, 47, 47);
+		playerSprite[5] = new Sprite(spriteSheet, 49 + 2 * 48, 6 * 48 + 1, 47, 47);
+		playerSprite[6] = new Sprite(spriteSheet, 2 * 48, 7 * 48 + 1, 47, 47);
+		playerSprite[7] = new Sprite(spriteSheet, 49 + 2 * 48, 7 * 48 + 1, 47, 47);
+
+		playerSprite[8] = new Sprite(spriteSheet, 8 * 48, 6 * 48 + 1, 47, 47);
+		playerSprite[9] = new Sprite(spriteSheet, 49 + 8 * 48, 6 * 48 + 1, 47, 47);
+		playerSprite[10] = new Sprite(spriteSheet, 8 * 48, 7 * 48 + 1, 47, 47);
+		playerSprite[11] = new Sprite(spriteSheet, 49 + 8 * 48, 7 * 48 + 1, 47, 47);
+
+		playerSprite[12] = new Sprite(spriteSheet, 10 * 48, 6 * 48 + 1, 47, 47);
+		playerSprite[13] = new Sprite(spriteSheet, 49 + 10 * 48, 6 * 48 + 1, 47, 47);
+		playerSprite[14] = new Sprite(spriteSheet, 10 * 48, 7 * 48 + 1, 47, 47);
+		playerSprite[15] = new Sprite(spriteSheet, 49 + 10 * 48, 7 * 48 + 1, 47, 47);
+
+		for (int i = 0; i < deathsprite.length; i++) {
+			deathsprite[i] = new Sprite(spriteSheet, (96 * i) + 4 * 96, 14 * 48, 94, 94);
 		}
-		
+
 		int z = 0;
 		for (int i = 0; i < 20; i++) {
 			for (int j = 0; j < 32; j++) {
